@@ -1,0 +1,66 @@
+
+.floatItRight{
+    float: right;
+}
+li{
+    color: #ffffff;
+    text-shadow: 1px;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #bababa;
+    padding: 10px;
+}
+
+button{
+    border: 1px solid #bababa;
+    background: aliceblue;
+    border-radius: 2px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+}
+button:hover{
+    box-shadow: .3px .3px .3px .3px deepskyblue;
+}
+.container{
+    position: relative;
+}
+
+.flexParent{
+    display: flex;
+}
+form{
+    width: 90%;
+    height: 90%;
+    margin: auto;
+}
+form div{
+    padding: 3px;
+    margin: 10px;
+}
+
+input, textarea{
+    width: 100%;
+    vertical-align: top;
+    border: 1px solid #bababa;
+    padding: 2px;
+    margin: 5px;
+    font-size: 18px;
+}
+.submitButton{
+    width:50%;
+    margin: auto;
+    background-color: #109f67;   
+}
+.submitButton > input{
+        background-color: #109f67;  
+        border: none; 
+}
+
+.submitButton > input:hover{
+    box-shadow: 5px;
+}
+h4{
+    margin-top: 15px;
+}
