@@ -1,66 +1,89 @@
-
-.floatItRight{
-    float: right;
+body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-li{
-    color: #ffffff;
-    text-shadow: 1px;
-    border-width: 0 0 1px 0;
-    border-style: solid;
-    border-color: #bababa;
-    padding: 10px;
+@font-face {
+    font-family: title-font;
+    src: url(CaviarDreams-webfont.woff);
 }
-
-button{
-    border: 1px solid #bababa;
-    background: aliceblue;
-    border-radius: 2px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px;
-}
-button:hover{
-    box-shadow: .3px .3px .3px .3px deepskyblue;
-}
-.container{
-    position: relative;
-}
-
-.flexParent{
-    display: flex;
-}
-form{
-    width: 90%;
-    height: 90%;
-    margin: auto;
-}
-form div{
-    padding: 3px;
-    margin: 10px;
-}
-
-input, textarea{
+.nav-bar{
+    top: 0;
     width: 100%;
-    vertical-align: top;
-    border: 1px solid #bababa;
-    padding: 2px;
-    margin: 5px;
-    font-size: 18px;
+    z-index: 1000;    
+    position: fixed;
+    overflow: hidden;
+    background-color: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #e7e7e7;
 }
-.submitButton{
-    width:50%;
-    margin: auto;
-    background-color: #109f67;   
+.nav-bar li{
+    vertical-align: middle;
+    font-size: 1.3em;
+    display: inline-block;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-top: 0;
+    font-family: title-font;
+    color: dimgrey;
 }
-.submitButton > input{
-        background-color: #109f67;  
-        border: none; 
+.title-text{
+    text-decoration: none;
+}
+.title-text:hover{
+    text-decoration: none;
+    color: grey;
+}
+.nav-bar img{
+    height: auto;
+    width: auto;
+    max-height: 40px;
+    max-width: 40px;
+}
+.nav-bar li:last-child{
+float: right;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  }
+.nav-bar li:last-child input{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid lightseagreen;
+    background-image: url('../static/searchicon.png');
+    background-repeat: no-repeat;
+    line-height: 1.5em;
+    background-position: 7px 10px; 
+    padding: 0 0 0 40px;
+    width: 40%;
+    float: right;
+    margin-right: 30px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
 }
 
-.submitButton > input:hover{
-    box-shadow: 5px;
+ input:focus{
+    width: 100%;
+
 }
-h4{
-    margin-top: 15px;
+.content{
+    margin-top:70px;
+    max-height: 3px;
 }
+.tab-bar{
+    margin-top: 65px;
+    background-color: paleturquoise;
+    width: 100%;  
+    border-bottom: 1px solid grey;
+}
+.tab-bar li{
+    display: inline-block;
+}
+
+
+
+
+
+

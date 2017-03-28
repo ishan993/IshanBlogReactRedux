@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { findDOMNode } from 'react-dom';
 import  {fetchPosts}  from '../actions/index';
 import {Link} from 'react-router';
 
@@ -7,6 +8,12 @@ class PostList extends Component {
     componentDidMount(){
         console.log("I mounted!, haha");
         this.props.fetchPosts();
+        findDOMNode(this.refs.content).addEventListener('scroll', this.onScroll.bind(this));
+
+    }
+
+    onScroll(e){
+        console.log("finally!");
     }
 
     populateRow(post){
@@ -36,13 +43,10 @@ class PostList extends Component {
        
         return (
 
-            <div>
-                <Link to="posts/new">  
-                    <button value="Another one!">Add a new post! </button>
-                </Link>
+            <div className="content">
                 <h3> Posts </h3>
             
-                <ul>
+                <ul ref="content" onScroll={(e)=>console.log("scared you'll forget about me!"+e)}>
                     {this.props.all.map((post)=>this.populateRow(post))}
                 </ul>
                 {this.renderNull()}

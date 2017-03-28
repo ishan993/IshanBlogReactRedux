@@ -6,6 +6,7 @@ import PostList from './containers/post_list';
 import NewPost from './containers/new_post';
 import CurrentPost from './containers/current_post';
 
+
 export default(
     <Route path="/" component={App} >
         <IndexRoute component={PostList} />

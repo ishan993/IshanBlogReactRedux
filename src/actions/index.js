@@ -7,6 +7,8 @@ const API_KEY = '?key=ishan';
 export const CREATE_POST = 'CREATE_POST';
 export const FETCH_POST = 'FETCH_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const UPDATE_WINDOW_SIZE =  'UPDATE_WINDOW_SIZE';
+export const ENABLE_SEARCH = 'ENABLE_SEARCH';
 
 
 export function fetchPosts(){
@@ -70,4 +72,20 @@ export function deletePost(id){
             return false;
         })
     }
+}
+
+export function updateWindowSize(windowSize){
+    console.log("called UPDATE_WINDOW_SIZE");
+    return({
+        type: UPDATE_WINDOW_SIZE,
+        payload: windowSize
+    });
+}
+
+export function showSearch(status){
+    console.log("Enabling Search: "+status);
+    return({
+        type: ENABLE_SEARCH,
+         payload: status
+        });
 }
