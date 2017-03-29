@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {showSearch} from '../actions/index';
+import {showSearch, updateSearchTerm} from '../actions/index';
 import {connect} from 'react-redux';
 
 const NavBarWrapper = styled.ul`
+    background: white;
     white-space: nowrap; 
     margin: auto;
     width: 100%;
@@ -123,7 +124,7 @@ const MobileSearchWrapper = styled.div`
 `;
 
 const MobileSearchInput = styled.input`
-    width: 50%;
+    width: 55%;
     display: inline-block;
     padding: 5px;
     margin-left: 10px;
@@ -138,7 +139,7 @@ const MobileSearchItem = styled(SearchIcon)`
     vertical-align: middle;
     margin-top: 5px;
     padding: 0;
-    margin-left: 10px;
+    margin-left: 5px;
 `;
 
 
@@ -151,7 +152,7 @@ class NavigationBar extends Component{
                             </NavBarLink>
                         </Item>
                         <Item>
-                        <NavBarLink to={'/'} className="item">
+                            <NavBarLink to={'/'} className="item">
                                 Ishan's Blog
                             </NavBarLink>
                         </Item>
@@ -166,12 +167,14 @@ class NavigationBar extends Component{
 
     componentDidMount(){
         console.log("Component did mount!");
-        console.log("Whaaa?"+window.innerWidth);    
     }
 
+    handleChange(event){
+        this.props.updateSearchTerm(event.target.value);
+    }
     handleFormSubmit(event){
         event.preventDefault();
-        console.log("trying to prevent defaults");
+        console.log("Imagine that I'm submitting the form with searchTerm: "+this.props.searchForm.searchTerm);
     }
 
     displaySearchBar(){
@@ -179,9 +182,9 @@ class NavigationBar extends Component{
                 return(
                   <MobileSearchWrapper>
                     <form>  
-                        <MobileSearchInput placeholder="Search" />
+                       <MobileSearchInput name="searchTerm" placeholder="Search" onChange={this.handleChange.bind(this)}/>
                         <MobileSearchItem src="./static/close.png" onClick={()=>this.props.showSearch(false)}/>
-                        <MobileSearchItem src="./static/search.png"/>
+                        <MobileSearchItem src="./static/search.png" onClick={this.handleFormSubmit.bind(this)}/>
                     </form>
                   </MobileSearchWrapper>
                 );
@@ -203,8 +206,8 @@ class NavigationBar extends Component{
 }
 
 function mapStatetoProps(state){
-    return {displayComps: state.displayComps};
+    return {displayComps: state.displayComps, searchForm: state.searchForm};
 }
 
 
-export default connect(mapStatetoProps, { showSearch })(NavigationBar);
+export default connect(mapStatetoProps, {showSearch, updateSearchTerm})(NavigationBar);

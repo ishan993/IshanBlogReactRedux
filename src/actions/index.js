@@ -9,7 +9,7 @@ export const FETCH_POST = 'FETCH_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_WINDOW_SIZE =  'UPDATE_WINDOW_SIZE';
 export const ENABLE_SEARCH = 'ENABLE_SEARCH';
-
+export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
 
 export function fetchPosts(){
     var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
@@ -88,4 +88,12 @@ export function showSearch(status){
         type: ENABLE_SEARCH,
          payload: status
         });
+}
+
+export function updateSearchTerm(term){
+    console.log("ActionCreator got the term: "+term);
+    return({
+        type: UPDATE_SEARCHTERM,
+        payload: term
+    })
 }

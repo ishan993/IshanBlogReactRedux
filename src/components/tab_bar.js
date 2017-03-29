@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
     margin: auto;
-    margin-top: 35px;
+    margin-top: 37px;
     width: 100%;
     border-bottom: .3pt solid lightgray;
     white-space: nowrap; 
