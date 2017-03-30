@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import NavigationBar from '../containers/nav_bar';
-import HeadlinePost from '../containers/headline_post';
-import TabBar from './tab_bar';
-import MidlinePosts from '../containers/midline_posts';
+import styled from 'styled-components';
+
+const ChildrenWrapper = styled.div`
+  margin-top: 37px;
+  @media only screen and (min-width: 768px){
+        margin-top: 65px;
+    }
+`;
 
 export default class App extends Component {
   
@@ -10,17 +15,11 @@ export default class App extends Component {
     return (
       <div className="parent">
         <NavigationBar />
-        <TabBar />
-        <HeadlinePost />
-        <MidlinePosts />
+        <ChildrenWrapper>
+          {this.props.children}
+        </ChildrenWrapper>
       </div>
     );
   }
 }
 
-
-
-//<div  className="container">
-//        <h1> BlogLite</h1>
-//          {this.props.children}
-//      </div>

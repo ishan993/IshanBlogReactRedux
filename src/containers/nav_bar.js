@@ -142,13 +142,12 @@ const MobileSearchItem = styled(SearchIcon)`
     margin-left: 5px;
 `;
 
-
 class NavigationBar extends Component{
 
     navBarContainer = ( <NavBarWrapper onScroll={this.handleScroll}>
                         <Item>
                             <NavBarLink to={'/'}>
-                                <ImgLogo src="./static/logoI.png"/>
+                                <ImgLogo src="/static/logoI.png"/>
                             </NavBarLink>
                         </Item>
                         <Item>
@@ -157,7 +156,7 @@ class NavigationBar extends Component{
                             </NavBarLink>
                         </Item>
                         <LastItem>
-                        <SearchIcon src="./static/search.png" onClick={()=> this.props.showSearch(true)}/>
+                        <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
                             <form>
                                 <InputSearch placeholder="Search" />
                             </form>

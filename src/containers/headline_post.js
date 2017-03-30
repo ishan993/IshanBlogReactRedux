@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router';
+import {Link} from 'react-router'; 
+import ReactMarkdown from 'react-markdown';
+
 
 const HeadlinePostWrapper = styled.div`
     display: flex;
@@ -10,7 +12,6 @@ const HeadlinePostWrapper = styled.div`
     padding: 20px;
     margin-top: 10px;
     border: .3pt solid lightgrey;
-    background: papayawhip;
 
 `;
 
@@ -22,7 +23,6 @@ const HeadlineImage = styled.img`
 `;
 
 const HeadLineTextWrapper = styled.div`
-    background: palevioletred;
     flex: 3;
     text-align: justify;
     vertical-align: top;
@@ -32,7 +32,6 @@ const HeadLineTextWrapper = styled.div`
 `;
 const HeadlineImageContainer = styled(HeadLineTextWrapper)`
     flex: 1.5;
-    background: tomato;
 
 `;
 
@@ -53,9 +52,10 @@ const HeadlineContent = styled.h4`
     padding: 5px;
     margin-left: 5px;
     height: auto;
-    font-size: 2vw;
+    font-size: 2.3vw;
     font-weight: 300;
 `;  
+const input = 'Dear *Marie*';
 
 class HeadlinePost extends Component{
 
@@ -69,7 +69,7 @@ class HeadlinePost extends Component{
                 </ HeadlineImageContainer>
                 <HeadLineTextWrapper>
                     <HeadlineTitle to={'/'}>
-                        Hello world!, how are you?<br/> I'm good, Thank you! How are you?
+                        <ReactMarkdown source={input} />
                     </HeadlineTitle>
                     <HeadlineContent>
                         Give me a shot at night, some kinda mysterious!

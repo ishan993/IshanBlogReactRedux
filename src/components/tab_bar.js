@@ -3,13 +3,10 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
     margin: auto;
-    margin-top: 37px;
     width: 100%;
     border-bottom: .3pt solid lightgray;
     white-space: nowrap; 
-    @media only screen and (min-width: 768px){
-        margin-top: 65px;
-    }
+  
 `;
 
 const List = styled.ul`
