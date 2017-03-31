@@ -6,7 +6,7 @@ import App from './components/app';
 import PostList from './containers/post_list';
 import NewPost from './containers/new_post';
 import CurrentPost from './containers/current_post';
-import HomePage from './components/home_page';
+import HomePage from './containers/home_page';
 import ShowPost from './containers/show_post';
 import CreatePost from './containers/create_post';
 

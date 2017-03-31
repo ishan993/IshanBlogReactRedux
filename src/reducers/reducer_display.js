@@ -1,7 +1,7 @@
-import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH} from '../actions/index';
+import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH, UPDATE_RESUME_VISIBLE} from '../actions/index';
 
 
-const DEFAULT_STATE = {isMobile: null, searchEnabled: false}
+const DEFAULT_STATE = {isMobile: null, searchEnabled: false, resumeVisible: false}
 
 export default function(state = DEFAULT_STATE, action){
     switch(action.type){
@@ -13,6 +13,9 @@ export default function(state = DEFAULT_STATE, action){
         break;  
         case ENABLE_SEARCH:
              return {...state, searchEnabled: action.payload};
+        break;
+        case UPDATE_RESUME_VISIBLE: 
+            return {...state, resumeVisible: action.payload}
         break;
         default: 
             return state;

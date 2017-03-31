@@ -10,10 +10,10 @@ export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_WINDOW_SIZE =  'UPDATE_WINDOW_SIZE';
 export const ENABLE_SEARCH = 'ENABLE_SEARCH';
 export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
+export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
 
 export function fetchPosts(){
     var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
-    console.log("calling this!");
     return function(dispatch){
          request.then((response)=>{
             dispatch({
@@ -26,8 +26,6 @@ export function fetchPosts(){
 
 export function createPost(props){
     var request = axios.post(`${ROOT_URL}posts${API_KEY}`, props);
-    console.log(`${ROOT_URL}posts${API_KEY}`);
-    console.log(props);
 
     return function(dispatch){
         request.then((response) =>{
@@ -91,9 +89,15 @@ export function showSearch(status){
 }
 
 export function updateSearchTerm(term){
-    console.log("ActionCreator got the term: "+term);
     return({
         type: UPDATE_SEARCHTERM,
         payload: term
     })
+}
+
+export function showResume(bool){
+    return ({
+        type: UPDATE_RESUME_VISIBLE,
+        payload: bool
+    });
 }

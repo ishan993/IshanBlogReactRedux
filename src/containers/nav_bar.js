@@ -23,19 +23,27 @@ const Item = styled.li`
     margin: auto;
     display: inline-block;
     vertical-align: middle;
+     &:last-child{
+        vertical-align: middle;
+        margin-top: 15px;
+        float: right;
+    }
 `;
 const LastItem = styled(Item)`
-    float: right;
+    float: right;   
 `;
 const NavBarLink = styled(Link)`
-
     text-align: center;
     padding: 14px 16px;
     margin-right: 5px;
     font-family: title-font;
     font-size: 1.5em;
     text-decoration: none;
-    color: grey;
+    color: ${props => props.login ? 'lightseagreen' : 'grey'};
+    &:last-child{
+        padding-top: 5px;
+        font-size:1.3em;
+    }
     &:hover{
         text-decoration: none;
         color: lightgrey;
@@ -85,7 +93,6 @@ const ImgLogo = styled.img`
     }
 `;
 const SearchBox = styled.div`
-    background: palevioletred;
 
     @media only screen and (min-width: 768px) {
         position: absolute;
@@ -94,7 +101,6 @@ const SearchBox = styled.div`
         height: 40px;
         top: 0;
         z-index: 1009;
-        background: palevioletred;
     }
 `;
 
@@ -151,7 +157,7 @@ class NavigationBar extends Component{
                             </NavBarLink>
                         </Item>
                         <Item>
-                            <NavBarLink to={'/'} className="item">
+                            <NavBarLink to={'/'}>
                                 Ishan's Blog
                             </NavBarLink>
                         </Item>
@@ -161,6 +167,11 @@ class NavigationBar extends Component{
                                 <InputSearch placeholder="Search" />
                             </form>
                         </LastItem>
+                        <Item>
+                            <NavBarLink login to={'/'}>
+                                Login
+                            </NavBarLink>
+                        </Item>
                 </NavBarWrapper>);
 
 

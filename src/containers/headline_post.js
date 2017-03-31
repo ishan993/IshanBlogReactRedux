@@ -55,8 +55,8 @@ const HeadlineContent = styled.h4`
     font-size: 2.3vw;
     font-weight: 300;
 `;  
-const input = 'Dear *Marie*';
-
+const input = '![Image of Yaktocat](https://s-media-cache-ak0.pinimg.com/236x/19/4d/09/194d0930e0867fdd67156ecf50f5e57b.jpg)';
+const headlineText = '## Miss Atomic bomb';
 class HeadlinePost extends Component{
 
   
@@ -69,7 +69,7 @@ class HeadlinePost extends Component{
                 </ HeadlineImageContainer>
                 <HeadLineTextWrapper>
                     <HeadlineTitle to={'/'}>
-                        <ReactMarkdown source={input} />
+                        <ReactMarkdown source={headlineText} />
                     </HeadlineTitle>
                     <HeadlineContent>
                         Give me a shot at night, some kinda mysterious!
