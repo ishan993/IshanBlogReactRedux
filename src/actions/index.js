@@ -11,6 +11,7 @@ export const UPDATE_WINDOW_SIZE =  'UPDATE_WINDOW_SIZE';
 export const ENABLE_SEARCH = 'ENABLE_SEARCH';
 export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
 export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
+export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
 
 export function fetchPosts(){
     var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
@@ -98,6 +99,14 @@ export function updateSearchTerm(term){
 export function showResume(bool){
     return ({
         type: UPDATE_RESUME_VISIBLE,
+        payload: bool
+    });
+}
+
+export function showLoginModal(bool){
+    console.log("Actions--> showLoginModal");
+    return({
+        type: UPDATE_LOGIN_MODAL_VISIBLE,
         payload: bool
     });
 }

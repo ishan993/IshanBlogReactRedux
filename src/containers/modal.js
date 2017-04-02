@@ -17,7 +17,6 @@ const ModalBackdrop = styled.div`
 
 class Modal extends Component{
     componentDidMount(){
-        console.log("hello World");
         this.modalTarget = document.createElement('div');
         this.modalTarget.className = "modal-combat";
         document.body.appendChild(this.modalTarget);
@@ -32,11 +31,9 @@ class Modal extends Component{
     }
     _render(){
         ReactDOM.render(
-            <Provider store={store}>
-                    <ModalBackdrop onClick={()=> console.log("I clicked!")}>
-                           {this.props.children}
-                    </ModalBackdrop>
-            </Provider>,
+                <Provider store={store}>
+                    {this.props.children}
+                </Provider>,
         this.modalTarget);
     }
     render(){

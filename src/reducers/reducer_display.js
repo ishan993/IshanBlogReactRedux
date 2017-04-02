@@ -1,7 +1,11 @@
-import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH, UPDATE_RESUME_VISIBLE} from '../actions/index';
+import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH, UPDATE_RESUME_VISIBLE, UPDATE_LOGIN_MODAL_VISIBLE} from '../actions/index';
 
 
-const DEFAULT_STATE = {isMobile: null, searchEnabled: false, resumeVisible: false}
+const DEFAULT_STATE = {isMobile: null,
+     searchEnabled: false, 
+     resumeVisible: false,
+     loginModalVisible: false
+    }
 
 export default function(state = DEFAULT_STATE, action){
     switch(action.type){
@@ -9,14 +13,17 @@ export default function(state = DEFAULT_STATE, action){
             if (action.payload < 720)
                 return {...state, isMobile: true};
             else
-                return {...state, isMobile: false}
+                return {...state, isMobile: false};
         break;  
         case ENABLE_SEARCH:
              return {...state, searchEnabled: action.payload};
         break;
         case UPDATE_RESUME_VISIBLE: 
-            return {...state, resumeVisible: action.payload}
+            return {...state, resumeVisible: action.payload};
         break;
+        case UPDATE_LOGIN_MODAL_VISIBLE:
+            return {...state, loginModalVisible: action.payload};
+            break;
         default: 
             return state;
         break;

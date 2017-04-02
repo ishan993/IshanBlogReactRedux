@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {showSearch, updateSearchTerm} from '../actions/index';
+import {showSearch, updateSearchTerm, showLoginModal} from '../actions/index';
 import {connect} from 'react-redux';
 
 const NavBarWrapper = styled.ul`
@@ -168,7 +168,7 @@ class NavigationBar extends Component{
                             </form>
                         </LastItem>
                         <Item>
-                            <NavBarLink login to={'/'}>
+                            <NavBarLink login onClick={()=> this.props.showLoginModal(true)} to={'/'}>
                                 Login
                             </NavBarLink>
                         </Item>
@@ -220,4 +220,4 @@ function mapStatetoProps(state){
 }
 
 
-export default connect(mapStatetoProps, {showSearch, updateSearchTerm})(NavigationBar);
+export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal})(NavigationBar);

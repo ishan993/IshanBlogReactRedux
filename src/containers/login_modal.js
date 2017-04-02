@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import {showLoginModal} from '../actions/index';
+import {connect} from 'react-redux';
 
 //Style the modal properly, you dumbfuck
 
@@ -42,16 +44,18 @@ const CloseButton = styled.img`
     border: none;
 `; 
 
-export default class ShowPost extends Component{
+class LoginModal extends Component{
 
     render(){
         return(
             <ModalContainer>
                 <HeaderDiv>
                     <h1>Hello World!</h1>
-                    <CloseButton src="../static/close.png" />
+                    <CloseButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
             </ModalContainer>
         );
     }
 }
+
+export default connect(null, {showLoginModal})(LoginModal)

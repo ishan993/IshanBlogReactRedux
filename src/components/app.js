@@ -17,11 +17,8 @@ export default class App extends Component {
   render() {
     return (
       <div className="parent">
-        <NavigationBar onClick={()=>console.log("hello world!")}/>
+        <NavigationBar/>
         <ChildrenWrapper>
-        <Modal>
-          <LoginModal/>
-        </Modal>
           {this.props.children}
         </ChildrenWrapper>
       </div>
