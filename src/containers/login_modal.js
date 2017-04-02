@@ -23,9 +23,12 @@ const HeaderDiv = styled.div`
     width: 100%;
     text-align: center;
     background: papayawhip;
-    padding: 10px;
+    padding: 15px;
     position: relative;
-    font-size: 1.5vw;
+    font-size: 2.5vw;
+    @media only screen and (min-width: 768px) {
+        font-size: 1.5vw;
+    }
 `;
 const CloseButton = styled.img`
     position: absolute;
