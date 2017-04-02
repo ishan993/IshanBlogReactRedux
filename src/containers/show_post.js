@@ -8,7 +8,7 @@ export default class ShowPost extends Component{
     render(){
         return(
             <div>
-                Hello world!
+                What the fucking fuck?
             </div>
         );
     }
