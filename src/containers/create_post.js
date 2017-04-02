@@ -11,7 +11,7 @@ const CreatePostWrapper = styled.div`
 `;
 
 
-const InputField = styled.input`
+export const InputField = styled.input`
     margin: auto;
     width: 100%;
     line-height: 3.5vw;
@@ -60,7 +60,7 @@ const TextAreaField = styled(Textarea)`
     border-bottom: .7pt solid lightseagreen;
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
     background: white;
     color: palevioletred;
     border: 1px solid palevioletred;
