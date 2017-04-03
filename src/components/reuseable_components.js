@@ -12,9 +12,13 @@ export const FullWidthWrapper = styled.div`
 `;
 
 export const EightyWidthWrapper = styled.div`
-    width: 80%;
+    width: 85%;
     margin: 20px;
     display: flex;
+    justify-content: space-between;
+    margin: 20px auto 20px auto;
+    border-bottom: .3pt solid lightgrey;
+
 `;
 //Supply the Image Icon whereever I need it.
 export const IconImage = styled.img`
@@ -52,6 +56,7 @@ export const TabWrapper = styled.div`
 
 export const TabItem = styled(FlexItem)`
     padding-left: 10px;
+    padding-top: 5px;
     padding-right: 10px;
     flex-basis: 5%;
     cursor: pointer;
@@ -60,7 +65,7 @@ export const TabItem = styled(FlexItem)`
     color: darkgrey;
 
     @media only screen and (min-width: 768px){
-        font-size: 2.5rem;
+        font-size: 2rem;
         padding: 0px 10px 5px 10px;
     }
     color: ${props => props.active ? 'palevioletred' : 'grey'};
@@ -71,3 +76,23 @@ export const TabItem = styled(FlexItem)`
         border-bottom: 2px solid lightseagreen;
     }
 `;
+
+export const HeadlineTitle = styled.div`
+    width: 100%;
+    text-decoration: none;
+    font-size: 3.3vw;
+    color: black;
+    display: inline;
+    vertical-align: top;
+    height: auto;
+    font-weight: 300;
+`;
+export const HeadlineContent = styled.div`
+    color: black;
+    vertical-align: middle;
+    padding: 5px;
+    margin-left: 5px;
+    height: auto;
+    font-size: 2.3vw;
+    font-weight: 300;
+`; 

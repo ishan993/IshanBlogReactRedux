@@ -12,12 +12,17 @@ const ChildrenWrapper = styled.div`
     }
 `;
 
+
+const propObject = {
+  title: "Dumbfuck",
+   name:"Ishan"
+  };
 export default class App extends Component {
 
   render() {
     return (
       <div className="parent">
-        <NavigationBar/>
+        <NavigationBar helloWorld={propObject}/>
         <ChildrenWrapper>
           {this.props.children}
         </ChildrenWrapper>

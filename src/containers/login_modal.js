@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {showLoginModal} from '../actions/index';
 import {connect} from 'react-redux';
 import {InputFieldLarge, SubmitButton} from './create_post';
+import TabBar from './tab_bar';
 //Style the modal properly, you dumbfuck
 
 const ModalContainer = styled.div`
@@ -118,10 +119,7 @@ class LoginModal extends Component{
                     <TitleText>Hello World!</TitleText>
                     <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
-                <TabWrapper>
-                    <TabText>Login</TabText>
-                    <TabText>Sign up</TabText>
-                </TabWrapper>
+                <TabBar />
                 <FullWrapper>
                         <NewInputField placeholder="Username"/>
                         <NewInputField type="password" placeholder="Password"/>
@@ -135,3 +133,7 @@ class LoginModal extends Component{
 }
 
 export default connect(null, {showLoginModal})(LoginModal);
+ /*<TabWrapper>
+                    <TabText>Login</TabText>
+                    <TabText>Sign up</TabText>
+                </TabWrapper>*/
