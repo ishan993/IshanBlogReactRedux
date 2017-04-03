@@ -2,39 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {showResume} from '../actions/index';
 import {connect} from 'react-redux';
-const Wrapper = styled.div`
-    margin: auto;
-    width: 100%;
-    border-bottom: .3pt solid lightgray;
-    white-space: nowrap; 
-`;
-const List = styled.ul`
-    text-align: center;
-    width: 60%;
-    margin: auto;
-`;
-
-const Item = styled.li`
-    cursor: pointer;
-    margin: auto;
-    font-family: title-font;
-    font-size: 1.0em;
-    display: inline-block;
-    padding: 15px 15px 5px 15px;
-    color: darkgrey;
-
-    @media only screen and (min-width: 768px){
-        font-size: 1.5em;
-        padding: 35px 15px 5px 15px;
-    }
-    color: ${props => props.active ? 'palevioletred' : 'grey'};
-    border-bottom: ${props => props.active ? '2px solid lightseagreen' : '2px solid grey'};
-
-    &:hover{
-        color: darkgrey; 
-        border-bottom: 2px solid lightseagreen;
-    }
-`;
+import {TabWrapper, TabItem} from '../components/reuseable_components';
 
 
 class TabBar extends Component{
@@ -44,22 +12,21 @@ class TabBar extends Component{
     renderTabHeading(obj){
         if(obj.isActiveClassEnabled){
             return(
-                <Item active onClick={()=>{this.props.showResume(obj.shouldShowResumeOnClick)}}>
-                    <h3>{obj.title}</h3>
-                </Item>
+                <TabItem active onClick={()=>{this.props.showResume(obj.shouldShowResumeOnClick)}}>
+                    {obj.title}
+                </TabItem>
             );
         }else{
             return(
-            <Item onClick={()=>{this.props.showResume(obj.shouldShowResumeOnClick)}}>
-                <h3>{obj.title}</h3>
-            </Item>);
+            <TabItem onClick={()=>{this.props.showResume(obj.shouldShowResumeOnClick)}}>
+                {obj.title}
+            </TabItem>);
         }
     }
     
     render(){
         return(
-            <Wrapper>
-                <List>
+            <TabWrapper>
                     {this.renderTabHeading({
                         title: 'blog',
                         isActiveClassEnabled: !this.props.resumeVisible,
@@ -70,8 +37,7 @@ class TabBar extends Component{
                         isActiveClassEnabled: this.props.resumeVisible,
                         shouldShowResumeOnClick:true
                     })}
-                </List>
-            </Wrapper>
+            </TabWrapper>
         );
     }
 }

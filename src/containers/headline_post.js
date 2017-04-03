@@ -56,7 +56,7 @@ const HeadlineContent = styled.h4`
     font-weight: 300;
 `;  
 const input = '![Image of Yaktocat](https://s-media-cache-ak0.pinimg.com/236x/19/4d/09/194d0930e0867fdd67156ecf50f5e57b.jpg)';
-const headlineText = '## Miss Atomic bomb';
+const headlineText = '# Miss Atomic bomb';
 class HeadlinePost extends Component{
 
   
