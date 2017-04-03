@@ -2,42 +2,56 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {EightyWidthWrapper} from '../components/reuseable_components';
 
-const PostListUL = styled.ul`
-    list-style-type: none;
+
+const ThisWrapper = styled(EightyWidthWrapper)`
+    flex-wrap: wrap;
+    flex-direction: column;
+    background: aliceblue;
 `;
 
-const PostListLi = styled.li`
-    display:flex;
+const PostListLi = styled.div`
+    background: papayawhip;
+    flex: 1;
     border-bottom: .3pt solid lightgrey;
     margin-top: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
+
+    @media only screen and (min-width: 768px) {
+        display:flex;
+        direction: row;
+        width: 100%;
+    }
 `;
 const PostListImg = styled.img`
-    flex: 1;
+    background: palevioletred;
     height: auto;
     width: auto;
-    max-height: 125px;
-    max-height: 125px;
+    margin: auto;
+    max-height: 200px;
+    max-height: 200px;
     max-width: auto;
      @media only screen and (min-width: 768px) {
+        flex: 1;
         max-height: 200px;
         max-width: 200px;
     }
 
 `;
 const PostListTextWrapper = styled.div`
-    flex: 2;
     padding: 5px;
     margin-left: 10px;
+    @media only screen and (min-width: 768px) {
+        flex: 2;
+    }
+
 `;
 
 export default class PostList extends Component{
 
     render(){
         return (
-            <EightyWidthWrapper>
-                <PostListUL>
+            <ThisWrapper>
                     <PostListLi>
                         <PostListImg  src="https://i.ytimg.com/vi/D3Bwx8BxY5k/maxresdefault.jpg"/>
                             <PostListTextWrapper>
@@ -69,8 +83,7 @@ export default class PostList extends Component{
                                 </p>
                             </PostListTextWrapper>
                         </PostListLi>
-                    </PostListUL>
-            </EightyWidthWrapper>
+            </ThisWrapper>
         );
     }
 }
