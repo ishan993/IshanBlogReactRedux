@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {showLoginModal} from '../actions/index';
 import {connect} from 'react-redux';
-import {InputField, SubmitButton} from './create_post';
+import {InputFieldLarge, SubmitButton} from './create_post';
 //Style the modal properly, you dumbfuck
 
 const ModalContainer = styled.div`
@@ -77,15 +77,16 @@ const TabText = styled.h3`
     user-select: none;
 `;
  
- const NewInputField = styled(InputField)`
+ const NewInputField = styled(InputFieldLarge)`
     margin: auto;
     width: 80%;
-    font-size: 3vw;
+    font-size: 5vw;
     margin-top: 20px;
-    line-height: 4vw;
+    line-height: 8vw;
     margin-bottom: 20px;
     @media only screen and (min-width: 768px) {
-    
+        font-size: 2vw;
+        line-height: 3vw;
     }
 
  `;
@@ -94,11 +95,16 @@ const FullWrapper = styled.div`
     width: 100%;
     background: papayawhip;
     text-align: center;
-    height: 90%;
+    height: 80%;
 `;
 
 const LoginSubmitButton = styled(SubmitButton)`
     unselectable: on;
+    padding: 10px;
+    font-size: 1em;
+    @media only screen and (min-width: 768px) {
+        font-size: 1em;
+    }
 `;
 
 
@@ -120,7 +126,7 @@ class LoginModal extends Component{
                         <NewInputField placeholder="Username"/>
                         <NewInputField type="password" placeholder="Password"/>
                         <LoginSubmitButton onClick={()=>{console.log("Trying to log in")}}> 
-                            Submit!
+                           <h3>Submit!</h3>
                         </LoginSubmitButton>
                 </FullWrapper>
             </ModalContainer>

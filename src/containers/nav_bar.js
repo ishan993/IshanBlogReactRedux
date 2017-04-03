@@ -2,53 +2,38 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
 import {showSearch, updateSearchTerm, showLoginModal} from '../actions/index';
+import {FullWidthWrapper, IconImage, FlexItem} from '../components/reuseable_components';
 import {connect} from 'react-redux';
 
-const NavBarWrapper = styled.ul`
-    background: white;
-    white-space: nowrap; 
-    margin: auto;
-    width: 100%;
+const NavBarWrapper = styled(FullWidthWrapper)`
     position: fixed;
     top: 0;
     z-index: 900;
-    list-style: none;
     border-bottom: .3pt solid lightgray;
-
-    @media only screen and (min-width: 768px) {
-    }
 `; 
-const Item = styled.li`
-    float: none;
-    margin: auto;
-    display: inline-block;
-    vertical-align: middle;
-     &:last-child{
-        vertical-align: middle;
-        margin-top: 15px;
-        float: right;
-    }
-`;
-const LastItem = styled(Item)`
-    float: right;   
-`;
-const NavBarLink = styled(Link)`
-    text-align: center;
-    padding: 14px 16px;
-    margin-right: 5px;
+
+const TitleItem = styled(FlexItem)`
+    padding-left: 5px;
     font-family: title-font;
-    font-size: 1.5em;
-    text-decoration: none;
-    color: ${props => props.login ? 'lightseagreen' : 'grey'};
-    &:last-child{
-        padding-top: 5px;
-        font-size:1.3em;
-    }
-    &:hover{
-        text-decoration: none;
-        color: lightgrey;
-    }
+    text-align: left;
+    flex-basis: 40%;
+    order: 2;
+    flex-shrink: 2;
 `;
+const SearchBarItem = styled(FlexItem)`
+    flex-basic: 40%;
+    order: 4;
+    padding-left: 10px;
+`;
+const LoginButtonItem = styled(FlexItem)`
+    font-family: title-font;
+    text-align: right;
+    flex-basis: 10%;
+    order: 3;
+    font-size: 1.4rem;
+    margin-left: auto;
+`;
+
 const InputSearch = styled.input`
     display: none;
     width: 100%;
@@ -68,40 +53,12 @@ const InputSearch = styled.input`
         margin-top: 10px;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out;
-        font-size: 1.1em;
+        font-size: 1.1rem;
 
         &:focus{
             width: 70%;
         }
     }   
-`;
-
-
-const ImgLogo = styled.img`
-    height: auto;
-    width: auto;
-    max-height: 30px;
-    max-width: 50px;
-    padding: 2px;
-    margin-top: 2px;
-    @media only screen and (min-width: 768px) {
-        display: inline-block;
-        padding: 5px;
-        margin-right: 10px;
-        max-height: 50px;
-        max-width: 100px;
-    }
-`;
-const SearchBox = styled.div`
-
-    @media only screen and (min-width: 768px) {
-        position: absolute;
-        width: 100%;
-        position: fixed;
-        height: 40px;
-        top: 0;
-        z-index: 1009;
-    }
 `;
 
 const SearchIcon = styled.img`
@@ -150,29 +107,25 @@ const MobileSearchItem = styled(SearchIcon)`
 
 class NavigationBar extends Component{
 
-    navBarContainer = ( <NavBarWrapper onScroll={this.handleScroll}>
-                        <Item>
-                            <NavBarLink to={'/'}>
-                                <ImgLogo src="/static/logoI.png"/>
-                            </NavBarLink>
-                        </Item>
-                        <Item>
-                            <NavBarLink to={'/'}>
+    navBarContainer = (
+         <NavBarWrapper onScroll={this.handleScroll}>
+                        <FlexItem>
+                                <IconImage src="/static/logoI.png"/>
+                        </FlexItem>
+                        <TitleItem>
                                 Ishan's Blog
-                            </NavBarLink>
-                        </Item>
-                        <LastItem>
+                        </TitleItem>
+                        <LoginButtonItem onClick={()=> this.props.showLoginModal(true)}> 
+                                Login
+                        </LoginButtonItem>
+                        <SearchBarItem>
                         <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
                             <form>
                                 <InputSearch placeholder="Search" />
                             </form>
-                        </LastItem>
-                        <Item>
-                            <NavBarLink login onClick={()=> this.props.showLoginModal(true)} to={'/'}>
-                                Login
-                            </NavBarLink>
-                        </Item>
-                </NavBarWrapper>);
+                        </SearchBarItem>
+                </NavBarWrapper>
+                );
 
 
     componentDidMount(){

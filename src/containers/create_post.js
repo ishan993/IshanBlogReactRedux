@@ -3,25 +3,12 @@ import styled from 'styled-components';
 import { Field, reduxForm } from 'redux-form';
 import Textarea from 'react-textarea-autosize';
 
-
 const CreatePostWrapper = styled.div`
     padding: 40px;
     width: 80%;
     margin: auto;
 `;
 
-
-export const InputField = styled.input`
-    margin: auto;
-    width: 100%;
-    line-height: 3.5vw;
-    font-size: 3vw;
-    color: grey;
-    padding: 3px;;
-    border: none;
-    outline: none;
-    border-bottom: .7pt solid lightseagreen;
-`;
 
 const SeparatorDiv = styled.div`
     margin-top: 20px;
@@ -70,6 +57,18 @@ export const SubmitButton = styled.button`
     width: 30%;
 `;
 
+export const InputFieldLarge = styled.input`
+    margin: auto;
+    width: 100%;
+    line-height: 20px;
+    font-size: 18px;
+    color: grey;
+    padding: 3px;;
+    border: none;
+    outline: none;
+    border-bottom: .7pt solid lightseagreen;
+`;
+
 class CreatePost extends Component{
 
     render(){
@@ -85,10 +84,10 @@ class CreatePost extends Component{
                 </PostImageDiv>
                 <form onSubmit={handleSubmit(()=>console.log("Tried to handle this form submission!"))}>
                     <SeparatorDiv>
-                        <InputField type="text" placeholder="Post Title" name="postTitle" {...title} />
+                        <InputFieldLarge type="text" placeholder="Post Title" name="postTitle" {...title} />
                      </SeparatorDiv>
                      <SeparatorDiv>
-                        <InputField type="text" placeholder="Post Tags" {...categories} />
+                        <InputFieldLarge type="text" placeholder="Post Tags" {...categories} />
                     </SeparatorDiv>
                     <SeparatorDiv>
                         <TextAreaField placeholder="Enter post content here!" minRows={3} {...content}/>
