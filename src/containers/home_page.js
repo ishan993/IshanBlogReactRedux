@@ -21,6 +21,11 @@ const ModalBackdrop = styled.div`
     z-index: 9991;
 `; 
 
+const headlineProps = {
+    displayProps: { imgFlex: 2, mobileImgWidthHeight: "150px", maxImgWidthHeight:"350px", imgUrl:"https://s3.amazonaws.com/rapgenius/Bob_Dylan_-_The_Times_They_are_a-Changin1.jpeg"},
+    textProps: {textFlex: 2, title: "Boots of Spanish Leather", content:"Oh, but I just thought you might want something fine Made of silver or of golden Either from the mountains of Madrid Or from the coast of Barcelona"}
+}
+
 class HomePage extends Component{
 
     renderHomePage(){
@@ -29,7 +34,7 @@ class HomePage extends Component{
         } else{
             return(
                 <div>
-                    <HeadlinePost />
+                    <HeadlinePost headlineProps={headlineProps}/>
                     <MidlinePosts />
                     <PostList />
                 </div>

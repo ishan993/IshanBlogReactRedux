@@ -6,8 +6,8 @@
 html {
     margin: 0;
     padding: 0;
-    font-family: 'Arvo', serif;
-    font-weight: normal;
+    font-family: 'Slabo 27px', serif;
+    font-weight: 200;
 	font-size: 13px;
 
 }
@@ -19,15 +19,16 @@ h2 {
 	font-size: 2rem;
 }
 h3{
-    
+    font-weight: 200;
     font-size: 1.5rem;
 }
 
 h4{
-    
+    font-weight: 200;
     font-size: 1.3rem;
 }
 p, li {
+    font-weight: 200;
 	font-size: 1rem;
 }
 

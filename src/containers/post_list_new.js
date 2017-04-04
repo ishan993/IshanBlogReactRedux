@@ -6,11 +6,10 @@ import {EightyWidthWrapper} from '../components/reuseable_components';
 const ThisWrapper = styled(EightyWidthWrapper)`
     flex-wrap: wrap;
     flex-direction: column;
-    background: aliceblue;
+    justify-contents: center;
 `;
 
 const PostListLi = styled.div`
-    background: papayawhip;
     flex: 1;
     border-bottom: .3pt solid lightgrey;
     margin-top: 20px;
@@ -24,7 +23,6 @@ const PostListLi = styled.div`
     }
 `;
 const PostListImg = styled.img`
-    background: palevioletred;
     height: auto;
     width: auto;
     margin: auto;
@@ -32,9 +30,9 @@ const PostListImg = styled.img`
     max-height: 200px;
     max-width: auto;
      @media only screen and (min-width: 768px) {
-        flex: 1;
-        max-height: 200px;
-        max-width: 200px;
+        flex: 3;
+        max-height: 250px;
+        max-width: 250px;
     }
 
 `;
@@ -42,7 +40,7 @@ const PostListTextWrapper = styled.div`
     padding: 5px;
     margin-left: 10px;
     @media only screen and (min-width: 768px) {
-        flex: 2;
+        flex: 1.5;
     }
 
 `;
@@ -54,7 +52,7 @@ export default class PostList extends Component{
             <ThisWrapper>
                     <PostListLi>
                         <PostListImg  src="https://i.ytimg.com/vi/D3Bwx8BxY5k/maxresdefault.jpg"/>
-                            <PostListTextWrapper>
+                        <PostListTextWrapper>
                             <h4>Blackbird</h4>
                             <p>Blackbird singing in the dead of night. 
                                 Take these broken wings and learn to fly!

@@ -13,7 +13,7 @@ const NavBarWrapper = styled(FullWidthWrapper)`
 `; 
 
 const TitleItem = styled(FlexItem)`
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding-left: 5px;
     font-family: title-font;
     text-align: left;
@@ -31,7 +31,7 @@ const LoginButtonItem = styled(FlexItem)`
     text-align: right;
     flex-basis: 10%;
     order: 3;
-    font-size: 1.4rem;
+    font-size: 1rem;
     margin-left: auto;
     padding-left: 10px;
 `;
@@ -48,14 +48,14 @@ const InputSearch = styled.input`
         background-image: url('../static/searchicon.png');
         background-repeat: no-repeat;
         background-position: 5px 10px; 
-        line-height: 2.5rem;
+        line-height: 1.5rem;
         padding: 0 0 1px 50px;
         width: 40%;
         margin-right: 30px;
         margin-top: 10px;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out;
-        font-size: 1.1rem;
+        font-size: .8rem;
 
         &:focus{
             width: 70%;
@@ -115,10 +115,10 @@ class NavigationBar extends Component{
                                 <IconImage src="/static/logoI.png"/>
                         </FlexItem>
                         <TitleItem>
-                            Ishan's Blog
+                           Ishan's Blog
                         </TitleItem>
                         <LoginButtonItem onClick={()=> this.props.showLoginModal(true)}> 
-                               Login
+                             Login
                         </LoginButtonItem>
                         <SearchBarItem>
                         <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
