@@ -3,7 +3,6 @@ import {Route, IndexRoute} from 'react-router';
 
 
 import App from './components/app';
-import PostList from './containers/post_list';
 import NewPost from './containers/new_post';
 import CurrentPost from './containers/current_post';
 import HomePage from './containers/home_page';

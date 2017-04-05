@@ -8,7 +8,6 @@ import {EightyWidthWrapper, ReuseableCardContainer} from '../components/reuseabl
 const headlineText = '## Miss Atomic bomb';
 class HeadlinePost extends Component{
     componentDidMount(){
-        console.log("I got these props"+JSON.stringify(this.props.headlineProps));
     }
 
     render(){

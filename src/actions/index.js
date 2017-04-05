@@ -12,6 +12,7 @@ export const ENABLE_SEARCH = 'ENABLE_SEARCH';
 export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
 export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
 export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
+export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
 
 export function fetchPosts(){
     var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
@@ -109,4 +110,12 @@ export function showLoginModal(bool){
         type: UPDATE_LOGIN_MODAL_VISIBLE,
         payload: bool
     });
+}
+
+export function showSignUpTab(bool){
+    console.log("Trying to show Sign up tab"+bool);
+    return ({
+        type: UPDATE_LOGIN_TAB_VISIBLE,
+        payload: bool
+    })
 }

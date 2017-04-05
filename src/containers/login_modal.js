@@ -1,28 +1,15 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
-import {showLoginModal} from '../actions/index';
 import {connect} from 'react-redux';
-import {InputFieldLarge, SubmitButton} from './create_post';
+import styled from 'styled-components';
+import {showLoginModal, showSignUpTab} from '../actions/index';
+import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
+import {ModalContainer, SubmitButton} from '../components/reuseable_components';
+
 //Style the modal properly, you dumbfuck
 
-const ModalContainer = styled.div`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: palevioletred;
-    width: 90%;
-    height: 80%;
-    z-index: 9999;
-    @media only screen and (min-width: 768px) {
-    width: 35%;
-    height: 75%;
-    }
-
-`;
 const HeaderDiv = styled.div`
-    background: white;
+    background: papayawhip;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -30,18 +17,14 @@ const HeaderDiv = styled.div`
     width: 100%;
     text-align: center;
     border-bottom: .3pt solid lightgrey;
-    @media only screen and (min-width: 768px) {
-        font-size: 1.5vw;
-    }
-`;
-const TitleText = styled.h2`
-    flex-basis: 70%;
-    padding: 20px;
-    unselectable: on;
-    user-select: none;
-
 `;
 
+const NoMarginH2 = styled.h2`
+    text-align: center;
+    flex-basis: 80%;
+    margin: 0;
+    padding-top: 10px;
+`
 const ImgButton = styled.img`
     order: 3;
     flex-basis: 15%;
@@ -111,15 +94,23 @@ const LoginSubmitButton = styled(SubmitButton)`
 
 class LoginModal extends Component{
 
+    componentDidMount(){
+        console.log("Login Modal props"+JSON.stringify(this.props));
+    }
+    logThis(){
+        console.log("Yellow world!");
+    }
+
     render(){
         return(
             <ModalContainer>
                 <HeaderDiv>
                     <LogoImg src="../static/logoI.png" />
-                    <TitleText>Hello World!</TitleText>
+                    <NoMarginH2>Ishan's Blog</NoMarginH2>
                     <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
-                <TabBar />
+                {this.props.showSignUpTab.bind(this)}
+                <TabBar Titles={['Login', 'Sign Up']} logThis={this.props.showSignUpTab}/>
                 <FullWrapper>
                         <NewInputField placeholder="Username"/>
                         <NewInputField type="password" placeholder="Password"/>
@@ -132,8 +123,4 @@ class LoginModal extends Component{
     }
 }
 
-export default connect(null, {showLoginModal})(LoginModal);
- /*<TabWrapper>
-                    <TabText>Login</TabText>
-                    <TabText>Sign up</TabText>
-                </TabWrapper>*/
+export default connect(null, {showLoginModal, showSignUpTab})(LoginModal);

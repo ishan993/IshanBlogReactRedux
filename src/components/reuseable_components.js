@@ -46,38 +46,9 @@ export const FlexItem = styled.div`
     }
 
 `;
-
-export const TabWrapper = styled.div`
-    display: flex;
-    width: 100%;
-    justify-items: center;
-    justify-content: center;
-    padding-top: 10px;
-    border-bottom: .3pt solid lightgrey;
-`;
-
-export const TabItem = styled(FlexItem)`
-    padding-left: 10px;
-    padding-top: 5px;
-    padding-right: 10px;
-    flex-basis: 5%;
-    cursor: pointer;
-    font-family: title-font;
-    font-size: 1.5rem;
-    color: darkgrey;
-
-    @media only screen and (min-width: 768px){
-        font-size: 2rem;
-        padding: 0px 10px 5px 10px;
-    }
-    color: ${props => props.active ? 'palevioletred' : 'grey'};
-    border-bottom: ${props => props.active ? '2px solid lightseagreen' : '2px solid grey'};
-
-    &:hover{
-        color: darkgrey; 
-        border-bottom: 2px solid lightseagreen;
-    }
-`;
+/////////////////////////
+// Used for building blog posts
+///////////////////////
 
 const ReusableCardImg = styled.img`
     flex: ${props => props.displayProps.imgFlex};
@@ -122,3 +93,39 @@ export function ReuseableCardContainer(props){
         </CardWrapper>
     );
 }
+
+/////////////////////////
+//Modal Container
+///////////////////////
+
+export const ModalContainer = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: 90%;
+    height: 80%;
+    z-index: 9999;
+    @media only screen and (min-width: 768px) {
+    width: 35%;
+    height: 75%;
+    }
+`;
+
+////////////////////////////
+// All Purpose Submit button
+////////////////////////////
+
+export const SubmitButton = styled.button`
+    background: white;
+    color: darkgreen;
+    border: 1px solid lightseagreen;
+    font-size: 2vw;
+    padding: 3px;
+    margin: auto;
+    width: 30%;
+    &:hover{
+        background: rgba(0, 0, 0, .2);
+    }
+`;

@@ -7,7 +7,6 @@ import { browserHistory } from 'react-router';
 
  class CurrentPost extends Component{
     componentDidMount(){
-        console.log("I mounted too!"+JSON.stringify(this.props.params));
         this.props.fetchPost(this.props.params.id);
 
     }

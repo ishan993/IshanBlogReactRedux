@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import { Field, reduxForm } from 'redux-form';
 import Textarea from 'react-textarea-autosize';
+import {SubmitButton} from '../components/reuseable_components'
 
 const CreatePostWrapper = styled.div`
     padding: 40px;
     width: 80%;
     margin: auto;
 `;
-
-
 const SeparatorDiv = styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
@@ -17,7 +16,6 @@ const SeparatorDiv = styled.div`
         display: flex;
     }
 `;
-
 const PostImageDiv = styled(SeparatorDiv)`
     width: 50%;
     margin-left: auto;
@@ -29,7 +27,6 @@ const PostImageDiv = styled(SeparatorDiv)`
     &:hover{
         background: lightgrey;
     }
-
 `;
 const CenteredTextDiv = styled.div`
     margin: auto;
@@ -45,16 +42,6 @@ const TextAreaField = styled(Textarea)`
     outline:none;
     padding: 3px;;
     border-bottom: .7pt solid lightseagreen;
-`;
-
-export const SubmitButton = styled.button`
-    background: white;
-    color: palevioletred;
-    border: 1px solid palevioletred;
-    font-size: 2vw;
-    padding: 5px;
-    margin: auto;
-    width: 30%;
 `;
 
 export const InputFieldLarge = styled.input`
