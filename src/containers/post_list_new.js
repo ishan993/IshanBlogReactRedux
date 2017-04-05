@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {EightyWidthWrapper} from '../components/reuseable_components';
+import {EightyWidthWrapper, ReuseableCardContainer} from '../components/reuseable_components';
 
 
 const ThisWrapper = styled(EightyWidthWrapper)`

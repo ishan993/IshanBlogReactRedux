@@ -15,14 +15,12 @@ export const FullWidthWrapper = styled.div`
 
 export const EightyWidthWrapper = styled.div`
     width: 85%;
-    margin: 20px;
     margin: 20px auto 20px auto;
     border-bottom: .3pt solid lightgrey;
     @media only screen and (min-width: 768px) {
         display: flex;
         justify-content: space-between;
     }
-
 `;
 //Supply the Image Icon whereever I need it.
 export const IconImage = styled.img`
@@ -81,38 +79,18 @@ export const TabItem = styled(FlexItem)`
     }
 `;
 
-/*export const HeadlineTitle = styled.div`
-    width: 100%;
-    text-decoration: none;
-    font-size: 3.3vw;
-    color: black;
-    display: inline;
-    vertical-align: top;
-    height: auto;
-    font-weight: 300;
-`;
-export const HeadlineContent = styled.div`
-    color: black;
-    vertical-align: middle;
-    padding: 5px;
-    margin-left: 5px;
-    height: auto;
-    font-size: 2.3vw;
-    font-weight: 300;
-`;*/
-
 const ReusableCardImg = styled.img`
     flex: ${props => props.displayProps.imgFlex};
     margin: auto;
-    background: papayawhip;
     width: 100%;
     height: 100%;
     padding: 2px;
     max-height: ${props => props.displayProps.mobileImgWidthHeight};
     max-width: ${props=>props.displayProps.mobileImgWidthHeight};
     @media only screen and (min-width: 768px) {
-        max-height: ${props => props.displayProps.maxImgWidthHeight};
-        max-width: ${props=>props.displayProps.maxImgWidthHeight};
+        object-fit: cover;
+        max-height: ${props=>props.displayProps.maxImgWidthHeight};
+        max-width: 100%;
     }
 `;
 const ReusableCardText = styled.div`
@@ -127,14 +105,15 @@ const CardWrapper = styled.div`
     width: 100%;
     text-align: center;
     @media only screen and (min-width: 768px) {
-        display: flex;
-        justify-content: space-between;
+        display: ${props => props.displayProps.flex ? 'flex' : 'block'};
+        box-sizing: border-box;
+        padding: 10px;
     }
 `;
 
 export function ReuseableCardContainer(props){
     return(
-        <CardWrapper>
+        <CardWrapper displayProps={props.displayProps}>
             <ReusableCardImg displayProps={props.displayProps} src={props.displayProps.imgUrl}/>
             <ReusableCardText txtProps={props.textProps}>
                 <h3>{props.textProps.title}</h3>
