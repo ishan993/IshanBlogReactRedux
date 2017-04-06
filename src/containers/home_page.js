@@ -24,9 +24,9 @@ const midlineProps = [];
 const postListProps = [];
 const headlineProps = {
     displayProps: { imgFlex: 3, mobileImgWidthHeight: "250px", maxImgWidthHeight:"350px", 
-    imgUrl:"https://s3.amazonaws.com/rapgenius/Bob_Dylan_-_The_Times_They_are_a-Changin1.jpeg", flex: true},
-    textProps: {textFlex: 2, title: "Boots of Spanish Leather",
-     content:"Oh, but I just thought you might want something fine. Made of silver or of golden. Either from the mountains of Madrid Or from the coast of Barcelona"}
+    imgUrl:"https://americansongwriter.com/wp-content/uploads/2009/05/515vQFdPfKL.jpg", flex: true},
+    textProps: {textFlex: 2, title: "Don't think twice, it's alright",
+     content:"When your rooster crows at the break a dawn, look out your window and I'll be gone. You're the reason I'm trav'lin' on. Don't think twice, it's all right"}
 }
 
 midlineProps.push({
