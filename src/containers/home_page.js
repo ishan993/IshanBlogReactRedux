@@ -24,7 +24,7 @@ const midlineProps = [];
 const postListProps = [];
 const headlineProps = {
     displayProps: { imgFlex: 3, mobileImgWidthHeight: "250px", maxImgWidthHeight:"350px", 
-    imgUrl:"https://americansongwriter.com/wp-content/uploads/2009/05/515vQFdPfKL.jpg", flex: true},
+    imgUrl:"https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg", flex: true},
     textProps: {textFlex: 2, title: "Don't think twice, it's alright",
      content:"When your rooster crows at the break a dawn, look out your window and I'll be gone. You're the reason I'm trav'lin' on. Don't think twice, it's all right"}
 }
