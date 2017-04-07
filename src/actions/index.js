@@ -96,11 +96,20 @@ export function updateSearchTerm(term){
         payload: term
     })
 }
-
-export function showResume(bool){
+// Functions to show and hide the home page Blog/Resume tab
+//Action creators make it less convoluted and more reusable
+//Instead of passing bools around.
+//Just pass Action creators to do the functions you want.
+export function showBlogTab(bool){
     return ({
         type: UPDATE_RESUME_VISIBLE,
-        payload: bool
+        payload: false
+    });
+}
+export function showResumeTab(bool){
+    return ({
+        type: UPDATE_RESUME_VISIBLE,
+        payload: true
     });
 }
 
@@ -112,10 +121,18 @@ export function showLoginModal(bool){
     });
 }
 
+//Use these to reuse the TabBar component
+export function showLoginTab(){
+    console.log("Trying to show Login tab");
+    return({
+        type: UPDATE_LOGIN_TAB_VISIBLE,
+        bool: true
+    });
+}
 export function showSignUpTab(bool){
     console.log("Trying to show Sign up tab"+bool);
     return ({
         type: UPDATE_LOGIN_TAB_VISIBLE,
-        payload: bool
+        payload: false
     })
 }

@@ -8,6 +8,7 @@ import ResumeTab from './resume_tab';
 import Modal from './modal';
 import LoginModal from './login_modal';
 import styled from 'styled-components';
+import {showBlogTab, showResumeTab} from '../actions/index';
 
 
 const ModalBackdrop = styled.div`
@@ -72,6 +73,13 @@ postListProps.push({
 
 class HomePage extends Component{
 
+    homePageTabProps = {
+        firstTabTitle:"blog",
+        secondTabTitle:"resume",
+        showFirstTab: this.props.showBlogTab,
+        showSecondTab: this.props.showResumeTab
+    }
+
     renderHomePage(){
         if(this.props.resumeVisible){
            return (<ResumeTab />);
@@ -100,7 +108,7 @@ class HomePage extends Component{
     render(){
         return(
             <div>
-                <TabBar />
+                <TabBar tabProps={this.homePageTabProps} isModalVisible={false}/>
                 {this.showLoginModal()}
                 {this.renderHomePage()}
             </div>
@@ -112,4 +120,4 @@ function mapStateToProps(state){
         loginModalVisible: state.displayComps.loginModalVisible};
 }
 
-export default connect(mapStateToProps, null)(HomePage);
+export default connect(mapStateToProps, {showBlogTab, showResumeTab})(HomePage);

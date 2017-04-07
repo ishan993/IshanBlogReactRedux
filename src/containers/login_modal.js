@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {showLoginModal, showSignUpTab} from '../actions/index';
+import {showLoginModal, showLoginTab, showSignUpTab} from '../actions/index';
 import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
 import {ModalContainer, SubmitButton} from '../components/reuseable_components';
@@ -93,6 +93,12 @@ const LoginSubmitButton = styled(SubmitButton)`
 
 
 class LoginModal extends Component{
+    tabProps = { 
+        firstTabTitle: "Login",
+        secondTabTitle: "Sign up",
+        showFirstTab: showLoginTab,
+        showSecondTab: showSignUpTab
+    }
 
     componentDidMount(){
         console.log("Login Modal props"+JSON.stringify(this.props));
@@ -109,8 +115,8 @@ class LoginModal extends Component{
                     <NoMarginH2>Ishan's Blog</NoMarginH2>
                     <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
-                {this.props.showSignUpTab.bind(this)}
-                <TabBar Titles={['Login', 'Sign Up']} logThis={this.props.showSignUpTab}/>
+                    {this.props.showSignUpTab.bind(this)}
+                <TabBar tabProps={this.tabProps} isModalVisible={true}/>
                 <FullWrapper>
                         <NewInputField placeholder="Username"/>
                         <NewInputField type="password" placeholder="Password"/>
@@ -123,4 +129,4 @@ class LoginModal extends Component{
     }
 }
 
-export default connect(null, {showLoginModal, showSignUpTab})(LoginModal);
+export default connect(null, {showLoginModal, showLoginTab, showSignUpTab})(LoginModal);

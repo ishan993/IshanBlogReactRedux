@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {showResume} from '../actions/index';
+import {showResumeTab} from '../actions/index';
 import {connect} from 'react-redux';
 import {FlexItem} from '../components/reuseable_components';
 
@@ -17,7 +17,8 @@ const TabItem = styled(FlexItem)`
     padding-left: 10px;
     padding-top: 5px;
     padding-right: 10px;
-    flex-basis: 5%;
+    ${props => console.log(props.isModalVisible)}
+    flex-basis: ${props => props.isModalVisible ? '40%':'5%'};
     cursor: pointer;
     font-family: title-font;
     font-size: 1.5rem;
@@ -37,48 +38,18 @@ const TabItem = styled(FlexItem)`
 `;
 
 class TabBar extends Component{
-
-  
-
-  componentDidMount(){
-        console.log("Tab bar props"+JSON.stringify(this.props));
-        try{
-            this.props.logThis(false);
-        }catch(error){
-            console.log("error!"+error);
-        }
-    }
-
-//Assigning a class name to tab to highlight the active tab
-//because you can't have if:else in a JSX tab
-    renderTabHeading(obj){
-        if(obj.isActiveClassEnabled){
-            return(
-                <TabItem active onClick={()=>{this.props.showResume(obj.shouldShowResumeOnClick)}}>
-                    {obj.title}
-                </TabItem>
-            );
-        }else{
-            return(
-            <TabItem onClick={()=>{this.props.showResume(obj.shouldShowResumeOnClick)}}>
-                {obj.title}
-            </TabItem>);
-        }
-    }
-    
+    firstTabOn = true;
     render(){
         return(
             <TabWrapper>
-                    {this.renderTabHeading({
-                        title: 'blog',
-                        isActiveClassEnabled: !this.props.resumeVisible,
-                        shouldShowResumeOnClick:false
-                    })}
-                    {this.renderTabHeading({
-                        title: 'resume',
-                        isActiveClassEnabled: this.props.resumeVisible,
-                        shouldShowResumeOnClick:true
-                    })}
+                <TabItem active={this.firstTabOn} onClick={()=>{this.props.tabProps.showFirstTab();
+                     this.firstTabOn=true;}} isModalVisible={this.props.isModalVisible}>
+                    <h3>{this.props.tabProps.firstTabTitle}</h3>
+                </TabItem>
+                <TabItem onClick={()=>{this.props.tabProps.showSecondTab() 
+                    this.firstTabOn=false;}} active={!this.firstTabOn} isModalVisible={this.props.isModalVisible}>
+                    <h3>{this.props.tabProps.secondTabTitle}</h3>
+                </TabItem>
             </TabWrapper>
         );
     }
@@ -87,4 +58,4 @@ class TabBar extends Component{
 function mapStatetoProps(state){
     return{resumeVisible: state.displayComps.resumeVisible};
 }
-export default connect(mapStatetoProps, {showResume})(TabBar);
+export default connect(mapStatetoProps, {showResumeTab})(TabBar);
