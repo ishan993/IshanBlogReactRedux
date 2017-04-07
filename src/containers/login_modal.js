@@ -9,7 +9,7 @@ import {ModalContainer, SubmitButton} from '../components/reuseable_components';
 //Style the modal properly, you dumbfuck
 
 const HeaderDiv = styled.div`
-    background: papayawhip;
+    background: white;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -77,7 +77,7 @@ const TabText = styled.h3`
 
 const FullWrapper = styled.div`
     width: 100%;
-    background: papayawhip;
+    background: white;
     text-align: center;
     height: 80%;
 `;

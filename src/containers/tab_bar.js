@@ -37,25 +37,18 @@ const TabItem = styled(FlexItem)`
     }
 `;
 
-class TabBar extends Component{
-    firstTabOn = true;
-    render(){
+var firstTabOn = true;
+export default function TabBar(props){
         return(
             <TabWrapper>
-                <TabItem active={this.firstTabOn} onClick={()=>{this.props.tabProps.showFirstTab();
-                     this.firstTabOn=true;}} isModalVisible={this.props.isModalVisible}>
-                    <h3>{this.props.tabProps.firstTabTitle}</h3>
+                <TabItem active={firstTabOn} onClick={()=>{props.tabProps.showFirstTab();
+                     firstTabOn=true;}} isModalVisible={props.isModalVisible}>
+                    <h3>{props.tabProps.firstTabTitle}</h3>
                 </TabItem>
-                <TabItem onClick={()=>{this.props.tabProps.showSecondTab() 
-                    this.firstTabOn=false;}} active={!this.firstTabOn} isModalVisible={this.props.isModalVisible}>
-                    <h3>{this.props.tabProps.secondTabTitle}</h3>
+                <TabItem onClick={()=>{props.tabProps.showSecondTab() 
+                    firstTabOn=false;}} active={!firstTabOn} isModalVisible={props.isModalVisible}>
+                    <h3>{props.tabProps.secondTabTitle}</h3>
                 </TabItem>
             </TabWrapper>
         );
-    }
 }
-
-function mapStatetoProps(state){
-    return{resumeVisible: state.displayComps.resumeVisible};
-}
-export default connect(mapStatetoProps, {showResumeTab})(TabBar);
