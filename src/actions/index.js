@@ -13,6 +13,7 @@ export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
 export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
 export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
 export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
+export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
 
 export function fetchPosts(){
     var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
@@ -114,7 +115,7 @@ export function showResumeTab(bool){
 }
 
 export function showLoginModal(bool){
-    console.log("Actions--> showLoginModal");
+    console.log("Actions--> showLoginModal:"+bool);
     return({
         type: UPDATE_LOGIN_MODAL_VISIBLE,
         payload: bool
@@ -123,16 +124,33 @@ export function showLoginModal(bool){
 
 //Use these to reuse the TabBar component
 export function showLoginTab(){
-    console.log("Trying to show Login tab");
     return({
         type: UPDATE_LOGIN_TAB_VISIBLE,
-        bool: true
+        payload: true
     });
 }
-export function showSignUpTab(bool){
-    console.log("Trying to show Sign up tab"+bool);
+export function showSignUpTab(){
     return ({
         type: UPDATE_LOGIN_TAB_VISIBLE,
         payload: false
     })
+}
+
+//Log in user
+//If 200OK, set the userLoggedIn displayProp to true
+export function logInUser(){
+    console.log("Actions--> logInUser");
+    var req = axios.get(`http://reduxblog.herokuapp.com/api/posts?key=ishan`);
+
+    return function(dispatch){
+        req.then((response)=>{
+            console.log("REQ_COMPLETE");
+            dispatch({type: UPDATE_USER_LOGGED_IN, payload: true});
+            showLoginModal(false);
+            localStorage.setItem('userLoggedIn', true);
+        }).catch((error)=>{
+            console.log("LOGIN_ERROR: "+JSON.stringify(error));
+            return false;
+        })
+    }
 }

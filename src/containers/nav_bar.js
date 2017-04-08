@@ -26,10 +26,10 @@ const SearchBarItem = styled(FlexItem)`
     order: 4;
     padding-left: 10px;
 `;
-const LoginButtonItem = styled(FlexItem)`
+const TextButtonRight = styled(FlexItem)`
     font-family: title-font;
     text-align: right;
-    flex-basis: 10%;
+    flex-basis: 15%;
     order: 3;
     font-size: 1rem;
     margin-left: auto;
@@ -108,30 +108,24 @@ const MobileSearchItem = styled(SearchIcon)`
 `;
 
 class NavigationBar extends Component{
+  
 
-    navBarContainer = (
-         <NavBarWrapper onScroll={this.handleScroll}>
-                        <FlexItem>
-                                <IconImage src="/static/logoI.png"/>
-                        </FlexItem>
-                        <TitleItem>
-                           Ishan's Blog
-                        </TitleItem>
-                        <LoginButtonItem onClick={()=> this.props.showLoginModal(true)}> 
-                             Login
-                        </LoginButtonItem>
-                        <SearchBarItem>
-                        <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
-                            <form>
-                                <InputSearch placeholder="Search" />
-                            </form>
-                        </SearchBarItem>
-                </NavBarWrapper>
+    renderLoginButton(){
+        console.log("localStorage"+localStorage.getItem("userLoggedIn"));
+        if (!this.props.displayComps.userLoggedIn &&
+                (!localStorage.getItem("userLoggedIn") || localStorage.getItem("userLoggedIn")==undefined)){
+            return( 
+                <TextButtonRight onClick={()=> this.props.showLoginModal(true)}> 
+                    Login
+                </TextButtonRight>);
+        }else{
+            return(
+                <TextButtonRight>
+                    Add a new post
+                </TextButtonRight>
                 );
-
-
-    componentDidMount(){
-        console.log("Component did mount!"+this.props.helloWorld.title);
+        }
+        
     }
 
     handleChange(event){
@@ -155,7 +149,21 @@ class NavigationBar extends Component{
                 );
         }else{
             return(
-                this.navBarContainer
+               <NavBarWrapper onScroll={this.handleScroll}>
+                        <FlexItem>
+                                <IconImage src="/static/logoI.png"/>
+                        </FlexItem>
+                        <TitleItem>
+                           Ishan's Blog
+                        </TitleItem>
+                        {this.renderLoginButton()}
+                        <SearchBarItem>
+                        <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
+                            <form>
+                                <InputSearch placeholder="Search" />
+                            </form>
+                        </SearchBarItem>
+            </NavBarWrapper>
             );
         }
     }
@@ -164,6 +172,7 @@ class NavigationBar extends Component{
     render(){ 
         return(
             <div>
+                {console.log("Inside render method, navBar")}
                 {this.displaySearchBar()}   
             </div>
         );

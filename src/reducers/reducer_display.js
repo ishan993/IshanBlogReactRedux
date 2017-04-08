@@ -1,10 +1,14 @@
-import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH, UPDATE_RESUME_VISIBLE, UPDATE_LOGIN_MODAL_VISIBLE} from '../actions/index';
+import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH,
+     UPDATE_RESUME_VISIBLE,UPDATE_LOGIN_MODAL_VISIBLE,
+      UPDATE_LOGIN_TAB_VISIBLE, UPDATE_USER_LOGGED_IN} from '../actions/index';
 
 
 const DEFAULT_STATE = {isMobile: null,
      searchEnabled: false, 
      resumeVisible: false,
-     loginModalVisible: false
+     loginModalVisible: false,
+     loginTabVisible: true,
+     userLoggedIn: false
     }
 
 export default function(state = DEFAULT_STATE, action){
@@ -22,8 +26,13 @@ export default function(state = DEFAULT_STATE, action){
             return {...state, resumeVisible: action.payload};
         break;
         case UPDATE_LOGIN_MODAL_VISIBLE:
+            console.log("REDUCER-->"+UPDATE_LOGIN_MODAL_VISIBLE);
             return {...state, loginModalVisible: action.payload};
             break;
+        case UPDATE_LOGIN_TAB_VISIBLE:
+            return {...state, loginTabVisible: action.payload};
+        case UPDATE_USER_LOGGED_IN:
+            return {...state, userLoggedIn: action.payload};
         default: 
             return state;
         break;

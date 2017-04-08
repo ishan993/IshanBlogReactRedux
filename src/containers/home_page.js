@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import NavigationBar from './nav_bar';
 import HeadlinePost from './headline_post';
 import TabBar from './tab_bar';
 import {MidlinePosts} from './midline_posts_temp';
@@ -106,11 +107,15 @@ class HomePage extends Component{
     }
 
     render(){
+        {console.log("re-rendering")}
         return(
             <div>
-                <TabBar tabProps={this.homePageTabProps} isModalVisible={false}/>
-                {this.showLoginModal()}
-                {this.renderHomePage()}
+                <NavigationBar/>
+                <div>
+                    <TabBar tabProps={this.homePageTabProps} isModalVisible={false}/>
+                    {this.showLoginModal()}
+                    {this.renderHomePage()}
+                </div>
             </div>
         );
     }

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {showLoginModal, showLoginTab, showSignUpTab} from '../actions/index';
+import {showLoginModal, showLoginTab, showSignUpTab, logInUser} from '../actions/index';
 import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
 import {ModalContainer, SubmitButton} from '../components/reuseable_components';
+
 
 //Style the modal properly, you dumbfuck
 
@@ -18,7 +19,6 @@ const HeaderDiv = styled.div`
     text-align: center;
     border-bottom: .3pt solid lightgrey;
 `;
-
 const NoMarginH2 = styled.h2`
     text-align: center;
     flex-basis: 80%;
@@ -60,26 +60,27 @@ const TabText = styled.h3`
     cursor: pointer;
     user-select: none;
 `;
- 
  const NewInputField = styled(InputFieldLarge)`
     margin: auto;
     width: 80%;
-    font-size: 5vw;
-    margin-top: 20px;
-    line-height: 8vw;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-top: 15px;
+    line-height: 2rem;
+    margin-bottom: 15px;
     @media only screen and (min-width: 768px) {
-        font-size: 2vw;
-        line-height: 3vw;
+        font-size: 1.3rem;
+        line-height: 1.5rem;
     }
-
  `;
-
+const SmallInputField = styled(NewInputField)`
+    width: 38%;
+    margin-right: 5px;
+`;
 const FullWrapper = styled.div`
     width: 100%;
     background: white;
     text-align: center;
-    height: 80%;
+    height: 80%;    
 `;
 
 const LoginSubmitButton = styled(SubmitButton)`
@@ -96,15 +97,38 @@ class LoginModal extends Component{
     tabProps = { 
         firstTabTitle: "Login",
         secondTabTitle: "Sign up",
-        showFirstTab: showLoginTab,
-        showSecondTab: showSignUpTab
+        showFirstTab: this.props.showLoginTab,
+        showSecondTab: this.props.showSignUpTab
     }
 
-    componentDidMount(){
-        console.log("Login Modal props"+JSON.stringify(this.props));
+    componentWillUnmount(){
+        this.props.showLoginTab();
     }
-    logThis(){
-        console.log("Yellow world!");
+    renderModalBody(){
+        if(this.props.loginTabVisible)
+            return(
+                <FullWrapper>
+                        <NewInputField placeholder="Email"/>
+                        <NewInputField type="password" placeholder="Password"/>
+                        <LoginSubmitButton onClick={()=>{this.props.logInUser()}}> 
+                           <h3>Submit!</h3>
+                        </LoginSubmitButton>
+                </FullWrapper>
+            );
+        else
+            return( 
+                <FullWrapper>
+                        <SmallInputField placeholder="First Name" />
+                        <SmallInputField placeholder="Last Name"/>
+                        <NewInputField placeholder="Email"/>
+                        <NewInputField type="password" placeholder="Password"/>
+                        <NewInputField type="password" placeholder="confirm password"/>
+
+                        <LoginSubmitButton> 
+                           <h4>Submit!</h4>
+                        </LoginSubmitButton>
+                </FullWrapper>
+                );
     }
 
     render(){
@@ -115,18 +139,15 @@ class LoginModal extends Component{
                     <NoMarginH2>Ishan's Blog</NoMarginH2>
                     <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
-                    {this.props.showSignUpTab.bind(this)}
-                <TabBar tabProps={this.tabProps} isModalVisible={true}/>
-                <FullWrapper>
-                        <NewInputField placeholder="Username"/>
-                        <NewInputField type="password" placeholder="Password"/>
-                        <LoginSubmitButton onClick={()=>{console.log("Trying to log in")}}> 
-                           <h3>Submit!</h3>
-                        </LoginSubmitButton>
-                </FullWrapper>
+                <TabBar isModalVisible={true} tabProps={this.tabProps} />
+                  {this.renderModalBody()}
             </ModalContainer>
         );
     }
 }
 
-export default connect(null, {showLoginModal, showLoginTab, showSignUpTab})(LoginModal);
+function mapStateToProps(state){
+    return ({loginTabVisible: state.displayComps.loginTabVisible});
+}
+
+export default connect(mapStateToProps, {showLoginModal, showLoginTab, showSignUpTab, logInUser})(LoginModal);
