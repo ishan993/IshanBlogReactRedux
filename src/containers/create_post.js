@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
-import { Field, reduxForm } from 'redux-form';
+import {uploadImage} from '../actions/index';
+import {Field, reduxForm, formValueSelector} from 'redux-form';
 import Textarea from 'react-textarea-autosize';
 import {SubmitButton} from '../components/reuseable_components'
 
@@ -57,7 +59,11 @@ export const InputFieldLarge = styled.input`
 `;
 
 class CreatePost extends Component{
-
+   handleFile(event){
+        console.log("handling file: "+this.props.postContent);
+        this.props.postContent = "FucketyFuckFuck";
+        this.props.uploadImage(event.target.files[0]);
+    }
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props;
         const {title, categories, content} = this.props.fields;
@@ -71,14 +77,15 @@ class CreatePost extends Component{
                 </PostImageDiv>
                 <form onSubmit={handleSubmit(()=>console.log("Tried to handle this form submission!"))}>
                     <SeparatorDiv>
-                        <InputFieldLarge type="text" placeholder="Post Title" name="postTitle" {...title} />
+                        <Field component="input" placeholder="Post Title" name="postTitle" {...title} />
                      </SeparatorDiv>
                      <SeparatorDiv>
-                        <InputFieldLarge type="text" placeholder="Post Tags" {...categories} />
+                        <Field component="textarea" placeholder="Post Tags" name="postTags" {...categories} />
                     </SeparatorDiv>
                     <SeparatorDiv>
-                        <TextAreaField placeholder="Enter post content here!" minRows={3} {...content}/>
+                        <Field component="input" placeholder="Enter post content here!" name="postContent"  minRows={3} {...content}/>
                     </SeparatorDiv>
+                    <input type="file" onChange={(event)=> this.handleFile(event)} name="image1"/>
                     <SeparatorDiv>
                         <SubmitButton value="Submit" type="submit">
                             Submit
@@ -92,7 +99,13 @@ class CreatePost extends Component{
 }
 
 
-export default CreatePost = reduxForm({
+CreatePost = reduxForm({
   form: 'newPost',
-  fields: ['title', 'categories', 'content'],
-}, null, null)(CreatePost);
+fields: ['title', 'categories', 'content']}, null, {uploadImage})(CreatePost);
+const selector = formValueSelector('newPost');
+
+export default connect( (state) => {
+    const postContent = selector(state, 'postContent')
+    return {
+        postContent
+    }}, {uploadImage})(CreatePost);

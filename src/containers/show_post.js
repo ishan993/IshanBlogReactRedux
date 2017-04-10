@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-
+import CreatePost from './create_post';
 
 
 export default class ShowPost extends Component{
@@ -8,7 +8,7 @@ export default class ShowPost extends Component{
     render(){
         return(
             <div>
-                What the fucking fuck?
+                <CreatePost />
             </div>
         );
     }

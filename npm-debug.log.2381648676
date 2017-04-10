@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'list' ]
+2 info using npm@3.10.10
+3 info using node@v6.9.4
+4 error extraneous: es6-error@4.0.2 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/es6-error
+4 error extraneous: prop-types@15.5.6 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/prop-types
+4 error extraneous: react-dropzone@3.12.3 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/react-dropzone
+4 error extraneous: react-textarea-autosize@4.0.5 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/react-textarea-autosize
+4 error extraneous: resolve-pathname@2.0.2 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/resolve-pathname
+4 error extraneous: superagent@3.5.2 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/superagent
+4 error extraneous: value-equal@0.2.0 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/value-equal
+4 error extraneous: path-to-regexp@1.7.0 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/react-router/node_modules/path-to-regexp
+4 error extraneous: lodash@4.17.4 /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux/node_modules/redux-form/node_modules/lodash
+5 verbose exit [ 1, true ]
+6 verbose stack Error: write EPIPE
+6 verbose stack     at exports._errnoException (util.js:1022:11)
+6 verbose stack     at WriteWrap.afterWrite (net.js:801:14)
+7 verbose cwd /Users/ishanvadwala/Code/ReactRedux/IshanBlogFinal/IshanBlogReactRedux
+8 error Darwin 16.0.0
+9 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "list"
+10 error node v6.9.4
+11 error npm  v3.10.10
+12 error code EPIPE
+13 error errno EPIPE
+14 error syscall write
+15 error write EPIPE
+16 error If you need help, you may report this error at:
+16 error     <https://github.com/npm/npm/issues>
+17 verbose exit [ 1, true ]

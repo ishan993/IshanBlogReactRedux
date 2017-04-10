@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import request from 'superagent';
+import {store} from '../index';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api/';
@@ -153,4 +155,25 @@ export function logInUser(){
             return false;
         })
     }
+}
+
+//////////////////////////
+//Upload image to backend
+/////////////////////////
+
+export function uploadImage(image){ 
+    console.log("ACTION--> uploadImage"+image.type);
+    
+    let upload = request.post("https://api.cloudinary.com/v1_1/ishanvadwala/upload")
+                        .field('upload_preset', "qjndfgea")
+                        .field('file', image);
+    return function(dispatch){
+        upload.then((response)=>{
+            console.log("Gujarat: "+JSON.stringify(store.getState().postContent));
+            console.log("uploadImage response: "+response.body.secure_url);
+        }).catch((error)=>{
+            console.log("ERROR_ACTION_UPLOAD_IMAGE"+JSON.stringify(error));
+        });
+    }
+    
 }
