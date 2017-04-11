@@ -171,6 +171,7 @@ export function uploadImage(image){
         upload.then((response)=>{
             console.log("Gujarat: "+JSON.stringify(store.getState().postContent));
             console.log("uploadImage response: "+response.body.secure_url);
+            
         }).catch((error)=>{
             console.log("ERROR_ACTION_UPLOAD_IMAGE"+JSON.stringify(error));
         });

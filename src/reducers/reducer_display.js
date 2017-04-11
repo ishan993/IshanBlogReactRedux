@@ -26,7 +26,7 @@ export default function(state = DEFAULT_STATE, action){
             return {...state, resumeVisible: action.payload};
         break;
         case UPDATE_LOGIN_MODAL_VISIBLE:
-            console.log("REDUCER-->"+UPDATE_LOGIN_MODAL_VISIBLE);
+            console.log("REDUCER-->"+JSON.stringify(state));
             return {...state, loginModalVisible: action.payload};
             break;
         case UPDATE_LOGIN_TAB_VISIBLE:

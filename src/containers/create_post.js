@@ -5,6 +5,7 @@ import {uploadImage} from '../actions/index';
 import {Field, reduxForm, formValueSelector} from 'redux-form';
 import Textarea from 'react-textarea-autosize';
 import {SubmitButton} from '../components/reuseable_components'
+import NavBar from './nav_bar';
 
 const CreatePostWrapper = styled.div`
     padding: 40px;
@@ -59,41 +60,54 @@ export const InputFieldLarge = styled.input`
 `;
 
 class CreatePost extends Component{
-   handleFile(event){
-        console.log("handling file: "+this.props.postContent);
+
+    componentDidMount(){
+        console.log("Does it work? "+this.props.markDownInQueue);
+    }
+    handleFile(event){
         this.props.postContent = "FucketyFuckFuck";
         this.props.uploadImage(event.target.files[0]);
+    }
+
+    
+
+    handleChange(event){
+        
     }
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props;
         const {title, categories, content} = this.props.fields;
-
+        const appendMarkDown = (value) => {return this.props.markDownInQueue ? value + "helloWorld!" : value;}
         return(
-            <CreatePostWrapper>
-                <PostImageDiv>
-                    <CenteredTextDiv>
-                        Select an image for this post!
-                    </CenteredTextDiv>
-                </PostImageDiv>
-                <form onSubmit={handleSubmit(()=>console.log("Tried to handle this form submission!"))}>
-                    <SeparatorDiv>
-                        <Field component="input" placeholder="Post Title" name="postTitle" {...title} />
-                     </SeparatorDiv>
-                     <SeparatorDiv>
-                        <Field component="textarea" placeholder="Post Tags" name="postTags" {...categories} />
-                    </SeparatorDiv>
-                    <SeparatorDiv>
-                        <Field component="input" placeholder="Enter post content here!" name="postContent"  minRows={3} {...content}/>
-                    </SeparatorDiv>
-                    <input type="file" onChange={(event)=> this.handleFile(event)} name="image1"/>
-                    <SeparatorDiv>
-                        <SubmitButton value="Submit" type="submit">
-                            Submit
-                        </SubmitButton>
-                    </SeparatorDiv>
-                </form>
-            </CreatePostWrapper>
-
+            <div>
+                <NavBar />
+                <CreatePostWrapper>
+                    <PostImageDiv>
+                        <CenteredTextDiv>
+                            Select an image for this post!
+                        </CenteredTextDiv>
+                    </PostImageDiv>
+                    <form onSubmit={handleSubmit(()=>console.log("Here's your content: "+JSON.stringify(this.props.postContent)))}>
+                        <SeparatorDiv>
+                            <Field component="input" placeholder="Post Title" name="postTitle" {...title} />
+                        </SeparatorDiv>
+                        <SeparatorDiv>
+                            <Field component="textarea" placeholder="Post Tags" name="postTags" {...categories} />
+                        </SeparatorDiv>
+                        <SeparatorDiv>
+                            <Field component="input" placeholder="Enter post content here!" 
+                            onChange={(event)=>{this.handleChange(event)}} name="postContent"  
+                            minRows={3} {...content}    normalize={appendMarkDown}/>
+                        </SeparatorDiv>
+                        <input type="file" onChange={(event)=> this.handleFile(event)} name="image1"/>
+                        <SeparatorDiv>
+                            <SubmitButton value="Submit" type="submit">
+                                Submit
+                            </SubmitButton>
+                        </SeparatorDiv>
+                    </form>
+                </CreatePostWrapper>
+            </div>
         );
     }
 }
@@ -107,5 +121,5 @@ const selector = formValueSelector('newPost');
 export default connect( (state) => {
     const postContent = selector(state, 'postContent')
     return {
-        postContent
+        postContent, markDownInQueue: false
     }}, {uploadImage})(CreatePost);

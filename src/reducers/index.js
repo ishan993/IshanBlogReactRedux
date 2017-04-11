@@ -12,3 +12,11 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+
+//The whole form re-renders everytime you add an image. So 
+//Check if this.props.AddedURL != null
+//Change the URL, convert it to markdown,
+//append the value of this.props.AddedURL to the content body.
+//fire a function to just remove the AddedURL
+
+//for this, I need what?
