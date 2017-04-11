@@ -2,6 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import request from 'superagent';
 import {store} from '../index';
+import {change} from 'redux-form';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api/';
@@ -16,6 +17,8 @@ export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
 export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
 export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
 export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
+export const MARKDOWN_ADDED = 'MARKDOWN_ADDED';
+export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
 
 export function fetchPosts(){
     var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
@@ -157,24 +160,34 @@ export function logInUser(){
     }
 }
 
-//////////////////////////
+////////////////////////////////////////////////////////////
 //Upload image to backend
-/////////////////////////
-
-export function uploadImage(image){ 
-    console.log("ACTION--> uploadImage"+image.type);
+//Dispatch action to indicate markdown text to be consumed
+////////////////////////////////////////////////////////////
+export function uploadImage(props){ 
     
     let upload = request.post("https://api.cloudinary.com/v1_1/ishanvadwala/upload")
                         .field('upload_preset', "qjndfgea")
-                        .field('file', image);
+                        .field('file', props.file);
+
     return function(dispatch){
         upload.then((response)=>{
-            console.log("Gujarat: "+JSON.stringify(store.getState().postContent));
-            console.log("uploadImage response: "+response.body.secure_url);
-            
+
+            dispatch({type: MARKDOWN_ADDED, payload: response.body.secure_url});
+            if(props.isPostTitleImage)
+                dispatch(change('newPost', "postTitleImageURL", response.body.secure_url));
+            else
+                dispatch(change('newPost', "postContent", props.content+" \n "+response.body.secure_url));
         }).catch((error)=>{
             console.log("ERROR_ACTION_UPLOAD_IMAGE"+JSON.stringify(error));
         });
     }
     
+}
+
+//////////////////////////////////////////////////////////////
+//Dispatch Action to alert that the markdown has been consumed
+//////////////////////////////////////////////////////////////
+export function markDownConsumed(){
+    return({type: MARKDOWN_CONSUMED});
 }

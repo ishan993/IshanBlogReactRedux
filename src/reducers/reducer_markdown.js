@@ -1,9 +1,9 @@
 import {MARKDOWN_ADDED, MARKDOWN_CONSUMED} from '../actions/index';
 
-const state = {markDownInQueue: false, markDownURL: ''}
+const DEFAULT_STATE = {markDownInQueue: false, markDownURL: ''};
 
 
-export default function(state, action){
+export default function(state = DEFAULT_STATE, action){
     switch(action.type){
         case MARKDOWN_ADDED: 
             console.log("MARKDOWN_REDUCER_ADDED-->"+action.payload);
