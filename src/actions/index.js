@@ -177,7 +177,8 @@ export function uploadImage(props){
             if(props.isPostTitleImage)
                 dispatch(change('newPost', "postTitleImageURL", response.body.secure_url));
             else
-                dispatch(change('newPost', "postContent", props.content+" \n "+response.body.secure_url));
+                dispatch(change('newPost', "postContent", props.content
+                +" "+"![alt text]("+response.body.secure_url+")"));
         }).catch((error)=>{
             console.log("ERROR_ACTION_UPLOAD_IMAGE"+JSON.stringify(error));
         });
@@ -191,3 +192,7 @@ export function uploadImage(props){
 export function markDownConsumed(){
     return({type: MARKDOWN_CONSUMED});
 }
+
+//////////////////////////////////////////////////////////////
+//Submit newPost form
+//////////////////////////////////////////////////////////////

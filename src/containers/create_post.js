@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {uploadImage, markDownConsumed} from '../actions/index';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
 import Textarea from 'react-textarea-autosize';
-import {SubmitButton} from '../components/reuseable_components'
+import {SubmitButton, ReusableCenteredImage} from '../components/reuseable_components'
 import NavBar from './nav_bar';
 
 const CreatePostWrapper = styled.div`
@@ -15,12 +15,13 @@ const CreatePostWrapper = styled.div`
 const Separator = styled.div`
     margin-top: 20px;
     margin-bottom: 20px;
+    display: flex;
     &:last-of-type{
         display: flex;
     }
 `;
 const PostImageDiv = styled.label`
-    vertcal-align: middle;
+    vertical-align: middle;
     text-align: center;
     cursor: pointer;
     width: 50%;
@@ -44,7 +45,8 @@ const TextAreaField = styled(Field)`
     width: 100%;
     line-height: 2rem;
     rows: 5;
-    font-size: 1.5rem;
+    font-weight: 300;
+    font-size: 1.1rem;
     color: grey;
     border: none;
     outline:none;
@@ -53,6 +55,7 @@ const TextAreaField = styled(Field)`
 `;
 
 export const InputFieldLarge = styled(Field)`
+    font-weight: 300;
     margin: auto;
     width: 100%;
     line-height: 2rem;
@@ -62,6 +65,27 @@ export const InputFieldLarge = styled(Field)`
     border: none;
     outline: none;
     border-bottom: .7pt solid lightseagreen;
+`;
+
+const AddImageButton = styled.label`
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: lightseagreen;
+    background-image: url('../static/plus.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    position:fixed;
+    bottom: 35px;
+    right: 35px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+`;
+const LabelButton = styled.label`
+    border: 1px solid lightseagreen;
+    padding: 5px;
+    margin: auto;
+    align-self: center;
 `;
 
 class CreatePost extends Component{
@@ -79,21 +103,25 @@ class CreatePost extends Component{
             <div>
                 <NavBar />
                 <CreatePostWrapper>
-                    <PostImageDiv>
-                        Upload a cover image for this post!
-                        <PostImageFileButton type="file" name="postTitleImageURL" onChange={(event)=>this.handleFile(event, true)} {...postTitleImageURL}/>
-                    </PostImageDiv>
+                    <Separator>
+                        <ReusableCenteredImage src={this.props.postTitleImageURL} />
+                    </Separator>
+                    <Separator>
+                        <LabelButton>
+                                <PostImageFileButton type="file" name="postTitleImageURL" onChange={(event)=>this.handleFile(event, true)} {...postTitleImageURL}/>
+                                Upload an image for this post
+                        </LabelButton>
+                    </Separator>
                     <form onSubmit={handleSubmit((values)=> console.log(JSON.stringify(values)))}>
                         <Separator>
                             <InputFieldLarge component="input" placeholder="Post Title" name="postTitle" {...title} />
                         </Separator>
                         <Separator>
-                            <InputFieldLarge component="input" placeholder="Post Tags" name="postTags" {...categories} />
-                        </Separator>
-                        <Separator>
                             <TextAreaField component="textarea" placeholder="Enter post content here!" name="postContent" {...content}/>
                         </Separator>
-                        <input type="file" onChange={(event)=> this.handleFile(event, false)} name="image1"/>
+                        <Separator>
+                            <InputFieldLarge component="input" placeholder="Post Tags" name="postTags" {...categories} />
+                        </Separator>
                         <Separator>
                             <SubmitButton value="Submit" type="submit">
                                 Submit
@@ -101,6 +129,9 @@ class CreatePost extends Component{
                         </Separator>
                     </form>
                 </CreatePostWrapper>
+                <AddImageButton>
+                    <PostImageFileButton type="file" onChange={(event)=> this.handleFile(event, false)} name="image1"/>
+                </AddImageButton>
             </div>
         );
     }
@@ -112,7 +143,7 @@ CreatePost = reduxForm({
 fields: ['postTitleImageURL','title', 'categories', 'content']}, null, {uploadImage})(CreatePost);
 const selector = formValueSelector('newPost');
 function mapStateToProps(state){
-    return({markDownProps: state.markDownProps, postContent: selector(state, 'postContent')})
+    return({markDownProps: state.markDownProps, postTitleImageURL: selector(state, 'postTitleImageURL'), postContent: selector(state, 'postContent')})
 }
 
 export default connect(mapStateToProps, {uploadImage, markDownConsumed})(CreatePost);

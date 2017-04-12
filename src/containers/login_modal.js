@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {showLoginModal, showLoginTab, showSignUpTab, logInUser} from '../actions/index';
 import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
-import {ModalContainer, SubmitButton} from '../components/reuseable_components';
+import {ModalContainer, SubmitButton, ReusableInputField} from '../components/reuseable_components';
 
 
 //Style the modal properly, you dumbfuck
@@ -20,14 +20,17 @@ const HeaderDiv = styled.div`
     border-bottom: .3pt solid lightgrey;
 `;
 const NoMarginH2 = styled.h2`
+    font-weight: 200;
+    color:grey;
+    font-family: title-font;
     text-align: center;
-    flex-basis: 80%;
+    flex-basis: 60%;
     margin: 0;
     padding-top: 10px;
 `
 const ImgButton = styled.img`
     order: 3;
-    flex-basis: 15%;
+    flex-basis: 20%;
     height: auto;
     width: auto;
     max-width:30px;
@@ -40,6 +43,7 @@ const LogoImg = styled(ImgButton)`
     order: -1 !important;
     max-width: 50px;
     max-height: 50px;
+    flex-basis: 20%
 
 `;
 
@@ -60,29 +64,22 @@ const TabText = styled.h3`
     cursor: pointer;
     user-select: none;
 `;
- const NewInputField = styled(InputFieldLarge)`
-    margin: auto;
-    width: 80%;
-    font-size: 1.5rem;
-    margin-top: 15px;
-    line-height: 2rem;
-    margin-bottom: 15px;
-    @media only screen and (min-width: 768px) {
-        font-size: 1.3rem;
-        line-height: 1.5rem;
-    }
- `;
-const SmallInputField = styled(NewInputField)`
+const SmallInputField = styled(ReusableInputField)`
     width: 38%;
     margin-right: 5px;
 `;
 const FullWrapper = styled.div`
+    box-sizing: border-box;
     width: 100%;
     background: white;
     text-align: center;
-    height: 80%;    
+    padding: 10px;
 `;
-
+const ContentWrapper = styled.div`
+    width: 80%;
+    margin: auto;
+    padding:20px;
+`;
 const LoginSubmitButton = styled(SubmitButton)`
     unselectable: on;
     padding: 10px;
@@ -108,25 +105,24 @@ class LoginModal extends Component{
         if(this.props.loginTabVisible)
             return(
                 <FullWrapper>
-                        <NewInputField placeholder="Email"/>
-                        <NewInputField type="password" placeholder="Password"/>
-                        <LoginSubmitButton onClick={()=>{this.props.logInUser()}}> 
-                           <h3>Submit!</h3>
-                        </LoginSubmitButton>
+                    <ReusableInputField placeholder="Email"/>
+                    <ReusableInputField type="password" placeholder="Password"/>
+                    <LoginSubmitButton onClick={()=>{this.props.logInUser()}}> 
+                        <h3>Submit!</h3>
+                    </LoginSubmitButton>
                 </FullWrapper>
             );
         else
             return( 
                 <FullWrapper>
-                        <SmallInputField placeholder="First Name" />
-                        <SmallInputField placeholder="Last Name"/>
-                        <NewInputField placeholder="Email"/>
-                        <NewInputField type="password" placeholder="Password"/>
-                        <NewInputField type="password" placeholder="confirm password"/>
-
-                        <LoginSubmitButton> 
-                           <h4>Submit!</h4>
-                        </LoginSubmitButton>
+                    <SmallInputField placeholder="First Name" />
+                    <SmallInputField placeholder="Last Name"/>
+                    <ReusableInputField placeholder="Email"/>
+                    <ReusableInputField type="password" placeholder="Password"/>
+                    <ReusableInputField type="password" placeholder="confirm password"/>
+                    <LoginSubmitButton> 
+                        <h4>Submit!</h4>
+                    </LoginSubmitButton>
                 </FullWrapper>
                 );
     }

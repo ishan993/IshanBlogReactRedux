@@ -5,41 +5,67 @@ import {showSearch, updateSearchTerm, showLoginModal} from '../actions/index';
 import {FullWidthWrapper, IconImage, FlexItem} from '../components/reuseable_components';
 import {connect} from 'react-redux';
 
+
 const NavBarWrapper = styled(FullWidthWrapper)`
     position: fixed;
     top: 0;
     z-index: 900;
     border-bottom: .3pt solid lightgray;
+    align-items: center;
+    justify-content: space-between;
 `; 
+const TitleAndLogoContainer = styled.div`
+    flex-basis: 40%;
+    font-family: title-font;
+    order: -1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+`;
+
+const SearchAndLoginContainer = styled.div`
+    padding: 2px;
+    flex-basis: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
 
 const TitleItem = styled(FlexItem)`
-    font-size: 1.5rem;
     padding-left: 5px;
     font-family: title-font;
     text-align: left;
-    flex-basis: 40%;
-    order: 2;
-    flex-shrink: 2;
 `;
 const SearchBarItem = styled(FlexItem)`
-    flex-basic: 40%;
+    flex-basis: 40%;
     order: 4;
     padding-left: 10px;
-`;
-const TextButtonRight = styled(FlexItem)`
-    font-family: title-font;
-    text-align: right;
-    flex-basis: 15%;
-    order: 3;
-    font-size: 1rem;
-    margin-left: auto;
-    padding-left: 10px;
-`;
+    order: 2;
 
+`;
+const TextButtonRight = styled(Link)`
+    color: grey;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    font-family: title-font;
+    text-align: center;
+    flex-basis: 40%;
+    order: -1;
+    font-size: 1rem;
+    &:hover:{
+        color: lightseagreen;
+    }
+`;
+const ProfilePicIcon = styled(IconImage)`
+    margin-right: 5px;
+    flex-basis: 20%;
+    order: 3;
+    border-radius: 50%;
+`;
 const InputSearch = styled.input`
     display: none;
     width: 100%;
-
     @media only screen and (min-width: 768px) {
         display: inline;
         border: none;
@@ -51,14 +77,12 @@ const InputSearch = styled.input`
         line-height: 1.5rem;
         padding: 0 0 1px 50px;
         width: 40%;
-        margin-right: 30px;
-        margin-top: 10px;
+        margin: 0;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out;
         font-size: .8rem;
-
         &:focus{
-            width: 70%;
+            width: 65%;
         }
     }   
 `;
@@ -120,8 +144,8 @@ class NavigationBar extends Component{
                 </TextButtonRight>);
         }else{
             return(
-                <TextButtonRight>
-                    Add a new post
+                <TextButtonRight to={'/post/new'}>
+                    New Post
                 </TextButtonRight>
                 );
         }
@@ -149,13 +173,14 @@ class NavigationBar extends Component{
                 );
         }else{
             return(
-               <NavBarWrapper onScroll={this.handleScroll}>
-                        <FlexItem>
-                                <IconImage src="/static/logoI.png"/>
-                        </FlexItem>
+                <NavBarWrapper onScroll={this.handleScroll}>
+                    <TitleAndLogoContainer>
+                        <IconImage src="/static/logoI.png"/>
                         <TitleItem>
-                           Ishan's Blog
+                            Ishan's Blog
                         </TitleItem>
+                    </TitleAndLogoContainer>
+                    <SearchAndLoginContainer>
                         {this.renderLoginButton()}
                         <SearchBarItem>
                         <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
@@ -163,7 +188,9 @@ class NavigationBar extends Component{
                                 <InputSearch placeholder="Search" />
                             </form>
                         </SearchBarItem>
-            </NavBarWrapper>
+                        <ProfilePicIcon src="/static/profilepic.png" />
+                    </SearchAndLoginContainer>
+                </NavBarWrapper>
             );
         }
     }

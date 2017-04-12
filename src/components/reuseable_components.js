@@ -32,13 +32,13 @@ export const IconImage = styled.img`
     @media only screen and (min-width: 768px) {
         display: inline-block;
         padding: 5px;
-        max-height: 50px;
-        max-width: 50px;
+        max-height: 45px;
+        max-width: 45px;
     }
 `;
 
 export const FlexItem = styled.div`
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: grey;
     cursor: pointer;
     &:hover{
@@ -50,7 +50,7 @@ export const FlexItem = styled.div`
 // Used for building blog posts
 ///////////////////////
 
-const ReusableCardImg = styled.img`
+export const ReusableCardImg = styled.img`
     flex: ${props => props.displayProps.imgFlex};
     margin: auto;
     width: 100%;
@@ -108,24 +108,52 @@ export const ModalContainer = styled.div`
     height: 80%;
     z-index: 9999;
     @media only screen and (min-width: 768px) {
-    width: 35%;
-    height: 75%;
+    width: 40%;
+    height: auto;
     }
 `;
 
 ////////////////////////////
 // All Purpose Submit button
 ////////////////////////////
-
 export const SubmitButton = styled.button`
+    font-weight: 200;
     background: white;
-    color: darkgreen;
+    color: grey;
     border: 1px solid lightseagreen;
     font-size: 2vw;
     padding: 3px;
     margin: auto;
-    width: 30%;
+    width: auto;
     &:hover{
         background: rgba(0, 0, 0, .2);
     }
+`;
+
+////////////////////////////
+// All Purpose input field
+////////////////////////////
+export const ReusableInputField = styled.input`
+    width: 80%;
+    margin: auto;
+    border: 0;
+    outline: none;
+    font-weight: 200;
+    border-bottom: 1px solid lightseagreen;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: grey;
+    margin-top:15px;
+    margin-bottom: 15px;
+    padding: 2px;
+`;
+//////////////////////////////
+// All Purpose centered image
+//////////////////////////////
+export const ReusableCenteredImage =  styled.img`   
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    max-width: auto;
+    max-height: 400px; 
 `;
