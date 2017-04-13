@@ -40,10 +40,11 @@ const CenteredTextDiv = styled.div`
 const PostImageFileButton = styled.input`
     display: none;
 `;
-const TextAreaField = styled(Textarea)`
+const TextAreaField = styled(Field)`
+    resize: both;
     margin: auto;
     width: 100%;
-    line-height: 2rem;
+    line-height: 1.5rem;
     rows: 5;
     font-weight: 300;
     font-size: 1.1rem;
@@ -117,11 +118,7 @@ class CreatePost extends Component{
                             <InputFieldLarge component="input" placeholder="Post Title" name="postTitle" {...title} />
                         </Separator>
                         <Separator>
-                            <Field component="textarea" name="postContent" {...content} 
-                            component={props => <TextAreaField currentValue={{val: props.value}}
-                            _onChange={param => props.onChange(param.val)}
-                            onChange={(param)=>console.log(param)}
-                            placeholder="Enter post content here!" rows={6}/>}/>
+                            <TextAreaField rows="9" component="textarea" name="postContent" placeholder={"Enter content here"} {...content}/>
                         </Separator>
                         <Separator>
                             <InputFieldLarge component="input" placeholder="Post Tags" name="postTags" {...categories} />

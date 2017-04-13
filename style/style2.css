@@ -9,6 +9,8 @@ img{
   max-width: auto;
   margin: auto;
   display: block;
+  padding: 10px;
+  background: palevioletred;
 }
 html {
     margin: 0;
