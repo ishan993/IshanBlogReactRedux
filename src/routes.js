@@ -12,8 +12,7 @@ import CreatePost from './containers/create_post';
 export default(
     <Route path="/" component={App} >
         <IndexRoute component={HomePage} />
-        <Route path="post" component={ShowPost} />
         <Route path="post/new" component={CreatePost} />
-
+        <Route path="post/:id" component={ShowPost} />
     </Route>
 );

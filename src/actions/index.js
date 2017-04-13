@@ -5,7 +5,7 @@ import {store} from '../index';
 import {change} from 'redux-form';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
-const ROOT_URL = 'http://reduxblog.herokuapp.com/api/';
+const ROOT_URL = 'http://localhost:3000';
 const API_KEY = '?key=ishan';
 export const CREATE_POST = 'CREATE_POST';
 export const FETCH_POST = 'FETCH_POST';
@@ -20,17 +20,7 @@ export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
 export const MARKDOWN_ADDED = 'MARKDOWN_ADDED';
 export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
 
-export function fetchPosts(){
-    var request = axios.get(`${ROOT_URL}posts${API_KEY}`);
-    return function(dispatch){
-         request.then((response)=>{
-            dispatch({
-                type: FETCH_POSTS, 
-                payload: response.data
-            });
-        });
-    }
-}
+
 
 export function createPost(props){
     var request = axios.post(`${ROOT_URL}posts${API_KEY}`, props);
@@ -178,7 +168,7 @@ export function uploadImage(props){
                 dispatch(change('newPost', "postTitleImageURL", response.body.secure_url));
             else
                 dispatch(change('newPost', "postContent", props.content
-                +" "+"![alt text]("+response.body.secure_url+")"));
+                +"\n"+"![alt text]("+response.body.secure_url+")"));
         }).catch((error)=>{
             console.log("ERROR_ACTION_UPLOAD_IMAGE"+JSON.stringify(error));
         });
@@ -193,6 +183,39 @@ export function markDownConsumed(){
     return({type: MARKDOWN_CONSUMED});
 }
 
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////
+//Actions related to a single post
+///////////////////////////////////////
+
 //Submit newPost form
-//////////////////////////////////////////////////////////////
+export function submitNewPost(values){
+    console.log("Submitting form w/ values: "+values);
+    let submit = request.post("http://localhost:3000/createpost")
+                        .send(values);
+    return function(dispatch){
+        submit.then((response)=>{
+            console.log("I got my response here:"+JSON.stringify(response));
+        }).catch(error=>{
+            console.log("ERROR_ACTIONS_SUBMIT_NEW_POST"+JSON.stringify(error));
+        })
+    }
+        
+}
+
+
+//Fetch new post for ShowPost
+export function fetchPostWithId(id){
+    console.log("ACTION-->FETCHPOST id:"+id);
+    console.log(`${ROOT_URL}/fetchpost/${id}`)
+    let fetch = request.get(`${ROOT_URL}/fetchpost/${id}`);
+
+    return function(dispatch){
+        fetch.then((response)=>{
+            console.log("ACTION-->FETCHPOST-->SUCCESS_RESPONSE"+JSON.parse(response.text).postTitle);
+            dispatch({type: FETCH_POST, payload: JSON.parse(response.text)})
+        }).catch((error)=>{
+            console.log("ACTION-->FETCHPOST-->ERROR_RESPONSE"+JSON.stringify(error));
+        });
+    }
+
+}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {uploadImage, markDownConsumed} from '../actions/index';
+import {uploadImage, markDownConsumed, submitNewPost} from '../actions/index';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
 import Textarea from 'react-textarea-autosize';
 import {SubmitButton, ReusableCenteredImage} from '../components/reuseable_components'
@@ -40,7 +40,7 @@ const CenteredTextDiv = styled.div`
 const PostImageFileButton = styled.input`
     display: none;
 `;
-const TextAreaField = styled(Field)`
+const TextAreaField = styled(Textarea)`
     margin: auto;
     width: 100%;
     line-height: 2rem;
@@ -112,12 +112,16 @@ class CreatePost extends Component{
                                 Upload an image for this post
                         </LabelButton>
                     </Separator>
-                    <form onSubmit={handleSubmit((values)=> console.log(JSON.stringify(values)))}>
+                    <form onSubmit={handleSubmit((values)=> this.props.submitNewPost(values))}>
                         <Separator>
                             <InputFieldLarge component="input" placeholder="Post Title" name="postTitle" {...title} />
                         </Separator>
                         <Separator>
-                            <TextAreaField component="textarea" placeholder="Enter post content here!" name="postContent" {...content}/>
+                            <Field component="textarea" name="postContent" {...content} 
+                            component={props => <TextAreaField currentValue={{val: props.value}}
+                            _onChange={param => props.onChange(param.val)}
+                            onChange={(param)=>console.log(param)}
+                            placeholder="Enter post content here!" rows={6}/>}/>
                         </Separator>
                         <Separator>
                             <InputFieldLarge component="input" placeholder="Post Tags" name="postTags" {...categories} />
@@ -145,5 +149,4 @@ const selector = formValueSelector('newPost');
 function mapStateToProps(state){
     return({markDownProps: state.markDownProps, postTitleImageURL: selector(state, 'postTitleImageURL'), postContent: selector(state, 'postContent')})
 }
-
-export default connect(mapStateToProps, {uploadImage, markDownConsumed})(CreatePost);
+export default connect(mapStateToProps, {uploadImage, markDownConsumed, submitNewPost})(CreatePost);

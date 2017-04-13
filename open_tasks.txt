@@ -1,0 +1,8 @@
+//FrontEnd
+1. Create ShowPost component to actually display posts. 
+2. Use Markdown to render content.
+
+//Backend
+1. Store the new post temporarily.
+2. Send it back when the show post page is done.
+

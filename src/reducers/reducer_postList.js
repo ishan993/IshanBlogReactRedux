@@ -13,6 +13,7 @@ export default function (state = DEFAULT_State, action){
         return {...state, post: action.payload}
         break;
       case FETCH_POST:
+        console.log("REDUCER-->FETCHPOST");
         return {...state, post: action.payload};
       case DELETE_POST:
         return {...state, post: null};

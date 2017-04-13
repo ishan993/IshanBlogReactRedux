@@ -150,10 +150,11 @@ export const ReusableInputField = styled.input`
 //////////////////////////////
 // All Purpose centered image
 //////////////////////////////
-export const ReusableCenteredImage =  styled.img`   
-    margin: auto;
+export const ReusableCenteredImage =  styled.img`
     padding: 10px;
     text-align: center;
     max-width: auto;
-    max-height: 400px; 
+    max-height: 200px; 
+    margin: auto;
+    display:block;
 `;
