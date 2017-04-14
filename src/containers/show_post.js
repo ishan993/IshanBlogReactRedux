@@ -7,9 +7,12 @@ import {fetchPostWithId} from '../actions/index';
 import ReactMarkdown from 'react-markdown';
 
 const FullWidthNoFlexWrapper = styled.div`
-    background: papayawhip;
     width: 100%;
     padding: 20px;
+    display: block;
+`;
+const MarkDown = styled(ReactMarkdown)`
+    font-weight: 50;
 `;
 
 class ShowPost extends Component{
@@ -22,9 +25,9 @@ class ShowPost extends Component{
         if(this.props.post){
             return(
                 <FullWidthNoFlexWrapper>
+                    <h2>{this.props.post.postTitle}</h2>
                     <ReusableCenteredImage src={this.props.post.postTitleImageURL} />
-                    <h1>{this.props.post.postTitle}</h1>
-                    <ReactMarkdown source={this.props.post.postContent} />
+                    <MarkDown source={this.props.post.postContent} />
                 </FullWidthNoFlexWrapper>
         )}else 
             return ("Loading...");

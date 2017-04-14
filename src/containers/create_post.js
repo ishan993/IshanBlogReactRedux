@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {uploadImage, markDownConsumed, submitNewPost} from '../actions/index';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
 import Textarea from 'react-textarea-autosize';
-import {SubmitButton, ReusableCenteredImage} from '../components/reuseable_components'
+import {SubmitButton, ReusableCenteredImage, FullWidthWrapper, FlexItem, ArrowDiv, ReusableInputField} from '../components/reuseable_components'
 import NavBar from './nav_bar';
 
 const CreatePostWrapper = styled.div`
@@ -67,7 +67,7 @@ export const InputFieldLarge = styled(Field)`
     outline: none;
     border-bottom: .7pt solid lightseagreen;
 `;
-
+/*
 const AddImageButton = styled.label`
     height: 50px;
     width: 50px;
@@ -81,18 +81,77 @@ const AddImageButton = styled.label`
     right: 35px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
     cursor: pointer;
-`;
+`;*/
 const LabelButton = styled.label`
     border: 1px solid lightseagreen;
-    padding: 5px;
     margin: auto;
     align-self: center;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    &:hover{
+        cursor: pointer;
+        background: rgba(0, 0, 0, .2);
+
+    }
 `;
-
+const OptionsMenuBar = styled(FullWidthWrapper)`
+    background: papayawhip;
+    width: 100%;
+    height: 60px;
+    display: flex;
+`;
+const ContainerDiv = styled.div`
+    flex: 1;
+    text-align: center;
+    overflow: none;
+`;
+const OptionsItem = styled(FlexItem)`
+    color: grey;
+    position: relative;
+`;
+const DropDownDiv = styled.div`
+    position: absolute;
+    top: 50px;
+    width: 250px;
+    height: auto;
+    text-align: center;
+    display: ${props=> props.showDropdown ? 'block' : 'none'};
+    padding-bottom: 5px;
+`;
+const DropdownInputField = styled(ReusableInputField)`
+    line-height: 1.2rem;
+    font-size: .8rem;
+    margin: 0;
+    padding:5px;
+    margin-bottom:4px;
+`;
+const SmallButton = styled.button`
+    font-height: 1.3rem;
+    font-size: .8rem;
+    color: grey;
+    border: .3pt solid lightseagreen;
+    display: inline-block;
+    background: white;
+    margin:2px;
+    font-weight: 200;
+`;
+const DropdownContent = styled.div`
+    border: .3pt solid lightgrey;
+    padding: 10px;
+    background: white;
+`;
+const InlineLabel = styled.label`
+    display: flex;
+    align-items: center;
+`;
 class CreatePost extends Component{
-
+    constructor(props){
+        super(props);
+        this.state={showDropdown: false}
+    }
     componentDidMount(){
-        console.log("Does it work? "+this.props.markDownInQueue);
+        console.log("Local state: "+this.state.name);        
     }
     handleFile(event, bool){
         this.props.uploadImage({ file: event.target.files[0], isPostTitleImage: bool, content: this.props.postContent});
@@ -109,9 +168,36 @@ class CreatePost extends Component{
                     </Separator>
                     <Separator>
                         <LabelButton>
-                                <PostImageFileButton type="file" name="postTitleImageURL" onChange={(event)=>this.handleFile(event, true)} {...postTitleImageURL}/>
-                                Upload an image for this post
+                            <img src="/static/cloud-upload.png" />
+                            <PostImageFileButton type="file" name="postTitleImageURL" onChange={(event)=>this.handleFile(event, true)} {...postTitleImageURL}/>
+                            Upload an image for this post    
                         </LabelButton>
+                    </Separator>
+                    <Separator>
+                        <OptionsMenuBar>
+                            <OptionsItem>
+                                <InlineLabel onClick={()=>{this.setState({showDropdown: !this.state.showDropdown}); console.log("FOCUS!")}}>
+                                   <img src="/static/link.png" />
+                                   <h4>Add a link</h4>
+                                </InlineLabel>
+                                <DropDownDiv showDropdown={this.state.showDropdown}>
+                                    <ArrowDiv/>
+                                    <DropdownContent>
+                                        <DropdownInputField placeholder="Enter URL" />
+                                        <DropdownInputField placeholder="Enter Text" />
+                                        <SmallButton> Add </SmallButton>
+                                        <SmallButton> Cancel </SmallButton>
+                                    </DropdownContent>
+                                </DropDownDiv>
+                            </OptionsItem>
+                            <OptionsItem>
+                                <InlineLabel>
+                                    <img src="/static/file-image.png"/>
+                                    <PostImageFileButton type="file" onChange={(event)=> this.handleFile(event, false)} name="image1"/>                                        
+                                    Add an image to the post
+                                </InlineLabel>  
+                            </OptionsItem>
+                        </OptionsMenuBar>
                     </Separator>
                     <form onSubmit={handleSubmit((values)=> this.props.submitNewPost(values))}>
                         <Separator>
@@ -130,9 +216,6 @@ class CreatePost extends Component{
                         </Separator>
                     </form>
                 </CreatePostWrapper>
-                <AddImageButton>
-                    <PostImageFileButton type="file" onChange={(event)=> this.handleFile(event, false)} name="image1"/>
-                </AddImageButton>
             </div>
         );
     }

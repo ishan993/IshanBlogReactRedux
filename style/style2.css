@@ -3,14 +3,12 @@
     font-family: title-font;
     src: url(CaviarDreams-webfont.woff);
 }
-
 img{
   max-height: 400px;
   max-width: auto;
   margin: auto;
   display: block;
-  padding: 10px;
-  background: palevioletred;
+  padding: 20px;
 }
 html {
     margin: 0;

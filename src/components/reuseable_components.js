@@ -34,6 +34,7 @@ export const IconImage = styled.img`
         padding: 5px;
         max-height: 45px;
         max-width: 45px;
+        margin: 0;
     }
 `;
 
@@ -44,7 +45,6 @@ export const FlexItem = styled.div`
     &:hover{
         color: lightseagreen;
     }
-
 `;
 /////////////////////////
 // Used for building blog posts
@@ -154,7 +154,17 @@ export const ReusableCenteredImage =  styled.img`
     padding: 10px;
     text-align: center;
     max-width: auto;
-    max-height: 200px; 
+    max-height: 400px; 
     margin: auto;
     display:block;
+`;
+
+export const ArrowDiv = styled.div`
+	width: 0;
+	height: 0;
+	margin-left: 15px;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 9px solid darkgrey;
+    text-align: center;
 `;
