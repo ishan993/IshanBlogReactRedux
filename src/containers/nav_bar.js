@@ -24,7 +24,7 @@ const TitleAndLogoContainer = styled.div`
 `;
 
 const SearchAndLoginContainer = styled.div`
-    padding: 2px;
+    padding-right: 10px;
     flex-basis: 30%;
     display: flex;
     align-items: center;
@@ -58,7 +58,7 @@ const TextButtonRight = styled(Link)`
     }
 `;
 const ProfilePicIcon = styled(IconImage)`
-    margin-right: 5px;
+    margin-right: 15px;
     flex-basis: 20%;
     order: 3;
     border-radius: 50%;

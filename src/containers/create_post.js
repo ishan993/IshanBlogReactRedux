@@ -83,23 +83,26 @@ const AddImageButton = styled.label`
     cursor: pointer;
 `;*/
 const LabelButton = styled.label`
-    border: 1px solid lightseagreen;
     margin: auto;
     align-self: center;
     display: flex;
     align-items: center;
     padding-right: 10px;
+    font-size: .8rem;
+    background: lightseagreen;
+    border-radius: 5px;
+    color: white;
     &:hover{
         cursor: pointer;
-        background: rgba(0, 0, 0, .2);
-
+        
     }
 `;
 const OptionsMenuBar = styled(FullWidthWrapper)`
-    background: papayawhip;
     width: 100%;
-    height: 60px;
+    height: auto;
     display: flex;
+    border-top: .3pt solid lightgrey;
+    border-bottom: .3pt solid lightgrey;
 `;
 const ContainerDiv = styled.div`
     flex: 1;
@@ -109,6 +112,11 @@ const ContainerDiv = styled.div`
 const OptionsItem = styled(FlexItem)`
     color: grey;
     position: relative;
+    padding-right:15px;
+    border-bottom: 3px solid white;
+    &:hover{
+        border-bottom: 3px solid lightseagreen;
+    }
 `;
 const DropDownDiv = styled.div`
     position: absolute;
@@ -144,6 +152,7 @@ const DropdownContent = styled.div`
 const InlineLabel = styled.label`
     display: flex;
     align-items: center;
+    font-size: .8rem;
 `;
 class CreatePost extends Component{
     constructor(props){
@@ -178,7 +187,7 @@ class CreatePost extends Component{
                             <OptionsItem>
                                 <InlineLabel onClick={()=>{this.setState({showDropdown: !this.state.showDropdown}); console.log("FOCUS!")}}>
                                    <img src="/static/link.png" />
-                                   <h4>Add a link</h4>
+                                   Add a link
                                 </InlineLabel>
                                 <DropDownDiv showDropdown={this.state.showDropdown}>
                                     <ArrowDiv/>
@@ -196,6 +205,15 @@ class CreatePost extends Component{
                                     <PostImageFileButton type="file" onChange={(event)=> this.handleFile(event, false)} name="image1"/>                                        
                                     Add an image to the post
                                 </InlineLabel>  
+                            </OptionsItem>
+                             <OptionsItem>
+                                    <img src="/static/format-bold.png"/>
+                            </OptionsItem>
+                            <OptionsItem>
+                                    <img src="/static/format-italic.png"/>
+                            </OptionsItem>
+                            <OptionsItem>
+                                    <img src="/static/code-braces.png"/>
                             </OptionsItem>
                         </OptionsMenuBar>
                     </Separator>
