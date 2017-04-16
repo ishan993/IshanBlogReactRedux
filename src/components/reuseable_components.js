@@ -168,3 +168,8 @@ export const ArrowDiv = styled.div`
 	border-bottom: 9px solid darkgrey;
     text-align: center;
 `;
+
+//Hides Input type file default button
+export const FileInputConcealer = styled.input`
+    display: none;
+`;

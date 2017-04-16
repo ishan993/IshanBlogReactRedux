@@ -1,31 +1,27 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import ReactPDF from 'react-pdf';
 
-const ResumeTabWrapper = styled.div`
-    width: 80%;
+const Wrapper = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: center;
+`;
+const ResumeTabWrapper = styled(ReactPDF)`
+    align-self: center;
+    width: auto;
     margin: auto;
     margintop: 40px;
-
-    @media only screen and (min-width: 768px) {
-        margin-top: 65px;
-        margin: auto;
-        display: flex;
-    }
+    display: inline-block;
+    background: papayawhip;
 `;
-
-const ResumeImg = styled.img`
-    margin: auto;
-    height: 60%;
-    width: 60%;
-`;
-
 class ResumeTab extends Component{
 
     render(){
         return(
-            <ResumeTabWrapper>
-                <ResumeImg src='./static/resume.png'/>
-            </ResumeTabWrapper>
+            <Wrapper>
+                <ResumeTabWrapper file="/static/IshanVadwala.pdf" scale={1.5}/>
+            </Wrapper>
         );
     }
 }

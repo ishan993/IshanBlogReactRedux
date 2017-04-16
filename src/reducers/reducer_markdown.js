@@ -1,4 +1,4 @@
-import {MARKDOWN_ADDED, MARKDOWN_CONSUMED} from '../actions/index';
+import {MARKDOWN_ADDED, MARKDOWN_CONSUMED, MARKDOWN_LINK_ADDED} from '../actions/index';
 
 const DEFAULT_STATE = {markDownInQueue: false, markDownURL: ''};
 

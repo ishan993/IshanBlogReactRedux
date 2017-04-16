@@ -19,6 +19,7 @@ export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
 export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
 export const MARKDOWN_ADDED = 'MARKDOWN_ADDED';
 export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
+export const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
 
 
 
@@ -217,5 +218,13 @@ export function fetchPostWithId(id){
             console.log("ACTION-->FETCHPOST-->ERROR_RESPONSE"+JSON.stringify(error));
         });
     }
-
+}
+//Add a link to content
+export function addMarkdownLink(props){
+    console.log()
+    console.log("ACTIONS-->"+MARKDOWN_LINK_ADDED);
+    return function(dispatch){
+        dispatch(change('newPost', "postContent", props.content
+                    +" "+"["+props.markdownText+"](//"+props.markdownURL+")"));
+    }
 }
