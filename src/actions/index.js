@@ -142,7 +142,7 @@ export function logInUser(){
         req.then((response)=>{
             console.log("REQ_COMPLETE");
             dispatch({type: UPDATE_USER_LOGGED_IN, payload: true});
-            showLoginModal(false);
+            dispatch(showLoginModal(false));
             localStorage.setItem('userLoggedIn', true);
         }).catch((error)=>{
             console.log("LOGIN_ERROR: "+JSON.stringify(error));

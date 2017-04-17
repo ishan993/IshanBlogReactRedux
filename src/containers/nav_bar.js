@@ -22,15 +22,13 @@ const TitleAndLogoContainer = styled.div`
     display: flex;
     align-items: center;
 `;
-
 const SearchAndLoginContainer = styled.div`
     padding-right: 10px;
-    flex-basis: 30%;
+    flex-basis: ${props=> props.isLoggedIn ? '35%' : '25%'};
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 `;
-
 const TitleLink = styled(Link)`
     font-size: 1.5rem;
     text-decoration: none;
@@ -133,10 +131,11 @@ const MobileSearchItem = styled(SearchIcon)`
 `;
 const ProfileContainer = styled.div`
     margin-right: 5px;
-    padding-top: 5px;
+    padding-top: 0px;
     flex-basis: 20%;
     order: 3;
     position: relative;
+    ${props=>console.log("Dumbfuck"+props.userLoggedIn)}
 `;
 const ProfileDropdown = styled(DropdownDiv)`
     top: 60px;
@@ -162,17 +161,15 @@ const LabelGrey = styled.label`
 `;
 
 class NavigationBar extends Component{
-    
     constructor(props){
         super(props);
-        this.state={showDropdown: false};
+        this.state=({showDropdown: false});
     }
     componentDidMount(){
-        console.log("userLoggedInProp:"+this.props.displayComps.userLoggedIn);
+        console.log("Here you go, you fucktard"+this.props.displayComps.userLoggedIn);
     }
-
     renderLoginButton(){
-        if (!this.props.displayComps.userLoggedIn || !localStorage.getItem("userLoggedIn")){
+        if (this.props.displayComps.userLoggedIn === false){
             return( 
                 <LabelGrey onClick={()=> this.props.showLoginModal(true)}> 
                     Login
@@ -186,33 +183,28 @@ class NavigationBar extends Component{
         }
     }
     renderProfileButton(){
-        if(this.props.displayComps.userLoggedIn || localStorage.getItem("userLoggedIn")){
+        if(this.props.displayComps.userLoggedIn === true){
             return(
                 <ProfileContainer> 
-                    <IconImage src="/static/profilepic.png" onClick={()=>{this.toggleDropdown()}} />
-                    <ProfileDropdown showDropdown={this.state.showDropdown}>
-                        <NavBarArrowDiv/>
-                        <DropdownContent>
-                            <LabelGrey onClick={()=>{this.logOutUser();
-                                this.toggleDropdown();}}> Log out</LabelGrey>
+                        <IconImage src="/static/profilepic.png" onClick={()=>{this.toggleDropdown()}} />
+                        <ProfileDropdown showDropdown={this.state.showDropdown}>
+                            <NavBarArrowDiv/>
+                            <DropdownContent>
+                                <LabelGrey onClick={()=>{this.logOutUser();
+                                    this.toggleDropdown();}}> Log out</LabelGrey>
                         </DropdownContent>
-                    </ProfileDropdown>
-                </ProfileContainer>
-            );
-        }else   
-            return;
+                        </ProfileDropdown>
+            </ProfileContainer>);
+        }
     }
     logOutUser(){
-        localStorage.setItem('userLoggedIn', false); 
         this.props.logOutUser();
-        console.log("User logged in: "+localStorage.getItem('userLoggedIn'))
     }
     handleChange(event){
         this.props.updateSearchTerm(event.target.value);
     }
     handleFormSubmit(event){
         event.preventDefault();
-        console.log("Imagine that I'm submitting the form with searchTerm: "+this.props.searchForm.searchTerm);
     }
     toggleDropdown(){
         this.setState({showDropdown: !this.state.showDropdown});
@@ -237,7 +229,7 @@ class NavigationBar extends Component{
                             Ishan's Blog
                         </TitleLink>
                     </TitleAndLogoContainer>
-                    <SearchAndLoginContainer>
+                    <SearchAndLoginContainer isLoggedIn={this.props.userLoggedIn}>
                         {this.renderLoginButton()}
                         <SearchBarItem>
                         <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
@@ -256,7 +248,7 @@ class NavigationBar extends Component{
     render(){ 
         return(
             <div>
-                {console.log("Inside render method, navBar")}
+                {console.log("ReREndering")}
                 {this.displaySearchBar()}   
             </div>
         );

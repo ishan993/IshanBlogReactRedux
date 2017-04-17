@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
+import {Link} from 'react-router';
+import { browserHistory } from 'react-router';
 
 export const FullWidthWrapper = styled.div`
     background: white;
@@ -30,7 +32,7 @@ export const IconImage = styled.img`
     max-height: 30px;
     max-width: 30px;
     border-radius: 50%;
-    padding: 0;
+    padding: 3px;
     text-align: center;
     @media only screen and (min-width: 768px) {
         display: inline-block;
@@ -53,6 +55,7 @@ export const FlexItem = styled.div`
 ///////////////////////
 
 export const ReusableCardImg = styled.img`
+    cursor: pointer;
     flex: ${props => props.displayProps.imgFlex};
     margin: auto;
     width: 100%;
@@ -83,13 +86,17 @@ const CardWrapper = styled.div`
         padding: 10px;
     }
 `;
-
+const TextLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+`;
 export function ReuseableCardContainer(props){
     return(
         <CardWrapper displayProps={props.displayProps}>
-            <ReusableCardImg displayProps={props.displayProps} src={props.displayProps.imgUrl}/>
+            <ReusableCardImg displayProps={props.displayProps} src={props.displayProps.imgUrl}
+             onClick={()=>{browserHistory.push('/post/new');}} />
             <ReusableCardText txtProps={props.textProps}>
-                <h3>{props.textProps.title}</h3>
+                <h3><TextLink to={'/post/new'}>{props.textProps.title}</TextLink></h3>
                 <p>{props.textProps.content}</p>
             </ReusableCardText>
         </CardWrapper>
