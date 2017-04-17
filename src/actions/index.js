@@ -151,6 +151,13 @@ export function logInUser(){
     }
 }
 
+export function logOutUser(){
+    return({
+        type: UPDATE_USER_LOGGED_IN,
+         payload: false
+    });
+}
+
 ////////////////////////////////////////////////////////////
 //Upload image to backend
 //Dispatch action to indicate markdown text to be consumed

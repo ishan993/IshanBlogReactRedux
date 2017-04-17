@@ -2,7 +2,8 @@ import React, {Component} from  'react';
 import {connect} from 'react-redux';
 import {uploadImage, addMarkdownLink} from '../actions/index';
 import styled from 'styled-components';
-import {FullWidthWrapper ,FlexItem, ArrowDiv, ReusableInputField, FileInputConcealer} from '../components/reuseable_components'
+import {FullWidthWrapper ,FlexItem, ArrowDiv, ReusableInputField, DropdownDiv, DropdownContent,
+     FileInputConcealer} from '../components/reuseable_components'
 
 const OptionsMenuBar = styled(FullWidthWrapper)`
     height: auto;
@@ -18,15 +19,6 @@ const OptionsItem = styled(FlexItem)`
     &:hover{
         border-bottom: 3px solid lightseagreen;
     }
-`;
-const DropDownDiv = styled.div`
-    position: absolute;
-    top: 50px;
-    width: 250px;
-    height: auto;
-    text-align: center;
-    display: ${props=> props.showDropdown ? 'block' : 'none'};
-    padding-bottom: 5px;
 `;
 const DropdownInputField = styled(ReusableInputField)`
     line-height: 1.2rem;
@@ -44,11 +36,6 @@ const SmallButton = styled.button`
     background: white;
     margin:2px;
     font-weight: 200;
-`;
-const DropdownContent = styled.div`
-    border: .3pt solid lightgrey;
-    padding: 10px;
-    background: white;
 `;
 const InlineLabel = styled.label`
     display: flex;
@@ -85,7 +72,7 @@ class OptionsBar extends Component{
     handleFile(event, bool){
         this.props.uploadImage({ file: event.target.files[0], isPostTitleImage: bool, content: this.props.postContent});
     }
-    hideDropdown(){
+    toggleDropdown(){
         this.setState({showDropdown: !this.state.showDropdown});
     }
     handleChange(event){
@@ -100,21 +87,21 @@ class OptionsBar extends Component{
         return(
             <OptionsMenuBar>
                 <OptionsItem>
-                    <InlineLabel onClick={()=>{this.hideDropdown()}}>
+                    <InlineLabel onClick={()=>{this.toggleDropdown()}}>
                         <img src="/static/link.png" />
                            Add a link
                     </InlineLabel>
-                    <DropDownDiv showDropdown={this.state.showDropdown}>
+                    <DropdownDiv showDropdown={this.state.showDropdown}>
                         <ArrowDiv/>
                         <DropdownContent>
                             <DropdownInputField placeholder="Enter URL" name="markdownURL"
                                 onChange={(event)=>this.handleChange(event)} value={this.state.markdownURL}/>
                             <DropdownInputField placeholder="Enter Text" name="markdownText"
                             onChange={(event)=>this.handleChange(event)} value={this.state.markdownText}/>
-                            <SmallButton onClick={()=>{this.addLink(); this.hideDropdown()}}> Add </SmallButton>
-                            <SmallButton onClick={()=>{this.hideDropdown()}}> Cancel </SmallButton>
+                            <SmallButton onClick={()=>{this.addLink(); this.toggleDropdown()}}> Add </SmallButton>
+                            <SmallButton onClick={()=>{this.toggleDropdown()}}> Cancel </SmallButton>
                         </DropdownContent>
-                    </DropDownDiv>
+                    </DropdownDiv>
                 </OptionsItem>
                 <OptionsItem>
                     <InlineLabel>

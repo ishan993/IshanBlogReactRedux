@@ -20,7 +20,7 @@ class ResumeTab extends Component{
     render(){
         return(
             <Wrapper>
-                <ResumeTabWrapper file="/static/IshanVadwala.pdf" scale={1.5}/>
+                <ResumeTabWrapper file="/static/ishanVadwalaF.pdf" scale={1.5}/>
             </Wrapper>
         );
     }

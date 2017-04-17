@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {showSearch, updateSearchTerm, showLoginModal} from '../actions/index';
-import {FullWidthWrapper, IconImage, FlexItem} from '../components/reuseable_components';
+import {showSearch, updateSearchTerm, showLoginModal, logOutUser} from '../actions/index';
+import {FullWidthWrapper, IconImage, FlexItem, DropdownDiv, ArrowDiv, DropdownContent} from '../components/reuseable_components';
 import {connect} from 'react-redux';
 
 
@@ -31,10 +31,16 @@ const SearchAndLoginContainer = styled.div`
     justify-content: space-between;
 `;
 
-const TitleItem = styled(FlexItem)`
+const TitleLink = styled(Link)`
+    font-size: 1.5rem;
+    text-decoration: none;
     padding-left: 5px;
     font-family: title-font;
     text-align: left;
+    color: grey;
+    &:hover{
+        color: lightseagreen;
+    }
 `;
 const SearchBarItem = styled(FlexItem)`
     flex-basis: 40%;
@@ -44,6 +50,7 @@ const SearchBarItem = styled(FlexItem)`
 
 `;
 const TextButtonRight = styled(Link)`
+    cursor: pointer;
     color: grey;
     text-decoration: none;
     margin: 0;
@@ -57,12 +64,7 @@ const TextButtonRight = styled(Link)`
         color: lightseagreen;
     }
 `;
-const ProfilePicIcon = styled(IconImage)`
-    margin-right: 15px;
-    flex-basis: 20%;
-    order: 3;
-    border-radius: 50%;
-`;
+
 const InputSearch = styled.input`
     display: none;
     width: 100%;
@@ -76,7 +78,7 @@ const InputSearch = styled.input`
         background-position: 5px 10px; 
         line-height: 1.5rem;
         padding: 0 0 1px 50px;
-        width: 40%;
+        width: 45%;
         margin: 0;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out;
@@ -86,7 +88,6 @@ const InputSearch = styled.input`
         }
     }   
 `;
-
 const SearchIcon = styled.img`
     margin-right: 25px;
     margin-top: 5px;
@@ -130,28 +131,82 @@ const MobileSearchItem = styled(SearchIcon)`
     padding: 0;
     margin-left: 5px;
 `;
+const ProfileContainer = styled.div`
+    margin-right: 5px;
+    padding-top: 5px;
+    flex-basis: 20%;
+    order: 3;
+    position: relative;
+`;
+const ProfileDropdown = styled(DropdownDiv)`
+    top: 60px;
+    width: 200px;
+    right: 30px; 
+`;
+const NavBarArrowDiv = styled(ArrowDiv)`
+    position: relative;
+    left: 160px;
+`;
+const LabelGrey = styled.label`
+    -webkit-user-select: none; 
+    user-select: none;
+    font-family: title-font;
+    font-size: 1rem;
+    color: grey;
+    font-weight: 200;
+    cursor: pointer;
+    background: white;
+    &:hover{
+        color: lightgray;
+    }
+`;
 
 class NavigationBar extends Component{
-  
+    
+    constructor(props){
+        super(props);
+        this.state={showDropdown: false};
+    }
+    componentDidMount(){
+        console.log("userLoggedInProp:"+this.props.displayComps.userLoggedIn);
+    }
 
     renderLoginButton(){
-        console.log("localStorage"+localStorage.getItem("userLoggedIn"));
-        if (!this.props.displayComps.userLoggedIn &&
-                (!localStorage.getItem("userLoggedIn") || localStorage.getItem("userLoggedIn")==undefined)){
+        if (!this.props.displayComps.userLoggedIn || !localStorage.getItem("userLoggedIn")){
             return( 
-                <TextButtonRight onClick={()=> this.props.showLoginModal(true)}> 
+                <LabelGrey onClick={()=> this.props.showLoginModal(true)}> 
                     Login
-                </TextButtonRight>);
+                </LabelGrey>);
         }else{
             return(
                 <TextButtonRight to={'/post/new'}>
                     New Post
                 </TextButtonRight>
-                );
+            );
         }
-        
     }
-
+    renderProfileButton(){
+        if(this.props.displayComps.userLoggedIn || localStorage.getItem("userLoggedIn")){
+            return(
+                <ProfileContainer> 
+                    <IconImage src="/static/profilepic.png" onClick={()=>{this.toggleDropdown()}} />
+                    <ProfileDropdown showDropdown={this.state.showDropdown}>
+                        <NavBarArrowDiv/>
+                        <DropdownContent>
+                            <LabelGrey onClick={()=>{this.logOutUser();
+                                this.toggleDropdown();}}> Log out</LabelGrey>
+                        </DropdownContent>
+                    </ProfileDropdown>
+                </ProfileContainer>
+            );
+        }else   
+            return;
+    }
+    logOutUser(){
+        localStorage.setItem('userLoggedIn', false); 
+        this.props.logOutUser();
+        console.log("User logged in: "+localStorage.getItem('userLoggedIn'))
+    }
     handleChange(event){
         this.props.updateSearchTerm(event.target.value);
     }
@@ -159,7 +214,9 @@ class NavigationBar extends Component{
         event.preventDefault();
         console.log("Imagine that I'm submitting the form with searchTerm: "+this.props.searchForm.searchTerm);
     }
-
+    toggleDropdown(){
+        this.setState({showDropdown: !this.state.showDropdown});
+    }
     displaySearchBar(){
         if(this.props.displayComps.searchEnabled){
                 return(
@@ -176,9 +233,9 @@ class NavigationBar extends Component{
                 <NavBarWrapper onScroll={this.handleScroll}>
                     <TitleAndLogoContainer>
                         <IconImage src="/static/logoI.png"/>
-                        <TitleItem>
+                        <TitleLink to={'/'}>
                             Ishan's Blog
-                        </TitleItem>
+                        </TitleLink>
                     </TitleAndLogoContainer>
                     <SearchAndLoginContainer>
                         {this.renderLoginButton()}
@@ -188,7 +245,7 @@ class NavigationBar extends Component{
                                 <InputSearch placeholder="Search" />
                             </form>
                         </SearchBarItem>
-                        <ProfilePicIcon src="/static/profilepic.png" />
+                        {this.renderProfileButton()}
                     </SearchAndLoginContainer>
                 </NavBarWrapper>
             );
@@ -211,4 +268,4 @@ function mapStatetoProps(state){
 }
 
 
-export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal})(NavigationBar);
+export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal, logOutUser})(NavigationBar);

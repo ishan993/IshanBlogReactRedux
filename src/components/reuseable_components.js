@@ -24,14 +24,16 @@ export const EightyWidthWrapper = styled.div`
 `;
 //Supply the Image Icon whereever I need it.
 export const IconImage = styled.img`
+    cursor: pointer;
     height: auto;
     width: auto;
     max-height: 30px;
     max-width: 30px;
-    padding: 5px;
+    border-radius: 50%;
+    padding: 0;
+    text-align: center;
     @media only screen and (min-width: 768px) {
         display: inline-block;
-        padding: 5px;
         max-height: 45px;
         max-width: 45px;
         margin: 0;
@@ -165,11 +167,29 @@ export const ArrowDiv = styled.div`
 	margin-left: 15px;
 	border-left: 7px solid transparent;
 	border-right: 7px solid transparent;
-	border-bottom: 9px solid darkgrey;
+	border-bottom: 9px solid #888;
     text-align: center;
 `;
 
 //Hides Input type file default button
 export const FileInputConcealer = styled.input`
     display: none;
+`;
+
+//Dropdown Container
+//DropdownDiv --> ArrowDiv + DropdownContent
+export const DropdownDiv = styled.div`
+    position: absolute;
+    top: 50px;
+    width: 250px;
+    height: auto;
+    text-align: center;
+    display: ${props=> props.showDropdown ? 'block' : 'none'};
+    padding-bottom: 5px;
+`;
+export const DropdownContent = styled.div`
+    border: .3pt solid lightgrey;
+    padding: 10px;
+    background: white;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 `;
