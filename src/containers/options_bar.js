@@ -1,6 +1,6 @@
 import React, {Component} from  'react';
 import {connect} from 'react-redux';
-import {uploadImage, addMarkdownLink} from '../actions/index';
+import {uploadImage, addMarkdownLink, addMarkdownFormatting} from '../actions/index';
 import styled from 'styled-components';
 import {FullWidthWrapper ,FlexItem, ArrowDiv, ReusableInputField, DropdownDiv, DropdownContent,
      FileInputConcealer} from '../components/reuseable_components'
@@ -68,6 +68,7 @@ class OptionsBar extends Component{
         this.state={showDropdown: false, markdownText:'', markdownURL:'',
             boldButton: false, codeButton: false, italicButton: false}
     }
+  
 
     handleFile(event, bool){
         this.props.uploadImage({ file: event.target.files[0], isPostTitleImage: bool, content: this.props.postContent});
@@ -79,7 +80,6 @@ class OptionsBar extends Component{
         this.setState({[event.target.name]:event.target.value});
     }
     addLink(){
-        console.log("Tried to submit link:"+this.state.markdownText);
         this.props.addMarkdownLink({markdownText: this.state.markdownText, markdownURL: this.state.markdownURL, content: this.props.content});
         this.setState({markdownText:'', markdownURL:''})
     }
@@ -111,21 +111,25 @@ class OptionsBar extends Component{
                         Add an image to the post
                     </InlineLabel>  
                 </OptionsItem>
-                    <OptionsItem onClick={(event)=>{this.setState({boldButton: !this.state.boldButton}); 
+                    <OptionsItem onClick={(event)=>{
+                        this.props.addMarkdownFormatting({formatting: 'BOLD', content: this.props.content});
+                        this.setState({boldButton: !this.state.boldButton}); 
                         console.log(JSON.stringify(this.state))}}
                         isActive={this.state.boldButton} name="boldButton">
                         <img src="/static/format-bold.png"/>
                 </OptionsItem>
-                <OptionsItem onClick={(event)=>{this.setState({italicButton: !this.state.italicButton})}}
+                <OptionsItem onClick={(event)=>{
+                    this.props.addMarkdownFormatting({formatting: 'ITALIC', content: this.props.content});
+                    this.setState({italicButton: !this.state.italicButton})}}
                     isActive={this.state.italicButton} name="italicButton">
                         <img src="/static/format-italic.png"/>
                 </OptionsItem>
-                <OptionsItem onClick={(event)=>{this.setState({codeButton: !this.state.codeButton})}}
-                    isActive={this.state.codeButton} name="codeButton">
+                <OptionsItem name="codeButton" onClick={()=>{this.props.addMarkdownFormatting({formatting: 'CODE', content: this.props.content});
+                    this.setState({codeButton: !this.state.codeButton})}} isActive={this.state.codeButton} >
                         <img src="/static/code-braces.png"/>
                 </OptionsItem>
             </OptionsMenuBar>
         );
     }
 }
-export default connect (null, {uploadImage, addMarkdownLink})(OptionsBar);
+export default connect (null, {uploadImage, addMarkdownLink, addMarkdownFormatting})(OptionsBar);

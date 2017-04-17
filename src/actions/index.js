@@ -152,6 +152,7 @@ export function logInUser(){
 }
 
 export function logOutUser(){
+    localStorage.setItem("userLoggedIn", false);
     return({
         type: UPDATE_USER_LOGGED_IN,
          payload: false
@@ -233,5 +234,31 @@ export function addMarkdownLink(props){
     return function(dispatch){
         dispatch(change('newPost', "postContent", props.content
                     +" "+"["+props.markdownText+"](//"+props.markdownURL+")"));
+    }
+}
+//Add markdown for Bold, Italic & code
+export function addMarkdownFormatting(props){
+    var formattingString='';
+    switch(props.formatting){
+        case 'BOLD':
+            formattingString = '**';
+            return function(dispatch){
+                dispatch(change('newPost', "postContent", props.content+" "+formattingString));
+            }   
+            break;
+        case 'CODE':
+            formattingString = '```';
+            return function(dispatch){
+                dispatch(change('newPost', "postContent", props.content+"\n"+formattingString));
+            }
+                break;
+        case 'ITALIC':
+            formattingString = '*';
+            return function(dispatch){
+                dispatch(change('newPost', "postContent", props.content+" "+formattingString));
+            }
+            break;
+        default:
+            break;
     }
 }

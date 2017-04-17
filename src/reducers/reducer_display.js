@@ -12,7 +12,6 @@ const DEFAULT_STATE = {isMobile: null,
     }
 
 export default function(state = DEFAULT_STATE, action){
-    state.userLoggedIn ? console.log("Is true") : console.log("is False");
     switch(action.type){
         case UPDATE_WINDOW_SIZE:
             if (action.payload < 720)
@@ -27,7 +26,6 @@ export default function(state = DEFAULT_STATE, action){
             return {...state, resumeVisible: action.payload};
         break;
         case UPDATE_LOGIN_MODAL_VISIBLE:
-            console.log("REDUCER-->"+JSON.stringify(state));
             return {...state, loginModalVisible: action.payload};
             break;
         case UPDATE_LOGIN_TAB_VISIBLE:

@@ -41,7 +41,7 @@ const TitleLink = styled(Link)`
     }
 `;
 const SearchBarItem = styled(FlexItem)`
-    flex-basis: 40%;
+    flex-basis: 60%;
     order: 4;
     padding-left: 10px;
     order: 2;
@@ -76,7 +76,7 @@ const InputSearch = styled.input`
         background-position: 5px 10px; 
         line-height: 1.5rem;
         padding: 0 0 1px 50px;
-        width: 45%;
+        width: 50%;
         margin: 0;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out;
@@ -130,7 +130,9 @@ const MobileSearchItem = styled(SearchIcon)`
     margin-left: 5px;
 `;
 const ProfileContainer = styled.div`
-    margin-right: 5px;
+    align-self: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
     padding-top: 0px;
     flex-basis: 20%;
     order: 3;
@@ -229,7 +231,7 @@ class NavigationBar extends Component{
                             Ishan's Blog
                         </TitleLink>
                     </TitleAndLogoContainer>
-                    <SearchAndLoginContainer isLoggedIn={this.props.userLoggedIn}>
+                    <SearchAndLoginContainer isLoggedIn={this.props.displayComps.userLoggedIn}>
                         {this.renderLoginButton()}
                         <SearchBarItem>
                         <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
@@ -248,7 +250,6 @@ class NavigationBar extends Component{
     render(){ 
         return(
             <div>
-                {console.log("ReREndering")}
                 {this.displaySearchBar()}   
             </div>
         );
