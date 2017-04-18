@@ -107,7 +107,6 @@ class HomePage extends Component{
     }
 
     render(){
-        {console.log("re-rendering")}
         return(
             <div>
                 <NavigationBar/>

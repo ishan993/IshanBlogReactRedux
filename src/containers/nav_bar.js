@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {browserHistory} from 'react-router';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {showSearch, updateSearchTerm, showLoginModal, logOutUser, loginActions} from '../actions/index';
+import {showSearch, updateSearchTerm, showLoginModal, logOutUser, logInUser} from '../actions';
 import {FullWidthWrapper, IconImage, FlexItem, DropdownDiv, ArrowDiv, DropdownContent} from '../components/reuseable_components';
 import {connect} from 'react-redux';
 
@@ -138,7 +138,6 @@ const ProfileContainer = styled.div`
     flex-basis: 20%;
     order: 3;
     position: relative;
-    ${props=>console.log("Dumbfuck"+props.userLoggedIn)}
 `;
 const ProfileDropdown = styled(DropdownDiv)`
     top: 60px;
@@ -166,9 +165,6 @@ class NavigationBar extends Component{
     constructor(props){
         super(props);
         this.state=({showDropdown: false});
-    }
-    componentDidMount(){
-        console.log("Here you go, you fucktard"+JSON.stringify(this.props.logThat()));
     }
     renderLoginButton(){
         if (this.props.displayComps.userLoggedIn === false){
@@ -262,4 +258,4 @@ function mapStatetoProps(state){
 }
 
 
-export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal, logOutUser, logThat: loginActions.logThat})(NavigationBar);
+export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal, logOutUser, logInUser})(NavigationBar);

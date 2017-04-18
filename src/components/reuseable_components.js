@@ -53,7 +53,6 @@ export const FlexItem = styled.div`
 /////////////////////////
 // Used for building blog posts
 ///////////////////////
-
 export const ReusableCardImg = styled.img`
     cursor: pointer;
     flex: ${props => props.displayProps.imgFlex};

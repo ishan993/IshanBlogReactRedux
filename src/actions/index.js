@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 import request from 'superagent';
 import {store} from '../index';
 import {change} from 'redux-form';
-import * as loginActions from './login_actions';
+export * from './login_actions';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://localhost:3000';
@@ -15,17 +15,10 @@ export const UPDATE_WINDOW_SIZE =  'UPDATE_WINDOW_SIZE';
 export const ENABLE_SEARCH = 'ENABLE_SEARCH';
 export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
 export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
-export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
 export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
-export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
 export const MARKDOWN_ADDED = 'MARKDOWN_ADDED';
 export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
 export const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
-
-
-export {
-    loginActions
-};
 
 export function createPost(props){
     var request = axios.post(`${ROOT_URL}posts${API_KEY}`, props);
@@ -114,13 +107,7 @@ export function showResumeTab(bool){
     });
 }
 
-export function showLoginModal(bool){
-    console.log("Actions--> showLoginModal:"+bool);
-    return({
-        type: UPDATE_LOGIN_MODAL_VISIBLE,
-        payload: bool
-    });
-}
+
 
 //Use these to reuse the TabBar component
 export function showLoginTab(){
@@ -136,32 +123,6 @@ export function showSignUpTab(){
     })
 }
 
-//Log in user
-//If 200OK, set the userLoggedIn displayProp to true
-export function logInUser(){
-    console.log("Actions--> logInUser");
-    var req = axios.get(`http://reduxblog.herokuapp.com/api/posts?key=ishan`);
-
-    return function(dispatch){
-        req.then((response)=>{
-            console.log("REQ_COMPLETE");
-            dispatch({type: UPDATE_USER_LOGGED_IN, payload: true});
-            dispatch(showLoginModal(false));
-            localStorage.setItem('userLoggedIn', true);
-        }).catch((error)=>{
-            console.log("LOGIN_ERROR: "+JSON.stringify(error));
-            return false;
-        })
-    }
-}
-
-export function logOutUser(){
-    localStorage.setItem("userLoggedIn", false);
-    return({
-        type: UPDATE_USER_LOGGED_IN,
-         payload: false
-    });
-}
 
 ////////////////////////////////////////////////////////////
 //Upload image to backend
