@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import {Link} from 'react-router';
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 
 export const FullWidthWrapper = styled.div`
     background: white;
@@ -94,9 +94,9 @@ export function ReuseableCardContainer(props){
     return(
         <CardWrapper displayProps={props.displayProps}>
             <ReusableCardImg displayProps={props.displayProps} src={props.displayProps.imgUrl}
-             onClick={()=>{browserHistory.push('/post/new');}} />
+             onClick={()=>{browserHistory.push('/');}} />
             <ReusableCardText txtProps={props.textProps}>
-                <h3><TextLink to={'/post/new'}>{props.textProps.title}</TextLink></h3>
+                <h3><TextLink to={'/'}>{props.textProps.title}</TextLink></h3>
                 <p>{props.textProps.content}</p>
             </ReusableCardText>
         </CardWrapper>

@@ -12,6 +12,7 @@ const DEFAULT_STATE = {isMobile: null,
     }
 
 export default function(state = DEFAULT_STATE, action){
+    console.log("Here, reducer_display:"+action.type);
     switch(action.type){
         case UPDATE_WINDOW_SIZE:
             if (action.payload < 720)

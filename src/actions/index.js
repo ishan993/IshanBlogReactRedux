@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import request from 'superagent';
 import {store} from '../index';
 import {change} from 'redux-form';
+import * as loginActions from './login_actions';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://localhost:3000';
@@ -22,6 +23,9 @@ export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
 export const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
 
 
+export {
+    loginActions
+};
 
 export function createPost(props){
     var request = axios.post(`${ROOT_URL}posts${API_KEY}`, props);

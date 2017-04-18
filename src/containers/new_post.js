@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { createPost } from '../actions/index';
+import {createPost} from '../actions/index';
+import {browserHistory} from 'react-router';
+
 
 class NewPost extends Component{
-
+    constructor(props){
+        super(props);
+    }
   
     render(){
         const { handleSubmit, pristine, reset, submitting } = this.props;
@@ -36,5 +41,6 @@ NewPost = reduxForm({
   form: 'contact',
   fields: ['title', 'categories', 'content'],
 }, null, {createPost})(NewPost);
+
 
 export default NewPost;

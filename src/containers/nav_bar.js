@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+import {browserHistory} from 'react-router';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {showSearch, updateSearchTerm, showLoginModal, logOutUser} from '../actions/index';
+import {showSearch, updateSearchTerm, showLoginModal, logOutUser, loginActions} from '../actions/index';
 import {FullWidthWrapper, IconImage, FlexItem, DropdownDiv, ArrowDiv, DropdownContent} from '../components/reuseable_components';
 import {connect} from 'react-redux';
 
@@ -161,14 +162,13 @@ const LabelGrey = styled.label`
         color: lightgray;
     }
 `;
-
-class NavigationBar extends Component{
+class NavigationBar extends Component{    
     constructor(props){
         super(props);
         this.state=({showDropdown: false});
     }
     componentDidMount(){
-        console.log("Here you go, you fucktard"+this.props.displayComps.userLoggedIn);
+        console.log("Here you go, you fucktard"+JSON.stringify(this.props.logThat()));
     }
     renderLoginButton(){
         if (this.props.displayComps.userLoggedIn === false){
@@ -201,6 +201,7 @@ class NavigationBar extends Component{
     }
     logOutUser(){
         this.props.logOutUser();
+        browserHistory.push('/');
     }
     handleChange(event){
         this.props.updateSearchTerm(event.target.value);
@@ -261,4 +262,4 @@ function mapStatetoProps(state){
 }
 
 
-export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal, logOutUser})(NavigationBar);
+export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal, logOutUser, logThat: loginActions.logThat})(NavigationBar);

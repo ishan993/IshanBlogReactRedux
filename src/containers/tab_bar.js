@@ -40,7 +40,10 @@ export default class TabBar extends Component{
 
     constructor(props) {
         super(props);
+        //Initializes the component to show the blog tab
+        //Also marks the first tab active
         this.state = {firstTabOn: true};
+        this.props.tabProps.showFirstTab();
     }
 
     render(){

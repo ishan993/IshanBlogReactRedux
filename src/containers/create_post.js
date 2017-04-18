@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 import styled from 'styled-components';
 import {uploadImage, markDownConsumed, submitNewPost} from '../actions/index';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
@@ -73,6 +74,12 @@ const LabelButton = styled.label`
 
 class CreatePost extends Component{
   
+    constructor(props){
+        super(props);
+        console.log("Calling this: "+this.props.userLoggedIn);
+        if(!this.props.userLoggedIn)
+            browserHistory.push('/');
+    }
     handleFile(event, bool){
         this.props.uploadImage({ file: event.target.files[0], isPostTitleImage: bool,
              content: this.props.postContent});
@@ -127,6 +134,6 @@ CreatePost = reduxForm({
 fields: ['postTitleImageURL','title', 'categories', 'content']}, null, {uploadImage})(CreatePost);
 const selector = formValueSelector('newPost');
 function mapStateToProps(state){
-    return({markDownProps: state.markDownProps, postTitleImageURL: selector(state, 'postTitleImageURL'), postContent: selector(state, 'postContent')})
+    return({userLoggedIn: state.displayComps.userLoggedIn,markDownProps: state.markDownProps, postTitleImageURL: selector(state, 'postTitleImageURL'), postContent: selector(state, 'postContent')})
 }
 export default connect(mapStateToProps, {uploadImage, markDownConsumed, submitNewPost})(CreatePost);
