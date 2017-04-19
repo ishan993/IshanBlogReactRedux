@@ -166,6 +166,10 @@ class NavigationBar extends Component{
         super(props);
         this.state=({showDropdown: false});
     }
+
+    componentDidMount(){
+        console.log("Here you go, userLoggedIn"+this.props.displayComps.userLoggedIn);
+    }
     renderLoginButton(){
         if (this.props.displayComps.userLoggedIn === false){
             return( 
