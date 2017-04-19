@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {browserHistory} from 'react-router';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {showSearch, updateSearchTerm, showLoginModal, logOutUser, logInUser} from '../actions';
+import {showSearch, updateSearchTerm, showLoginModal, logOutUser, logInUser, checkUserLoggedInAction} from '../actions';
 import {FullWidthWrapper, IconImage, FlexItem, DropdownDiv, ArrowDiv, DropdownContent} from '../components/reuseable_components';
 import {connect} from 'react-redux';
 
@@ -165,13 +165,14 @@ class NavigationBar extends Component{
     constructor(props){
         super(props);
         this.state=({showDropdown: false});
+        this.props.checkUserLoggedInAction();
     }
 
     componentDidMount(){
-        console.log("Here you go, userLoggedIn"+this.props.displayComps.userLoggedIn);
+        console.log("Here you go, userLoggedIn"+this.props.displayProps.userLoggedIn);
     }
     renderLoginButton(){
-        if (this.props.displayComps.userLoggedIn === false){
+        if (this.props.displayProps.userLoggedIn === false){
             return( 
                 <LabelGrey onClick={()=> this.props.showLoginModal(true)}> 
                     Login
@@ -185,7 +186,7 @@ class NavigationBar extends Component{
         }
     }
     renderProfileButton(){
-        if(this.props.displayComps.userLoggedIn === true){
+        if(this.props.displayProps.userLoggedIn === true){
             return(
                 <ProfileContainer> 
                         <IconImage src={'/static/profilePic.png'} onClick={()=>{this.toggleDropdown()}} />
@@ -213,7 +214,7 @@ class NavigationBar extends Component{
         this.setState({showDropdown: !this.state.showDropdown});
     }
     displaySearchBar(){
-        if(this.props.displayComps.searchEnabled){
+        if(this.props.displayProps.searchEnabled){
                 return(
                   <MobileSearchWrapper>
                     <form>  
@@ -232,7 +233,7 @@ class NavigationBar extends Component{
                             Ishan's Blog
                         </TitleLink>
                     </TitleAndLogoContainer>
-                    <SearchAndLoginContainer isLoggedIn={this.props.displayComps.userLoggedIn}>
+                    <SearchAndLoginContainer isLoggedIn={this.props.displayProps.userLoggedIn}>
                         {this.renderLoginButton()}
                         <SearchBarItem>
                         <SearchIcon src="/static/search.png" onClick={()=> this.props.showSearch(true)}/>
@@ -258,8 +259,9 @@ class NavigationBar extends Component{
 }
 
 function mapStatetoProps(state){
-    return {displayComps: state.displayComps, searchForm: state.searchForm};
+    return {displayProps: state.displayComps, searchForm: state.searchForm};
 }
 
 
-export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal, logOutUser, logInUser})(NavigationBar);
+export default connect(mapStatetoProps, {showSearch, updateSearchTerm, showLoginModal,
+                                         logOutUser, logInUser, checkUserLoggedInAction})(NavigationBar);

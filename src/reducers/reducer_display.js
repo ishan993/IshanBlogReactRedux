@@ -8,7 +8,7 @@ const DEFAULT_STATE = {isMobile: null,
      resumeVisible: false,
      loginModalVisible: false,
      loginTabVisible: true,
-     userLoggedIn: (false || JSON.parse(localStorage.getItem("userLoggedIn")))
+     userLoggedIn: false
     }
 
 export default function(state = DEFAULT_STATE, action){

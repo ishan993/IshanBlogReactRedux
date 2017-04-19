@@ -12,6 +12,21 @@ export function showLoginModal(bool){
         payload: bool
     });
 }
+export function checkUserLoggedInAction(){
+    console.log("localStorage gives me:"+localStorage.getItem('userLoggedIn'));
+    if((localStorage.getItem('userLogged') === undefined) || localStorage.getItem('userLoggedIn') === 'false'){
+        console.log("If condition"+localStorage.getItem('userLoggedIn'));
+        return({
+            type: UPDATE_USER_LOGGED_IN,
+            payload: false
+        });
+    } else{
+        return({
+            type: UPDATE_USER_LOGGED_IN,
+            payload: true
+        })
+    }
+}
 
 //Log in user
 //If 200OK, set the userLoggedIn displayProp to true
