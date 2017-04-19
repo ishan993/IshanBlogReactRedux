@@ -184,7 +184,7 @@ class NavigationBar extends Component{
         if(this.props.displayComps.userLoggedIn === true){
             return(
                 <ProfileContainer> 
-                        <IconImage src="/static/profilepic.png" onClick={()=>{this.toggleDropdown()}} />
+                        <IconImage src={'/static/profilePic.png'} onClick={()=>{this.toggleDropdown()}} />
                         <ProfileDropdown showDropdown={this.state.showDropdown}>
                             <NavBarArrowDiv/>
                             <DropdownContent>
