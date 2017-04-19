@@ -14,16 +14,16 @@ export function showLoginModal(bool){
 }
 export function checkUserLoggedInAction(){
     console.log("localStorage gives me:"+localStorage.getItem('userLoggedIn'));
-    if((localStorage.getItem('userLogged') === undefined) || localStorage.getItem('userLoggedIn') === 'false'){
+    if(localStorage.getItem('userLoggedIn') == 'true'){
         console.log("If condition"+localStorage.getItem('userLoggedIn'));
         return({
             type: UPDATE_USER_LOGGED_IN,
-            payload: false
+            payload: true
         });
     } else{
         return({
             type: UPDATE_USER_LOGGED_IN,
-            payload: true
+            payload: false
         })
     }
 }
