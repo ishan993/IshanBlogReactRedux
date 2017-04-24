@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {showLoginModal, showLoginTab, showSignUpTab, logInUser} from '../actions/index';
+import {Field, reduxForm, formValueSelector, change} from 'redux-form';
+import {showLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser} from '../actions/index';
 import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
-import {ModalContainer, SubmitButton, ReusableInputField} from '../components/reuseable_components';
+import {ModalContainer, ReusableInputField, LoadingSubmitButton} from '../components/reuseable_components';
+import SignupForm from './signup_form';
+import LoadingScreen from '../components/loading_screen';
 
 
-//Style the modal properly, you dumbfuck
 
 const HeaderDiv = styled.div`
     background: white;
@@ -64,10 +66,7 @@ const TabText = styled.h3`
     cursor: pointer;
     user-select: none;
 `;
-const SmallInputField = styled(ReusableInputField)`
-    width: 38%;
-    margin-right: 5px;
-`;
+
 const FullWrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
@@ -80,15 +79,6 @@ const ContentWrapper = styled.div`
     margin: auto;
     padding:20px;
 `;
-const LoginSubmitButton = styled(SubmitButton)`
-    unselectable: on;
-    padding: 10px;
-    font-size: 1em;
-    @media only screen and (min-width: 768px) {
-        font-size: 1em;
-    }
-`;
-
 
 class LoginModal extends Component{
     tabProps = { 
@@ -97,34 +87,30 @@ class LoginModal extends Component{
         showFirstTab: this.props.showLoginTab,
         showSecondTab: this.props.showSignUpTab
     }
-
+    renderLoadingAnimation(){
+        if(this.props.loadingScreenVisible)
+            return (<LoadingScreen />);
+        else 
+            return;
+    }
     componentWillUnmount(){
         this.props.showLoginTab();
     }
     renderModalBody(){
-        if(this.props.loginTabVisible)
-            return(
-                <FullWrapper>
-                    <ReusableInputField placeholder="Email"/>
-                    <ReusableInputField type="password" placeholder="Password"/>
-                    <LoginSubmitButton onClick={()=>{this.props.logInUser()}}> 
-                        <h3>Submit!</h3>
-                    </LoginSubmitButton>
-                </FullWrapper>
-            );
-        else
-            return( 
-                <FullWrapper>
-                    <SmallInputField placeholder="First Name" />
-                    <SmallInputField placeholder="Last Name"/>
-                    <ReusableInputField placeholder="Email"/>
-                    <ReusableInputField type="password" placeholder="Password"/>
-                    <ReusableInputField type="password" placeholder="confirm password"/>
-                    <LoginSubmitButton> 
-                        <h4>Submit!</h4>
-                    </LoginSubmitButton>
-                </FullWrapper>
+        if(this.props.loadingScreenVisible)
+            this.renderLoadingAnimation();
+        else{
+            if(this.props.loginTabVisible)
+                return(
+                    <FullWrapper>
+                        <ReusableInputField placeholder="Email"/>
+                        <ReusableInputField type="password" placeholder="Password"/>
+                        <LoadingSubmitButton onClick={this.props.logInUser}  isLoading={this.props.isLoading} /> 
+                    </FullWrapper>
                 );
+            else
+                return(<SignupForm onClick={this.props.signUpUser} isLoading={this.props.isLoading}/>);
+        }
     }
 
     render(){
@@ -136,14 +122,18 @@ class LoginModal extends Component{
                     <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
                 <TabBar isModalVisible={true} tabProps={this.tabProps} />
-                  {this.renderModalBody()}
+                    {this.renderModalBody()}
             </ModalContainer>
         );
     }
 }
 
 function mapStateToProps(state){
-    return ({loginTabVisible: state.displayComps.loginTabVisible});
+    return({
+        loginTabVisible: state.displayComps.loginTabVisible,
+        isLoading: state.displayComps.isLoading
+    });
 }
 
-export default connect(mapStateToProps, {showLoginModal, showLoginTab, showSignUpTab, logInUser})(LoginModal);
+export default connect(mapStateToProps, {showLoginModal, showLoginTab,
+                signUpUser, showSignUpTab, logInUser})(LoginModal);

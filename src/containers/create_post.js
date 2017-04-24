@@ -87,7 +87,7 @@ class CreatePost extends Component{
 
     
     render(){
-        const { handleSubmit, pristine, reset, submitting } = this.props;
+        const {handleSubmit, pristine, reset, submitting} = this.props;
         const {postTitleImageURL, title, categories, content} = this.props.fields;
         return(
             <div>
@@ -133,6 +133,7 @@ CreatePost = reduxForm({
   form: 'newPost',
 fields: ['postTitleImageURL','title', 'categories', 'content']}, null, {uploadImage})(CreatePost);
 const selector = formValueSelector('newPost');
+
 function mapStateToProps(state){
     return({userLoggedIn: state.displayComps.userLoggedIn,markDownProps: state.markDownProps, postTitleImageURL: selector(state, 'postTitleImageURL'), postContent: selector(state, 'postContent')})
 }

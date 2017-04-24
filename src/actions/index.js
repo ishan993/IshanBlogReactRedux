@@ -19,6 +19,7 @@ export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
 export const MARKDOWN_ADDED = 'MARKDOWN_ADDED';
 export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
 export const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
+export const UPDATE_LOADING_MODAL_VISIBLE = 'UPDATE_LOADING_MODAL_VISIBLE';
 
 export function createPost(props){
     var request = axios.post(`${ROOT_URL}posts${API_KEY}`, props);

@@ -1,6 +1,9 @@
-import {UPDATE_WINDOW_SIZE, ENABLE_SEARCH,
-     UPDATE_RESUME_VISIBLE,UPDATE_LOGIN_MODAL_VISIBLE,
-      UPDATE_LOGIN_TAB_VISIBLE, UPDATE_USER_LOGGED_IN} from '../actions/index';
+import {
+    UPDATE_WINDOW_SIZE, ENABLE_SEARCH,
+    UPDATE_RESUME_VISIBLE,UPDATE_LOGIN_MODAL_VISIBLE,
+    UPDATE_LOGIN_TAB_VISIBLE, UPDATE_USER_LOGGED_IN,
+    UPDATE_LOADING_MODAL_VISIBLE
+} from '../actions/index';
 
 
 const DEFAULT_STATE = {isMobile: null,
@@ -8,7 +11,8 @@ const DEFAULT_STATE = {isMobile: null,
      resumeVisible: false,
      loginModalVisible: false,
      loginTabVisible: true,
-     userLoggedIn: false
+     userLoggedIn: false,
+     isLoading: false
     }
 
 export default function(state = DEFAULT_STATE, action){
@@ -32,6 +36,9 @@ export default function(state = DEFAULT_STATE, action){
             return {...state, loginTabVisible: action.payload};
         case UPDATE_USER_LOGGED_IN:
             return {...state, userLoggedIn: action.payload};
+        case UPDATE_LOADING_MODAL_VISIBLE:
+            console.log("Loading: "+action.payload);
+            return {...state, isLoading: action.payload}
         default: 
             return state;
         break;

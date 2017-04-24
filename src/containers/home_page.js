@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import {showBlogTab, showResumeTab} from '../actions/index';
 
 
-const ModalBackdrop = styled.div`
+export const ModalBackdrop = styled.div`
     background: rgba(0, 0, 0, .7);
     position: fixed;
     top: 0;
@@ -121,7 +121,8 @@ class HomePage extends Component{
 }
 function mapStateToProps(state){
     return {resumeVisible: state.displayComps.resumeVisible, 
-        loginModalVisible: state.displayComps.loginModalVisible};
+        loginModalVisible: state.displayComps.loginModalVisible,
+        loadingScreenVisible: state.displayComps.loadingScreenVisible};
 }
 
 export default connect(mapStateToProps, {showBlogTab, showResumeTab})(HomePage);

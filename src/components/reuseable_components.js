@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import React from 'react';
 import {Link} from 'react-router';
 import {browserHistory} from 'react-router';
+export * from './buttons';
+
 
 export const FullWidthWrapper = styled.div`
     background: white;
@@ -121,22 +123,6 @@ export const ModalContainer = styled.div`
     }
 `;
 
-////////////////////////////
-// All Purpose Submit button
-////////////////////////////
-export const SubmitButton = styled.button`
-    font-weight: 200;
-    background: white;
-    color: grey;
-    border: 1px solid lightseagreen;
-    font-size: 2vw;
-    padding: 3px;
-    margin: auto;
-    width: auto;
-    &:hover{
-        background: rgba(0, 0, 0, .2);
-    }
-`;
 
 ////////////////////////////
 // All Purpose input field
