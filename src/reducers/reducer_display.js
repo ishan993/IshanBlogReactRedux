@@ -2,7 +2,7 @@ import {
     UPDATE_WINDOW_SIZE, ENABLE_SEARCH,
     UPDATE_RESUME_VISIBLE,UPDATE_LOGIN_MODAL_VISIBLE,
     UPDATE_LOGIN_TAB_VISIBLE, UPDATE_USER_LOGGED_IN,
-    UPDATE_LOADING_MODAL_VISIBLE
+    UPDATE_LOADING_GRAPHIC_VISIBLE
 } from '../actions/index';
 
 
@@ -36,7 +36,7 @@ export default function(state = DEFAULT_STATE, action){
             return {...state, loginTabVisible: action.payload};
         case UPDATE_USER_LOGGED_IN:
             return {...state, userLoggedIn: action.payload};
-        case UPDATE_LOADING_MODAL_VISIBLE:
+        case UPDATE_LOADING_GRAPHIC_VISIBLE:
             console.log("Loading: "+action.payload);
             return {...state, isLoading: action.payload}
         default: 

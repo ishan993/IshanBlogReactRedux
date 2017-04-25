@@ -1,12 +1,13 @@
 import request from 'superagent';
 import config from '../config';
+import {toggleAuthErrorAction, toggleLoadingGraphicAction} from '../actions';
+
 export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
 export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
-const UPDATE_LOADING_MODAL_VISIBLE = 'UPDATE_LOADING_MODAL_VISIBLE';
 const ROOT_URL = 'http://localhost:3000';
 //const ROOT_URL = 'https://ishan-blog-backend.herokuapp.com';
-const ShowLoadingGraphicAction = {type: UPDATE_LOADING_MODAL_VISIBLE, payload: true};
-const HideLoadingGraphicAction = {type: UPDATE_LOADING_MODAL_VISIBLE, payload: false};
+
+
 //Show or hide login modal
 export function showLoginModal(bool){
     return({
@@ -29,22 +30,21 @@ export function checkUserLoggedInAction(){
     }
 }
 
-
-export function signUpUser(props){
-    console.log("Trying to sign up");
+export const signUpUser = (props)=>{
 
     var signUpReq =  request.post(ROOT_URL+'/signup')
                             .send(props);
     return function(dispatch){
-        dispatch(ShowLoadingGraphicAction);
+        dispatch(toggleLoadingGraphicAction(true));
 
         signUpReq.then((response)=>{
-            dispatch(HideLoadingGraphicAction);
+            dispatch(toggleLoadingGraphicAction(false));
             dispatch(showLoginModal(false));
             
             console.log("SIGNUP_REQ_OK"+response.body);
         })
         .catch((error)=>{
+            dispatch(toggleLoadingGraphicAction(false));
             console.log("SIGNUP_REQ_ERR"+JSON.stringify(error));
         })
 
@@ -54,25 +54,24 @@ export function signUpUser(props){
 
 //Log in user
 //If 200OK, set the userLoggedIn displayProp to true
-export function logInUser(){
+export function logInUser(values){
     var loginReq = request.post(ROOT_URL+'/login')
-                          .send({username: 'ishan993', password: 'Ishan'});
+                          .send(values);
 
     return function(dispatch){
-        dispatch(ShowLoadingGraphicAction);
+        dispatch(toggleLoadingGraphicAction(true));
         loginReq.then((response)=>{
             console.log("login response: "+JSON.stringify(response.body));
-
-            dispatch(HideLoadingGraphicAction);
+            dispatch(toggleAuthErrorAction({showError: false, message: null}));
+            dispatch(toggleLoadingGraphicAction(false));
             dispatch({type: UPDATE_USER_LOGGED_IN, payload: true});
             dispatch(showLoginModal(false));
 
             localStorage.setItem('userLoggedIn', true);
         }).catch((error)=>{
-            console.log("LOGIN_ERROR: "+JSON.stringify(error));
-
-            dispatch(HideLoadingGraphicAction);
-            return false;
+            dispatch(toggleLoadingGraphicAction(false));
+            dispatch(toggleAuthErrorAction({showError: true, message: error.response.body.message}));
+            console.log("LOGIN_ERROR: "+JSON.stringify(error.response.body.message));
         })
     }
 }

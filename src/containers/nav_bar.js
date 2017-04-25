@@ -10,6 +10,8 @@ import {connect} from 'react-redux';
 const NavBarWrapper = styled(FullWidthWrapper)`
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 900;
     border-bottom: .3pt solid lightgray;
     align-items: center;

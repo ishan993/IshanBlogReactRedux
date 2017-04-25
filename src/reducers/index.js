@@ -4,13 +4,14 @@ import { reducer as formReducer } from 'redux-form';
 import displayComponentsReducer from './reducer_display';
 import searchFormReducer from './reducer_form';
 import markDownReducer from './reducer_markdown';
-
+import errorReducer from './redeucer_error';
 const rootReducer = combineReducers({
     posts: postsReducer, 
     displayComps: displayComponentsReducer,
     form: formReducer,
     searchForm: searchFormReducer,
-    markDownProps: markDownReducer
+    markDownProps: markDownReducer,
+    errorProps: errorReducer
 });
 
 export default rootReducer;

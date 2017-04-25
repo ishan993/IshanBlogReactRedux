@@ -4,7 +4,7 @@ import {Field, reduxForm, formValueSelector, change} from 'redux-form';
 import styled from 'styled-components';
 import {ReusableInputField, SubmitButton, LoadingSubmitButton} from '../components/reuseable_components';
 
-const InputFieldLarge = styled(Field)`
+export const InputFieldLarge = styled(Field)`
     font-weight: 300;
     margin: auto;
     width: 80%;
@@ -16,6 +16,9 @@ const InputFieldLarge = styled(Field)`
     border: none;
     outline: none;
     border-bottom: .7pt solid lightseagreen;
+    &:focus{
+        border-bottom: 2px solid lightseagreen;
+    }
 `;
 
 const SmallInputField = styled(InputFieldLarge)`
@@ -39,13 +42,15 @@ class SignUpForm extends Component{
         const {firstName, lastName, email, password} = this.props.fields;
         return(
             <FullWrapper>
-                <form onSubmit={handleSubmit((values)=>{console.log("Submitting"+JSON.stringify(values))})}>
+                <form>
                     <SmallInputField component="input" name="firstName" placeholder="First Name" {...firstName}/>
                     <SmallInputField component="input" name="lastName"placeholder="Last Name" {...lastName}/>
                     <InputFieldLarge component="input" name="email" placeholder="Email" {...email}/>
                     <InputFieldLarge component="input" name="password" type="password" placeholder="Password" {...password}/>
                     <InputFieldLarge component="input" name="confirmPassword" type="password" placeholder="confirm password"/>
-                    <LoadingSubmitButton onClick={handleSubmit((values)=>{this.props.onClick(values)})}
+                    <LoadingSubmitButton onClick={handleSubmit((values)=>{
+                        console.log("trying to submit signup form"+JSON.stringify(values));
+                        this.props.onClick(values)})}
                     isLoading={this.props.isLoading} value="Submit" type="submit"> 
                         <h4>Submit!</h4>
                     </LoadingSubmitButton>

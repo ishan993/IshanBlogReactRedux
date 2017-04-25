@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
-import {showLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser} from '../actions/index';
+import {showLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser, toggleLoadingGraphicAction} from '../actions/index';
 import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
-import {ModalContainer, ReusableInputField, LoadingSubmitButton} from '../components/reuseable_components';
+import {ModalContainer, ReusableInputField, LoadingSubmitButton, ErrorDiv} from '../components/reuseable_components';
+import LoginForm from '../components/login_form';
 import SignupForm from './signup_form';
-import LoadingScreen from '../components/loading_screen';
-
 
 
 const HeaderDiv = styled.div`
@@ -48,7 +47,6 @@ const LogoImg = styled(ImgButton)`
     flex-basis: 20%
 
 `;
-
 const TabWrapper = styled.div`
     text-align: center;
     background: white;
@@ -87,30 +85,17 @@ class LoginModal extends Component{
         showFirstTab: this.props.showLoginTab,
         showSecondTab: this.props.showSignUpTab
     }
-    renderLoadingAnimation(){
-        if(this.props.loadingScreenVisible)
-            return (<LoadingScreen />);
-        else 
-            return;
-    }
+    
     componentWillUnmount(){
         this.props.showLoginTab();
+        this.props.toggleLoadingGraphicAction(false);
     }
     renderModalBody(){
-        if(this.props.loadingScreenVisible)
-            this.renderLoadingAnimation();
-        else{
-            if(this.props.loginTabVisible)
-                return(
-                    <FullWrapper>
-                        <ReusableInputField placeholder="Email"/>
-                        <ReusableInputField type="password" placeholder="Password"/>
-                        <LoadingSubmitButton onClick={this.props.logInUser}  isLoading={this.props.isLoading} /> 
-                    </FullWrapper>
-                );
-            else
-                return(<SignupForm onClick={this.props.signUpUser} isLoading={this.props.isLoading}/>);
-        }
+        if(this.props.loginTabVisible)
+            return(<LoginForm onClick={this.props.logInUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading} />);
+        else
+            return(<SignupForm onClick={this.props.signUpUser} isLoading={this.props.isLoading}/>);
+       
     }
 
     render(){
@@ -122,7 +107,7 @@ class LoginModal extends Component{
                     <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
                 </HeaderDiv>
                 <TabBar isModalVisible={true} tabProps={this.tabProps} />
-                    {this.renderModalBody()}
+                {this.renderModalBody()}
             </ModalContainer>
         );
     }
@@ -131,9 +116,10 @@ class LoginModal extends Component{
 function mapStateToProps(state){
     return({
         loginTabVisible: state.displayComps.loginTabVisible,
-        isLoading: state.displayComps.isLoading
+        isLoading: state.displayComps.isLoading,
+        authErrorMessage: state.errorProps.authErrorMessage
     });
 }
 
 export default connect(mapStateToProps, {showLoginModal, showLoginTab,
-                signUpUser, showSignUpTab, logInUser})(LoginModal);
+                signUpUser, showSignUpTab, logInUser, toggleLoadingGraphicAction})(LoginModal);

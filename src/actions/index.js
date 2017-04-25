@@ -3,7 +3,10 @@ import {browserHistory} from 'react-router';
 import request from 'superagent';
 import {store} from '../index';
 import {change} from 'redux-form';
+
 export * from './login_actions';
+export * from './error_actions';
+export * from './display_actions';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://localhost:3000';

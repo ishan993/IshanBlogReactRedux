@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
-import {Link} from 'react-router';
-import {browserHistory} from 'react-router';
 export * from './buttons';
-
+export * from './post_container';
 
 export const FullWidthWrapper = styled.div`
     background: white;
@@ -52,57 +50,7 @@ export const FlexItem = styled.div`
         color: lightseagreen;
     }
 `;
-/////////////////////////
-// Used for building blog posts
-///////////////////////
-export const ReusableCardImg = styled.img`
-    cursor: pointer;
-    flex: ${props => props.displayProps.imgFlex};
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    padding: 2px;
-    max-height: ${props => props.displayProps.mobileImgWidthHeight};
-    max-width: ${props=>props.displayProps.mobileImgWidthHeight};
-    @media only screen and (min-width: 768px) {
-        object-fit: cover;
-        max-height: ${props=>props.displayProps.maxImgWidthHeight};
-        max-width: 100%;
-    }
-`;
-const ReusableCardText = styled.div`
-    padding-left: 10px;
-    flex: ${props=>props.textFlex};
-    text-align: justify;
-    vertical-align: top;
-    height: 100%;
-    margin:0;
-`;
-const CardWrapper = styled.div`
-    width: 100%;
-    text-align: center;
-    @media only screen and (min-width: 768px) {
-        display: ${props => props.displayProps.flex ? 'flex' : 'block'};
-        box-sizing: border-box;
-        padding: 10px;
-    }
-`;
-const TextLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-`;
-export function ReuseableCardContainer(props){
-    return(
-        <CardWrapper displayProps={props.displayProps}>
-            <ReusableCardImg displayProps={props.displayProps} src={props.displayProps.imgUrl}
-             onClick={()=>{browserHistory.push('/');}} />
-            <ReusableCardText txtProps={props.textProps}>
-                <h3><TextLink to={'/'}>{props.textProps.title}</TextLink></h3>
-                <p>{props.textProps.content}</p>
-            </ReusableCardText>
-        </CardWrapper>
-    );
-}
+
 
 /////////////////////////
 //Modal Container
@@ -118,7 +66,7 @@ export const ModalContainer = styled.div`
     height: 80%;
     z-index: 9999;
     @media only screen and (min-width: 768px) {
-    width: 40%;
+    width: 43%;
     height: auto;
     }
 `;
@@ -185,3 +133,29 @@ export const DropdownContent = styled.div`
     background: white;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 `;
+
+
+///////////////////
+//Show error div
+//////////////////
+
+const ErrorLabel = styled.label`
+    font-size: 0.8rem;
+    line-height: 1.5rem;
+    color: #cc0000;
+    font-weight: 200;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border: .3pt solid #cc0000;
+`;
+
+export const ErrorDiv = (props)=>{
+    return(
+        <FullWidthWrapper>
+            <ErrorLabel>
+                {props.errorMessage}
+            </ErrorLabel>
+        </FullWidthWrapper>
+    );
+}
