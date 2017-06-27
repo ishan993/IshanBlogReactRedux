@@ -30,7 +30,6 @@ class LoginForm extends Component{
                     <InputFieldLarge component="input" name="password" type="password" placeholder="Password" {...password}/>
                     {this.renderErrorMessage()}
                     <LoadingSubmitButton onClick={handleSubmit((values)=>{
-                        console.log('login values:'+JSON.stringify(values));
                         this.props.onClick(values)})}
                         isLoading={this.props.isLoading} value="Submit" type="submit"> 
                         <h4>Submit!</h4>

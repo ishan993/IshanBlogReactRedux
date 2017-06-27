@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
-import {showLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser, toggleLoadingGraphicAction} from '../actions/index';
+import {showLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser,
+     toggleLoadingGraphicAction, toggleAuthErrorAction} from '../actions';
 import {InputFieldLarge} from './create_post';
 import TabBar from './tab_bar';
 import {ModalContainer, ReusableInputField, LoadingSubmitButton, ErrorDiv} from '../components/reuseable_components';
@@ -79,6 +80,10 @@ const ContentWrapper = styled.div`
 `;
 
 class LoginModal extends Component{
+    constructor(props){
+        super(props);
+        this.props.toggleAuthErrorAction(false);
+    }
     tabProps = { 
         firstTabTitle: "Login",
         secondTabTitle: "Sign up",
@@ -94,8 +99,7 @@ class LoginModal extends Component{
         if(this.props.loginTabVisible)
             return(<LoginForm onClick={this.props.logInUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading} />);
         else
-            return(<SignupForm onClick={this.props.signUpUser} isLoading={this.props.isLoading}/>);
-       
+            return(<SignupForm onClick={this.props.signUpUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading}/>);
     }
 
     render(){
@@ -122,4 +126,4 @@ function mapStateToProps(state){
 }
 
 export default connect(mapStateToProps, {showLoginModal, showLoginTab,
-                signUpUser, showSignUpTab, logInUser, toggleLoadingGraphicAction})(LoginModal);
+                signUpUser, showSignUpTab, logInUser, toggleAuthErrorAction, toggleLoadingGraphicAction})(LoginModal);

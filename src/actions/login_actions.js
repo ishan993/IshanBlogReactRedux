@@ -33,7 +33,8 @@ export function checkUserLoggedInAction(){
 export const signUpUser = (props)=>{
 
     var signUpReq =  request.post(ROOT_URL+'/signup')
-                            .send(props);
+                            .send(props)
+                             .set('Content-Type', 'application/json');
     return function(dispatch){
         dispatch(toggleLoadingGraphicAction(true));
 
@@ -45,7 +46,8 @@ export const signUpUser = (props)=>{
         })
         .catch((error)=>{
             dispatch(toggleLoadingGraphicAction(false));
-            console.log("SIGNUP_REQ_ERR"+JSON.stringify(error));
+            dispatch(toggleAuthErrorAction({showError: true, message: error.response.body.message}));
+            console.log("SIGNUP_REQ_ERR"+JSON.stringify(error.response.body.message));
         })
 
     }
@@ -56,7 +58,8 @@ export const signUpUser = (props)=>{
 //If 200OK, set the userLoggedIn displayProp to true
 export function logInUser(values){
     var loginReq = request.post(ROOT_URL+'/login')
-                          .send(values);
+                          .send(values)
+                          .set('Content-Type', 'application/json');
 
     return function(dispatch){
         dispatch(toggleLoadingGraphicAction(true));
@@ -66,8 +69,8 @@ export function logInUser(values){
             dispatch(toggleLoadingGraphicAction(false));
             dispatch({type: UPDATE_USER_LOGGED_IN, payload: true});
             dispatch(showLoginModal(false));
-
             localStorage.setItem('userLoggedIn', true);
+            localStorage.setItem('token', response.body.token);
         }).catch((error)=>{
             dispatch(toggleLoadingGraphicAction(false));
             dispatch(toggleAuthErrorAction({showError: true, message: error.response.body.message}));
@@ -78,6 +81,7 @@ export function logInUser(values){
 
 export function logOutUser(){
     localStorage.setItem("userLoggedIn", false);
+    localStorage.removeItem("token");
     return({
         type: UPDATE_USER_LOGGED_IN,
          payload: false

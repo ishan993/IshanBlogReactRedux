@@ -1,4 +1,5 @@
-const express = require('express');
+import * as express from 'express';
+const fs = require('fs');
 const path = require('path');
 const port = process.env.PORT || 8080;
 
