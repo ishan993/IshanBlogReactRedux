@@ -1,8 +1,7 @@
 import axios from 'axios';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 import request from 'superagent';
-import {store} from '../index';
-import {change} from 'redux-form';
+import { change } from 'redux-form';
 
 export * from './login_actions';
 export * from './error_actions';
@@ -15,48 +14,48 @@ const API_KEY = '?key=ishan';
 export const CREATE_POST = 'CREATE_POST';
 export const FETCH_POST = 'FETCH_POST';
 export const DELETE_POST = 'DELETE_POST';
-export const UPDATE_WINDOW_SIZE =  'UPDATE_WINDOW_SIZE';
+export const UPDATE_WINDOW_SIZE = 'UPDATE_WINDOW_SIZE';
 export const ENABLE_SEARCH = 'ENABLE_SEARCH';
 export const UPDATE_SEARCHTERM = 'UPDATE_SEARCHTERM';
-export const UPDATE_RESUME_VISIBLE ='UPDATE_RESUME_VISIBLE';
+export const UPDATE_RESUME_VISIBLE = 'UPDATE_RESUME_VISIBLE';
 export const UPDATE_LOGIN_TAB_VISIBLE = 'UPDATE_LOGIN_TAB_VISIBLE';
 export const MARKDOWN_ADDED = 'MARKDOWN_ADDED';
 export const MARKDOWN_CONSUMED = 'MARKDOWN_CONSUMED';
 export const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
 export const UPDATE_LOADING_MODAL_VISIBLE = 'UPDATE_LOADING_MODAL_VISIBLE';
 
-export function createPost(props){
-    var request = axios.post(`${ROOT_URL}posts${API_KEY}`, props);
+export const createPost = (props) => {
+  const postReq = axios.post(`${ROOT_URL}posts${API_KEY}`, props);
 
-    return function(dispatch){
-        request.then((response) =>{
-                 dispatch({
-                     type: CREATE_POST,
-                     payload: response
-                    });
-                    browserHistory.push('/');
-        }).catch((error)=>{
-            console.log("ERROR_FETCHPOSTS"+JSON.stringify(error));
-        })
-    }
-}
+  return (dispatch) => {
+    postReq.then((response) => {
+      dispatch({
+        type: CREATE_POST,
+        payload: response,
+      });
+      browserHistory.push('/');
+    }).catch((error) => {
+      console.log('ERROR_FETCHPOSTS' + JSON.stringify(error));
+    });
+  };
+};
 
-export function fetchPost(id){
-    var req = axios.get(`${ROOT_URL}posts/${id}${API_KEY}`);
+export const fetchPost = (id) => {
+  const getReq = axios.get(`${ROOT_URL}posts/${id}${API_KEY}`);
 
-    return function(dispatch){
-        req.then((response) =>{
-            console.log("I got this post: "+response.data);
-            dispatch({
-                type: FETCH_POST,
-                payload: response.data
-            })
-            
-        }).catch((error)=>{
-            console.log("ERROR_FETCHPOST"+error);
-        });
-    }
-}
+  return (dispatch) => {
+    getReq.then((response) => {
+      console.log('I got this post: ' + response.data);
+      dispatch({
+        type: FETCH_POST,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      console.log('ERROR_FETCHPOST' + error);
+    });
+  };
+};
 
 export function deletePost(id){
     var request = axios.delete(`${ROOT_URL}posts/${id}${API_KEY}`);
