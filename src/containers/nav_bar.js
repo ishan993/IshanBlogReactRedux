@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {browserHistory} from 'react-router';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {showSearch, updateSearchTerm, showLoginModal, logOutUser, logInUser, checkUserLoggedInAction} from '../actions';
 import {FullWidthWrapper, IconImage, FlexItem, DropdownDiv, ArrowDiv, DropdownContent} from '../components/reuseable_components';

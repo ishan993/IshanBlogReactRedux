@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router-dom';
 import request from 'superagent';
 import { change } from 'redux-form';
 
@@ -57,107 +57,104 @@ export const fetchPost = (id) => {
   };
 };
 
-export function deletePost(id){
-    var request = axios.delete(`${ROOT_URL}posts/${id}${API_KEY}`);
+export const deletePost = (id) => {
+  const deleteReq = axios.delete(`${ROOT_URL}posts/${id}${API_KEY}`);
 
-    return function(dispatch){
-        request.then((response)=>{
-            console.log("I deleted"+response.data.title);
-            browserHistory.push('/');
-            dispatch({type: "request_complete", payload: null});
-        }).catch((error)=>{
-            console.log("DELETE_ERROR: "+JSON.stringify(error));
-            return false;
-        })
-    }
-}
-
-export function updateWindowSize(windowSize){
-    console.log("called UPDATE_WINDOW_SIZE");
-    return({
-        type: UPDATE_WINDOW_SIZE,
-        payload: windowSize
-    });
-}
-
-export function showSearch(status){
-    console.log("Enabling Search: "+status);
-    return({
-        type: ENABLE_SEARCH,
-         payload: status
-        });
-}
-
-export function updateSearchTerm(term){
-    return({
-        type: UPDATE_SEARCHTERM,
-        payload: term
+  return (dispatch) => {
+    deleteReq.then((response) => {
+      console.log('I deleted' + response.data.title);
+      browserHistory.push('/');
+      dispatch({ type: 'request_complete', payload: null });
     })
-}
+    .catch((error) => {
+      console.log('DELETE_ERROR: ' + JSON.stringify(error));
+      return false;
+    });
+  };
+};
+
+export const updateWindowSize = (windowSize) => {
+  console.log('called UPDATE_WINDOW_SIZE');
+  return ({
+    type: UPDATE_WINDOW_SIZE,
+    payload: windowSize,
+  });
+};
+
+export const showSearch = (status) => {
+  console.log('Enabling Search: ' + status);
+  return ({
+    type: ENABLE_SEARCH,
+    payload: status,
+  });
+};
+
+export const updateSearchTerm = (term) => {
+  return ({
+    type: UPDATE_SEARCHTERM,
+    payload: term,
+  });
+};
+
 // Functions to show and hide the home page Blog/Resume tab
-//Action creators make it less convoluted and more reusable
-//Instead of passing bools around.
-//Just pass Action creators to do the functions you want.
-export function showBlogTab(bool){
-    return ({
-        type: UPDATE_RESUME_VISIBLE,
-        payload: false
-    });
-}
-export function showResumeTab(bool){
-    return ({
-        type: UPDATE_RESUME_VISIBLE,
-        payload: true
-    });
-}
+// Action creators make it less convoluted and more reusable
+// Instead of passing bools around.
+// Just pass Action creators to do the functions you want.
+export const showBlogTab = (bool) => {
+  return ({
+    type: UPDATE_RESUME_VISIBLE,
+    payload: false,
+  });
+};
 
+export const showResumeTab = (bool) => {
+  return ({
+    type: UPDATE_RESUME_VISIBLE,
+    payload: true,
+  });
+};
 
+// Use these to reuse the TabBar component
+export const showLoginTab = () => ({
+  type: UPDATE_LOGIN_TAB_VISIBLE,
+  payload: true,
+});
 
-//Use these to reuse the TabBar component
-export function showLoginTab(){
-    return({
-        type: UPDATE_LOGIN_TAB_VISIBLE,
-        payload: true
-    });
-}
-export function showSignUpTab(){
-    return ({
-        type: UPDATE_LOGIN_TAB_VISIBLE,
-        payload: false
-    })
-}
+export const showSignUpTab = () => ({
+  type: UPDATE_LOGIN_TAB_VISIBLE,
+  payload: false,
+});
 
-
-////////////////////////////////////////////////////////////
-//Upload image to backend
-//Dispatch action to indicate markdown text to be consumed
-////////////////////////////////////////////////////////////
-export function uploadImage(props){ 
-    
-    let upload = request.post("https://api.cloudinary.com/v1_1/ishanvadwala/upload")
+// //////////////////////////////////////////////////////////
+// Upload image to backend
+// Dispatch action to indicate markdown text to be consumed
+// //////////////////////////////////////////////////////////
+export const uploadImage = (props) => {
+  const upload = request.post('https://api.cloudinary.com/v1_1/ishanvadwala/upload')
                         .field('upload_preset', "qjndfgea")
                         .field('file', props.file);
 
-    return function(dispatch){
-        upload.then((response)=>{
+  return (dispatch) => {
+    upload.then((response) => {
+      dispatch({ type: MARKDOWN_ADDED, payload: response.body.secure_url });
+      if (props.isPostTitleImage) {
+        dispatch(change('newPost', 'postTitleImageURL', response.body.secure_url));
+      } else {
+        dispatch(change('newPost', 'postContent', props.content
+          +'\n' + '![alt text](' + response.body.secure_url + ')'));
+      }
+    })
+    .catch((error) => {
+      console.log('ERROR_ACTION_UPLOAD_IMAGE' + JSON.stringify(error));
+    });
+  };
+};
 
-            dispatch({type: MARKDOWN_ADDED, payload: response.body.secure_url});
-            if(props.isPostTitleImage)
-                dispatch(change('newPost', "postTitleImageURL", response.body.secure_url));
-            else
-                dispatch(change('newPost', "postContent", props.content
-                +"\n"+"![alt text]("+response.body.secure_url+")"));
-        }).catch((error)=>{
-            console.log("ERROR_ACTION_UPLOAD_IMAGE"+JSON.stringify(error));
-        });
-    }
-    
-}
+// ////////////////////////////////////////////////////////////
+// Dispatch Action to alert that the markdown has been consumed
+// ////////////////////////////////////////////////////////////
+export const markDownConsumed = () => ({
+  type: MARKDOWN_CONSUMED,
+});
 
-//////////////////////////////////////////////////////////////
-//Dispatch Action to alert that the markdown has been consumed
-//////////////////////////////////////////////////////////////
-export function markDownConsumed(){
-    return({type: MARKDOWN_CONSUMED});
-}
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router-dom';
 
 // ///////////////////////////////////////
 // Used for building blog post containers

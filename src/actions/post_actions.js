@@ -1,11 +1,10 @@
-////////////////////////////////////////
-//Actions related to posts
-///////////////////////////////////////
+// //////////////////////////////////////
+// Actions related to posts
+// /////////////////////////////////////
 
-//Submit newPost form
+// Submit newPost form
 export function submitNewPost(values){
-    console.log("Submitting form w/ values: "+values);
-    let submit = request.post("http://localhost:3000/createpost")
+  const submit = request.post("http://localhost:3000/createpost")
                         .send(values);
     return function(dispatch){
         submit.then((response)=>{

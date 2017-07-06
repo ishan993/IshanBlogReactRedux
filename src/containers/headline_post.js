@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router'; 
+import {Link} from 'react-router-dom'; 
 import ReactMarkdown from 'react-markdown';
 import {EightyWidthWrapper, ReuseableCardContainer} from '../components/reuseable_components';
 

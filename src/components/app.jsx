@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
+import ContentRouter from './content_router';
+import NavBar from '../containers/nav_bar';
 
-const ChildrenWrapper = styled.div`
-  margin-top: 37px;
-  @media only screen and (min-width: 768px){
-        margin-top: 65px;
-    }
-`;
 
-const App = () => (
-  <div className="parent">
-    <ChildrenWrapper>
-      {this.props.children}
-    </ChildrenWrapper>
-  </div>
-);
-
+class App extends Component {
+  render() {
+    return (
+      <div className="parent">
+        <BrowserRouter>
+          <div>
+            <NavBar />
+            <ContentRouter />
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
+}
 export default App;
 
 

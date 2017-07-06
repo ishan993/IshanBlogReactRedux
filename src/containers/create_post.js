@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {uploadImage, markDownConsumed, submitNewPost} from '../actions/index';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
