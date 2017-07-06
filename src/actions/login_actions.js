@@ -8,9 +8,14 @@ const ROOT_URL = 'http://localhost:3000';
 // const ROOT_URL = 'https://ishan-blog-backend.herokuapp.com';
 
 // Show or hide login modal
-export const showLoginModal = (bool) => ({
+export const showLoginModal = () => ({
   type: UPDATE_LOGIN_MODAL_VISIBLE,
-  payload: bool,
+  payload: true,
+});
+
+export const hideLoginModal = () => ({
+  type: UPDATE_LOGIN_MODAL_VISIBLE,
+  payload: false,
 });
 
 export const checkUserLoggedInAction = () => {

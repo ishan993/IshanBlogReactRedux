@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import {EightyWidthWrapper, ReusableCenteredImage} from '../components/reuseable_components';
-import NavBar from './nav_bar';
-import {fetchPostWithId} from '../actions/index';
+import { EightyWidthWrapper, ReusableCenteredImage } from '../components/reuseable_components';
+import { fetchPostWithId } from '../actions/index';
 import ReactMarkdown from 'react-markdown';
 
 const FullWidthNoFlexWrapper = styled.div`
@@ -36,7 +35,6 @@ class ShowPost extends Component{
     {console.log("I got a post!"+JSON.stringify(this.props.post))}
         return(
             <div>
-                <NavBar />
                 <EightyWidthWrapper>
                     {this.renderPost()}
                 </EightyWidthWrapper>

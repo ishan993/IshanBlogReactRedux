@@ -7,7 +7,6 @@ import {Field, reduxForm, formValueSelector, change} from 'redux-form';
 import Textarea from 'react-textarea-autosize';
 import {SubmitButton, ReusableCenteredImage, FileInputConcealer} from '../components/reuseable_components'
 
-import NavBar from './nav_bar';
 import OptionsBar from './options_bar';
 
 const CreatePostWrapper = styled.div`
@@ -91,7 +90,6 @@ class CreatePost extends Component{
         const {postTitleImageURL, title, categories, content} = this.props.fields;
         return(
             <div>
-                <NavBar />
                 <CreatePostWrapper>
                     <Separator>
                         <ReusableCenteredImage src={this.props.postTitleImageURL} />

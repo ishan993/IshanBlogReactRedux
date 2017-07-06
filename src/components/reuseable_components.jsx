@@ -135,6 +135,19 @@ export const DropdownContent = styled.div`
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 `;
 
+export const LabelGrey = styled.label`
+    -webkit-user-select: none; 
+    user-select: none;
+    font-family: title-font;
+    font-size: 1rem;
+    color: grey;
+    font-weight: 200;
+    cursor: pointer;
+    background: white;
+    &:hover{
+        color: lightgray;
+    }
+`;
 
 ///////////////////
 //Show error div
