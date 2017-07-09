@@ -2,7 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 
 export * from './buttons';
-export * from './post_container';
+
+export const ReusableCardImg = styled.img`
+    cursor: pointer;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    max-height: 250px;
+    max-width: 250px;
+    @media only screen and (min-width: 768px) {
+        border-radius: 50%;
+        flex: 3;
+        object-fit: cover;
+        max-height: 350px;
+        max-width: auto;
+    }
+`;
 
 export const FullWidthWrapper = styled.div`
     background: white;
@@ -51,7 +67,6 @@ export const FlexItem = styled.div`
         color: lightseagreen;
     }
 `;
-
 
 // ///////////////////////
 // Modal Container
@@ -149,9 +164,9 @@ export const LabelGrey = styled.label`
     }
 `;
 
-///////////////////
-//Show error div
-//////////////////
+// /////////////////
+// Show error div
+// ////////////////
 
 const ErrorLabel = styled.label`
     font-size: 0.8rem;

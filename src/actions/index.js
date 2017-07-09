@@ -100,14 +100,15 @@ export const updateSearchTerm = (term) => {
 // Action creators make it less convoluted and more reusable
 // Instead of passing bools around.
 // Just pass Action creators to do the functions you want.
-export const showBlogTab = (bool) => {
+export const showBlogTab = () => {
   return ({
     type: UPDATE_RESUME_VISIBLE,
     payload: false,
   });
 };
 
-export const showResumeTab = (bool) => {
+export const showResumeTab = () => {
+  console.log('Showing resume tab!');
   return ({
     type: UPDATE_RESUME_VISIBLE,
     payload: true,

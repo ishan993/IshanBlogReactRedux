@@ -27,7 +27,9 @@ const TitleLink = styled(Link)`
 
 const LogoAndTitle = () => (
   <TitleAndLogoContainer>
-    <IconImage src="/static/logoI.png" />
+    <Link to={'/'}>
+        <IconImage src="/static/logoI.png" />
+    </Link>
     <TitleLink to={'/'}>
       Ishan's Blog
     </TitleLink>

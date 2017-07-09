@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-// import NoMatch from './NoMatch';
-// import CurrentPost from '../containers/current_post';
-import HomeComponent from '../containers/home_page';
+
+import HomeComponent from '../components/HomeContainer';
 import ShowPostComponent from '../containers/show_post';
 import CreatePostComponent from '../containers/create_post';
 
