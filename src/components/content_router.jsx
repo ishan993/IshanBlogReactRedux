@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import HomeComponent from '../components/HomeContainer';
 import ShowPostComponent from '../containers/show_post';
 import CreatePostComponent from '../containers/create_post';
+import CurrentPost from './CurrentPost';
 
 const RouterWrapper = styled.div`
-  margin-top: 50px;
+  margin-top: 60px;
   padding: 0;
 `;
 // Handles all the client side routing
@@ -27,7 +28,7 @@ const ContentRouter = () => (
       <Route
         path="/post/:id"
         exact
-        component={props => <ShowPostComponent routerProps={props} />}
+        component={props => <CurrentPost routerProps={props} />}
       />
     </Switch>
   </RouterWrapper>

@@ -5,12 +5,12 @@ import { IconImage } from '../../reuseable_components';
 
 
 const TitleAndLogoContainer = styled.div`
-  flex-basis: 40%;
+  flexBasis: 40%;
   font-family: title-font;
   order: -1;
   text-align: left;
   display: flex;
-  align-items: center;
+  alignItems: center;
 `;
 
 const TitleLink = styled(Link)`

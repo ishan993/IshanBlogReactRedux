@@ -15,19 +15,20 @@ import { showSearch, showLoginModal, logOutUser, checkUserLoggedInAction } from 
 // Fix Dropdown Arrow
 
 const NavBarWrapper = styled(FullWidthWrapper)`
+    
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 900;
-    border-bottom: .3pt solid lightgray;
-    align-items: center;
-    justify-content: space-between;
+    borderBottom: .3pt solid lightgray;
+    alignItems: center;
+    justifyContent: space-between;
 `;
 
 const SearchAndLoginContainer = styled.div`
-    padding-right: 10px;
-    flex-basis: ${props=> props.isLoggedIn ? '35%' : '25%'};
+    paddingRight: 10px;
+    flexBasis: ${props => props.isLoggedIn ? '55%' : '30%'};
     display: flex;
     align-items: center;
     justify-content: space-around;

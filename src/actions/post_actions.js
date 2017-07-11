@@ -30,7 +30,7 @@ export const fetchPostWithId = (id) => {
   return (dispatch) => {
     fetch.then((response) => {
       console.log('ACTION-->FETCHPOST-->SUCCESS_RESPONSE' + JSON.parse(response.text).postTitle);
-      dispatch({ type: FETCH_POST, payload: JSON.parse(response.text) });
+      dispatch({ type: `FETCH_POST`, payload: JSON.parse(response.text) });
     })
     .catch(error => (
         console.log('ACTION-->FETCHPOST-->ERROR_RESPONSE' + JSON.stringify(error))

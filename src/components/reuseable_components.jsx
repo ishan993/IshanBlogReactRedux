@@ -168,7 +168,7 @@ export const LabelGrey = styled.label`
 // Show error div
 // ////////////////
 const ErrorLabel = styled.label`
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.5rem;
     color: #cc0000;
     font-weight: 200;
