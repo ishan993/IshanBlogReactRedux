@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 import { FlexItem } from '../components/reuseable_components';
 
 const TabWrapper = styled.div`
@@ -8,7 +7,7 @@ const TabWrapper = styled.div`
     width: 100%;
     justify-items: center;
     justify-content: center;
-    padding-top: 10px;
+    padding-top: 20px;
     border-bottom: .3pt solid lightgrey;
 `;
 
@@ -39,8 +38,6 @@ const TabItem = styled(FlexItem)`
 class TabBar extends Component {
   constructor(props) {
     super(props);
-    // Initializes the component to show the blog tab
-    // Also marks the first tab active
     this.state = { firstTabOn: true };
     this.props.tabProps.showFirstTab();
   }
@@ -50,19 +47,19 @@ class TabBar extends Component {
       <TabWrapper>
         <TabItem
           active={this.state.firstTabOn}
-          onClick={() => {this.props.tabProps.showFirstTab();
+          onClick={() => {
+            this.props.tabProps.showFirstTab();
             this.state.firstTabOn=true;
           }}
           isModalVisible={this.props.isModalVisible}
         >
           <h3>
             {this.props.tabProps.firstTabTitle}
-            {console.log(JSON.stringify(this.props))}
           </h3>
         </TabItem>
         <TabItem
           onClick={() => {
-            this.props.tabProps.showSecondTab() 
+            this.props.tabProps.showSecondTab();
             this.state.firstTabOn=false;
           }}
           active={!this.state.firstTabOn}

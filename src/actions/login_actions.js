@@ -4,7 +4,7 @@ import { toggleAuthErrorAction, toggleLoadingGraphicAction } from '../actions';
 
 export const UPDATE_USER_LOGGED_IN = 'UPDATE_USER_LOGGED_IN';
 export const UPDATE_LOGIN_MODAL_VISIBLE = 'UPDATE_LOGIN_MODAL_VISIBLE';
-const ROOT_URL = 'http://localhost:3000';
+const ROOT_URL = config.ROOT_URL_REMOTE;
 // const ROOT_URL = 'https://ishan-blog-backend.herokuapp.com';
 
 // Show or hide login modal

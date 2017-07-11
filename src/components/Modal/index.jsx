@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
-import {showLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser,
-     toggleLoadingGraphicAction, toggleAuthErrorAction} from '../actions';
-import {InputFieldLarge} from './create_post';
-import TabBar from './tab_bar';
-import {ModalContainer, ReusableInputField, LoadingSubmitButton, ErrorDiv} from '../components/reuseable_components';
-import LoginForm from '../components/login_form';
-import SignupForm from './signup_form';
 
+import { hideLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser,
+     toggleLoadingGraphicAction, toggleAuthErrorAction} from '../../actions';
+import { InputFieldLarge } from '../../containers/create_post';
+import TabBar from '../../containers/tab_bar';
+import { ModalContainer, ReusableInputField, LoadingSubmitButton, ErrorDiv } from '../../components/reuseable_components';
+import LoginForm from '../login_form';
+import SignupForm from '../../containers/signup_form';
 
 const HeaderDiv = styled.div`
     background: white;
@@ -80,26 +80,26 @@ const ContentWrapper = styled.div`
 `;
 
 class LoginModal extends Component{
-    constructor(props){
-        super(props);
-        this.props.toggleAuthErrorAction(false);
-    }
-    tabProps = { 
-        firstTabTitle: "Login",
-        secondTabTitle: "Sign up",
-        showFirstTab: this.props.showLoginTab,
-        showSecondTab: this.props.showSignUpTab
-    }
-    
-    componentWillUnmount(){
-        this.props.showLoginTab();
-        this.props.toggleLoadingGraphicAction(false);
-    }
-    renderModalBody(){
-        if(this.props.loginTabVisible)
-            return(<LoginForm onClick={this.props.logInUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading} />);
-        else
-            return(<SignupForm onClick={this.props.signUpUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading}/>);
+  constructor(props){
+    super(props);
+    this.props.toggleAuthErrorAction(false);
+  }
+  tabProps = { 
+    firstTabTitle: "Login",
+    secondTabTitle: "Sign up",
+    showFirstTab: this.props.showLoginTab,
+    showSecondTab: this.props.showSignUpTab
+  }
+
+  componentWillUnmount(){
+    this.props.showLoginTab();
+    this.props.toggleLoadingGraphicAction(false);
+  }
+  renderModalBody(){
+    if(this.props.loginTabVisible)
+        return(<LoginForm onClick={this.props.logInUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading} />);
+    else
+        return(<SignupForm onClick={this.props.signUpUser} authErrorMessage={this.props.authErrorMessage} isLoading={this.props.isLoading}/>);
     }
 
     render(){
@@ -108,7 +108,7 @@ class LoginModal extends Component{
                 <HeaderDiv>
                     <LogoImg src="../static/logoI.png" />
                     <NoMarginH2>Ishan's Blog</NoMarginH2>
-                    <ImgButton src="../static/close.png" onClick={()=>{this.props.showLoginModal(false)}}/>
+                    <ImgButton src="../static/close.png" onClick={()=>{this.props.hideLoginModal()}}/>
                 </HeaderDiv>
                 <TabBar isModalVisible={true} tabProps={this.tabProps} />
                 {this.renderModalBody()}
@@ -125,5 +125,5 @@ function mapStateToProps(state){
     });
 }
 
-export default connect(mapStateToProps, {showLoginModal, showLoginTab,
+export default connect(mapStateToProps, { hideLoginModal, showLoginTab,
                 signUpUser, showSignUpTab, logInUser, toggleAuthErrorAction, toggleLoadingGraphicAction})(LoginModal);

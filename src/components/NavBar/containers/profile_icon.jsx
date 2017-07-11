@@ -42,7 +42,7 @@ class ProfileIcon extends Component {
           <NavBarArrowDiv />
           <DropdownContent>
             <LabelGrey onClick={() => {
-              this.logOutUser();
+              this.props.logOutUser();
               this.toggleDropdown();
             }}
             >

@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import {uploadImage, markDownConsumed, submitNewPost} from '../actions/index';
-import {Field, reduxForm, formValueSelector, change} from 'redux-form';
+import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import Textarea from 'react-textarea-autosize';
-import {SubmitButton, ReusableCenteredImage, FileInputConcealer} from '../components/reuseable_components'
+
+import { uploadImage, markDownConsumed, submitNewPost } from '../actions/index';
+import { SubmitButton, ReusableCenteredImage, FileInputConcealer } from '../components/reuseable_components'
 
 import OptionsBar from './options_bar';
 
@@ -72,25 +73,24 @@ const LabelButton = styled.label`
 
 
 class CreatePost extends Component{
-  
-    constructor(props){
-        super(props);
-        console.log("Calling this: "+this.props.userLoggedIn);
-        if(!this.props.userLoggedIn)
-            browserHistory.push('/');
+  constructor(props){
+    super(props);
+    if (!this.props.userLoggedIn) {
+      browserHistory.push('/');
     }
-    handleFile(event, bool){
-        this.props.uploadImage({ file: event.target.files[0], isPostTitleImage: bool,
-             content: this.props.postContent});
-    }
+  }
 
-    
-    render(){
-        const {handleSubmit, pristine, reset, submitting} = this.props;
-        const {postTitleImageURL, title, categories, content} = this.props.fields;
-        return(
-            <div>
-                <CreatePostWrapper>
+  handleFile(event, bool){
+    this.props.uploadImage({ file: event.target.files[0], isPostTitleImage: bool,
+      content: this.props.postContent});
+  }
+
+  render() {
+    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { postTitleImageURL, title, categories, content } = this.props.fields;
+    return (
+      <div>
+          <CreatePostWrapper>
                     <Separator>
                         <ReusableCenteredImage src={this.props.postTitleImageURL} />
                     </Separator>

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
+
 import {singnUpUser} from '../actions';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
-import styled from 'styled-components';
-import {ReusableInputField, SubmitButton, LoadingSubmitButton, ErrorDiv} from '../components/reuseable_components';
+import { ReusableInputField, SubmitButton, LoadingSubmitButton, ErrorDiv } from '../components/reuseable_components';
 
 export const InputFieldLarge = styled(Field)`
     font-weight: 300;
@@ -36,16 +37,11 @@ const FullWrapper = styled.div`
 `;
 
 class SignUpForm extends Component{
-    constructor(props){
-        super(props);
-
+renderErrorMessage(){
+    if(this.props.authErrorMessage){
+        return(<ErrorDiv errorMessage={this.props.authErrorMessage}/>);
     }
-
-    renderErrorMessage(){
-        if(this.props.authErrorMessage){
-            return(<ErrorDiv errorMessage={this.props.authErrorMessage}/>);
-        }
-    }
+}
 
     render(){
         const {handleSubmit} = this.props;

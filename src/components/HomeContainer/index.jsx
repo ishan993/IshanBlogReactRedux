@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import TabBar from '../../containers/tab_bar';
 import HomePage from './containers/home_page_new';
 import ResumeTab from '../../containers/resume_tab';
+import Modal from '../base_modal';
+import LoginModal from '../Modal';
 import {showBlogTab, showResumeTab} from '../../actions/index';
 
 const HomeWrapper = styled.div`
@@ -17,6 +19,16 @@ const HomeWrapper = styled.div`
   }
 `;
 
+export const ModalBackdrop = styled.div`
+  background: rgba(0, 0, 0, .7);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 25px;
+  z-index: 9991;
+`;
 
 class HomeContainer extends Component {
   homePageTabProps = {
@@ -30,6 +42,13 @@ class HomeContainer extends Component {
     return (
       <HomeWrapper>
         <TabBar tabProps={this.homePageTabProps} isModalVisible={false}/>
+        {this.props.loginModalVisible ?
+           <ModalBackdrop>
+             <Modal>
+               <LoginModal/>
+             </Modal>
+           </ModalBackdrop> : ''
+        }
         {this.props.resumeVisible ?
           <ResumeTab /> :
           <HomePage />
@@ -41,6 +60,8 @@ class HomeContainer extends Component {
 
 const mapStateToProps = (state) => ({
   resumeVisible: state.displayComps.resumeVisible,
+  loginModalVisible: state.displayComps.loginModalVisible,
+  loadingScreenVisible: state.displayComps.loadingScreenVisible
 });
 
 export default connect(mapStateToProps, {showBlogTab, showResumeTab})(HomeContainer);

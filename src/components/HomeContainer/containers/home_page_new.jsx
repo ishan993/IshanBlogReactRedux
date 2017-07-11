@@ -14,7 +14,8 @@ const BottomPostWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 95%;
-  marginTop: 10px;
+  margin: auto;
+  marginTop: 30px;
   @media only screen and (min-width: 768px) {
     width: 85%;
   }
@@ -30,7 +31,6 @@ const MidPostsWrapper = styled.div`
     justifyContent: space-around;
     alignContent: center;
   }
-
 `;
 
 const headlineProps = {
