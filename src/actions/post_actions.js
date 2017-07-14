@@ -2,8 +2,9 @@ import { change } from 'redux-form';
 import request from 'superagent';
 import config from '../config';
 
-const ROOT_URL = config.ROOT_URL_REMOTE;
+const ROOT_URL = config.ROOT_URL;
 const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
+export const FETCH_POST = 'FETCH_POST';
 
 // //////////////////////////////////////
 // Actions related to posts
@@ -11,11 +12,12 @@ const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
 
 // Submit newPost form
 export const submitNewPost = (values) => {
-  const submit = request.post(ROOT_URL + '/createpost')
+  console.log('I got these values here! ' + JSON.stringify(values));
+  const createPost = request.post(ROOT_URL + '/post')
                         .send(values);
+
   return (dispatch) => {
-    submit.then((response) => {
-      console.log('I got my response here:' + JSON.stringify(response));
+    createPost.then((response) => {
     })
     .catch(error => {
       console.log('ERROR_ACTIONS_SUBMIT_NEW_POST' + JSON.stringify(error));
@@ -25,15 +27,14 @@ export const submitNewPost = (values) => {
 
 // Fetch new post for ShowPost
 export const fetchPostWithId = (id) => {
-  const fetch = request.get(`${ROOT_URL}/fetchpost/${id}`);
+  const fetch = request.get(`${ROOT_URL}/post/${id}`);
 
   return (dispatch) => {
     fetch.then((response) => {
-      console.log('ACTION-->FETCHPOST-->SUCCESS_RESPONSE' + JSON.parse(response.text).postTitle);
-      dispatch({ type: `FETCH_POST`, payload: JSON.parse(response.text) });
+      dispatch({ type: FETCH_POST, post: response.body.result });
     })
     .catch(error => (
-        console.log('ACTION-->FETCHPOST-->ERROR_RESPONSE' + JSON.stringify(error))
+        console.log('ACTION-->FETCHPOST-->ERROR_RESPONSE' + error)
     ));
   };
 };

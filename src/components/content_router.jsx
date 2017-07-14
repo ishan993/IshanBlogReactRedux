@@ -3,8 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import HomeComponent from '../components/HomeContainer';
-import ShowPostComponent from '../containers/show_post';
-import CreatePostComponent from '../containers/create_post';
+import CreatePostComponent from '../components/CreatePost';
 import CurrentPost from './CurrentPost';
 
 const RouterWrapper = styled.div`

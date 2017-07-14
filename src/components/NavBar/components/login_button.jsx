@@ -22,7 +22,7 @@ const TextButtonRight = styled(Link)`
 
 const LoginButton = props => (
     props.userLoggedIn ?
-      <TextButtonRight to={'post/new'}>
+      <TextButtonRight to={'/post/new'}>
         New Post
       </TextButtonRight> :
       <LabelGrey onClick={() => { props.showLoginModal(); }}>

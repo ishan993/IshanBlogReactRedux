@@ -111,8 +111,8 @@ export const ReusableInputField = styled.input`
 export const ReusableCenteredImage = styled.img`
     padding: 10px;
     text-align: center;
-    max-width: auto;
-    max-height: 400px; 
+    maxWidth: 100%;
+    maxHeight: 400px; 
     margin: auto;
     display:block;
 `;

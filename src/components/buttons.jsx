@@ -23,7 +23,7 @@ const FlexLabel = styled.label`
 export const SubmitButton = styled.button`
     display: flex;
     vertical-align: center;
-    font-weight: 200;
+    fontWeight: 200;
     background: white;
     color: grey;
     border: 1px solid lightseagreen;

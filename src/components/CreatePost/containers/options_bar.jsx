@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { uploadImage, addMarkdownLink, addMarkdownFormatting } from '../actions/index';
 import styled from 'styled-components';
+import { uploadImage, addMarkdownLink, addMarkdownFormatting } from '../../../actions/index';
 import { FullWidthWrapper, FlexItem, ArrowDiv, ReusableInputField, DropdownDiv, DropdownContent,
-     FileInputConcealer } from '../components/reuseable_components';
+     FileInputConcealer } from '../../reuseable_components';
 
 const OptionsMenuBar = styled(FullWidthWrapper)`
     height: auto;
@@ -42,25 +42,6 @@ const InlineLabel = styled.label`
     align-items: center;
     font-size: .8rem;
 `;
-const ContainerDiv = styled.div`
-    flex: 1;
-    text-align: center;
-    overflow: none;
-`;
-const PostImageDiv = styled.label`
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    background: aliceblue;
-    height: 200px;
-    display: flex;
-    &:hover{
-        background: lightgrey;
-    }
-`;
 
 class OptionsBar extends Component {
   constructor(props) {
@@ -73,22 +54,28 @@ class OptionsBar extends Component {
       italicButton: false,
     };
   }
+
   handleFile(event, bool) {
-    this.props.uploadImage({ file: event.target.files[0],
-        isPostTitleImage: bool,
-        content: this.props.postContent
+    this.props.uploadImage({
+      file: event.target.files[0],
+      isPostTitleImage: bool,
+      content: this.props.postContent,
     });
   }
+
   toggleDropdown() {
     this.setState({ showDropdown: !this.state.showDropdown });
   }
+
   handleChange(event) {
-    this.setState({ [event.target.name]:event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   }
+
   addLink() {
-    this.props.addMarkdownLink({ markdownText: this.state.markdownText,
-        markdownURL: this.state.markdownURL,
-        content: this.props.content
+    this.props.addMarkdownLink({
+      markdownText: this.state.markdownText,
+      markdownURL: this.state.markdownURL,
+      content: this.props.content,
     });
     this.setState({ markdownText: '', markdownURL: '' });
   }
@@ -112,7 +99,7 @@ class OptionsBar extends Component {
               <DropdownInputField
                 placeholder="Enter Text"
                 name="markdownText"
-                onChange={ event => this.handleChange(event)}
+                onChange={event => this.handleChange(event)}
                 value={this.state.markdownText}
               />
               <SmallButton onClick={() => { this.addLink(); this.toggleDropdown(); }}>
@@ -127,21 +114,21 @@ class OptionsBar extends Component {
         <OptionsItem>
           <InlineLabel>
             <img src="/static/file-image.png" alt="file" />
-            <FileInputConcealer 
+            <FileInputConcealer
               type="file"
-              onChange={event => this.props.uploadImage({ file: event.target.files[0],
-                        isPostTitleImage: false,
-                        content: this.props.content
+              onChange={event => this.props.uploadImage({
+                file: event.target.files[0],
+                isPostTitleImage: false,
+                content: this.props.content,
               })}
             />
               Add an image to the post
             </InlineLabel>
         </OptionsItem>
         <OptionsItem
-          onClick={(event) => {
+          onClick={() => {
             this.props.addMarkdownFormatting({ formatting: 'BOLD', content: this.props.content });
-            this.setState({boldButton: !this.state.boldButton});
-            console.log(JSON.stringify(this.state));
+            this.setState({ boldButton: !this.state.boldButton });
           }}
           isActive={this.state.boldButton}
           name="boldButton"
@@ -149,7 +136,7 @@ class OptionsBar extends Component {
           <img src="/static/format-bold.png" alt="bold" />
         </OptionsItem>
         <OptionsItem
-          onClick={(event) => {
+          onClick={() => {
             this.props.addMarkdownFormatting({ formatting: 'ITALIC', content: this.props.content });
             this.setState({ italicButton: !this.state.italicButton });
           }}
@@ -165,7 +152,7 @@ class OptionsBar extends Component {
               formatting: 'CODE',
               content: this.props.content
             });
-            this.setState({codeButton: !this.state.codeButton})
+            this.setState({ codeButton: !this.state.codeButton });
           }}
           isActive={this.state.codeButton}
         >

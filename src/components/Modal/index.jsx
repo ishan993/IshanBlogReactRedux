@@ -5,7 +5,7 @@ import {Field, reduxForm, formValueSelector, change} from 'redux-form';
 
 import { hideLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser,
      toggleLoadingGraphicAction, toggleAuthErrorAction} from '../../actions';
-import { InputFieldLarge } from '../../containers/create_post';
+import { InputFieldLarge } from '../CreatePost';
 import TabBar from '../../containers/tab_bar';
 import { ModalContainer, ReusableInputField, LoadingSubmitButton, ErrorDiv } from '../../components/reuseable_components';
 import LoginForm from '../login_form';

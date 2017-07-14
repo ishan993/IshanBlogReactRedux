@@ -8,11 +8,9 @@ export * from './error_actions';
 export * from './display_actions';
 export * from './post_actions';
 
-export const FETCH_POSTS = 'FETCH_POSTS';
 const ROOT_URL = 'http://localhost:3000';
 const API_KEY = '?key=ishan';
 export const CREATE_POST = 'CREATE_POST';
-export const FETCH_POST = 'FETCH_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_WINDOW_SIZE = 'UPDATE_WINDOW_SIZE';
 export const ENABLE_SEARCH = 'ENABLE_SEARCH';
