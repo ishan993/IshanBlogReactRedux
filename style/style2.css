@@ -24,28 +24,34 @@ html {
 }
 h1 {
 	font-size: 3rem;
+  font-weight: 100;
 }
 h2 {
 	font-size: 2rem;
+  font-weight: 100;
 }
 h3 {
     margin:0;
     padding: 0;
     margin-bottom: 2px;
-    font-weight: 200;
+    font-weight: 100;
     font-size: 1.5rem;
 }
 h4 {
     margin:0;
     padding: 0;
     margin-bottom: 2px;
-    font-weight: 200;
+    font-weight: 100;
     font-size: 1.3rem;
 }
 p, li {
   margin-top: 0;
-  font-weight: 200;
-	font-size: 1rem;
+  font-weight: 100;
+	font-size: 0.9rem;
+}
+
+img {
+  max-width: 90%;
 }
 
 @media screen and (min-width: 500px) {

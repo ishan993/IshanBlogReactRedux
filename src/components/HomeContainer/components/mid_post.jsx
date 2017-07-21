@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-
 const H3Link = styled(Link)`
   cursor: pointer;
   fontSize: 1.2rem;
@@ -39,13 +38,13 @@ const TextContainer = styled.div`
   flexBasis: 40%;
   padding: 10px;
 `;
-const ImageContainer = styled.div`
+const ImageContainer = styled(Link)`
   flexBasis: 40%;
 `;
 
-const MidPost = (props) => (
+const MidPost = props => (
   <MidPostWrapper>
-    <ImageContainer>
+    <ImageContainer to="/post/1499901747564">
       <Image src={props.url} />
     </ImageContainer>
     <TextContainer>

@@ -22,13 +22,6 @@ const FullWidthImage = styled.img`
   marginBottom: 20px;
 `;
 
-const img = styled.img`
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    maxHeight: 100px;
-`;
-
 const MarkDown = styled(ReactMarkdown)`
     font-weight: 50;
 `;
@@ -41,7 +34,11 @@ export default class PostBody extends Component {
           {console.log(JSON.stringify(this.props))}
           {this.props.post.postTitle}
         </h1>
-        <FullWidthImage src="https://cdn.filestackcontent.com/cv1AYBjxToCbzBSMy1OO" alt="title" />
+        <FullWidthImage
+          src="https://cdn.filestackcontent.com/cv1AYBjxToCbzBSMy1OO"
+          alt="title"
+          onClick={() => { console.log('Clicked the image1'); }}
+        />
         <MarkDown source={this.props.post.postContent} />
       </CurrentPostWrapper>
     );

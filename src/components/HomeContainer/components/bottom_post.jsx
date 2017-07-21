@@ -23,7 +23,7 @@ const BottomPostWrapper = styled.div`
   }
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled(Link)`
   flexBasis: 20%;
 `;
 const TextWrapper = styled.div`
@@ -38,7 +38,7 @@ const Image = styled.img`
 
 const BottomPost = (props) => (
   <BottomPostWrapper>
-    <ImageWrapper>
+    <ImageWrapper to="/post/1499901747564">
       <Image src="https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg" />
     </ImageWrapper>
     <TextWrapper>

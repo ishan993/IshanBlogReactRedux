@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+const H1Link = styled(Link)`
+  cursor: pointer;
+  fontSize: 2rem;
+  textDecoration: none;
+  fontWeight: 100;
+  color: darkGrey;
+`;
 
 const TopPostWrapper = styled.div`
   width: 100%;
@@ -13,12 +22,12 @@ const TopPostWrapper = styled.div`
   }
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled(Link)`
   flexBasis: 40%;
 `;
 const TextWrapper = styled.div`
   flexBasis: 50%;
-  background: papayawhip;
+  padding: 30px;
 `;
 const Image = styled.img`
   maxWidth: 90%;
@@ -27,11 +36,16 @@ const Image = styled.img`
 
 const TopPost = (props) => (
   <TopPostWrapper>
-    <ImageWrapper>
+    <ImageWrapper to="/post/1499901747564">
       <Image src="https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg" />
     </ImageWrapper>
     <TextWrapper>
-      Hello World!
+      <H1Link to="/post/1499901747564">
+        What is React? How does it work?
+      </H1Link>
+      <p>
+        Content content
+      </p>
     </TextWrapper>
   </TopPostWrapper>
 );
