@@ -31,11 +31,11 @@ export default class PostBody extends Component {
     return (
       <CurrentPostWrapper>
         <h1>
-          {console.log(JSON.stringify(this.props))}
+          {console.log(JSON.stringify(this.props.post))}
           {this.props.post.postTitle}
         </h1>
         <FullWidthImage
-          src="https://cdn.filestackcontent.com/cv1AYBjxToCbzBSMy1OO"
+          src={this.props.post.postTitleImageURL}
           alt="title"
           onClick={() => { console.log('Clicked the image1'); }}
         />

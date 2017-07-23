@@ -8,7 +8,10 @@ const H1Link = styled(Link)`
   fontSize: 2rem;
   textDecoration: none;
   fontWeight: 100;
-  color: darkGrey;
+  color: grey;
+  &:hover {
+    color: darkgrey;
+  }
 `;
 
 const TopPostWrapper = styled.div`
@@ -24,10 +27,12 @@ const TopPostWrapper = styled.div`
 
 const ImageWrapper = styled(Link)`
   flexBasis: 40%;
+  flex-shrink: 0;
 `;
 const TextWrapper = styled.div`
   flexBasis: 50%;
   padding: 30px;
+  flex-shrink: 1;
 `;
 const Image = styled.img`
   maxWidth: 90%;
@@ -36,18 +41,23 @@ const Image = styled.img`
 
 const TopPost = (props) => (
   <TopPostWrapper>
-    <ImageWrapper to="/post/1499901747564">
+    <ImageWrapper to={'/post/' + props.post._id}>
+      {console.log('I got these props!' + JSON.stringify(props))}
       <Image src="https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg" />
     </ImageWrapper>
     <TextWrapper>
       <H1Link to="/post/1499901747564">
-        What is React? How does it work?
+        {props.post.postTitle}
       </H1Link>
       <p>
-        Content content
+        {props.post.postDescription}
       </p>
     </TextWrapper>
   </TopPostWrapper>
 );
+
+TopPost.propTypes = {
+  post: PropTypes.object.isRequired,
+};
 
 export default TopPost;

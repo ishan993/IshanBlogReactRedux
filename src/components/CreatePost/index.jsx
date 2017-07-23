@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+import MarkDown from 'react-markdown';
 import { uploadImage, markDownConsumed, submitNewPost } from '../../actions';
 import { SubmitButton, ReusableCenteredImage, FileInputConcealer } from '../reuseable_components';
 import OptionsBar from './containers/options_bar';
@@ -21,10 +22,19 @@ const ButtonWrapper = styled.div`
         display: flex;
     }
 `;
-
-const FullWidthWrapper = styled.div`
-  width: 100%;
-  margin: auto;
+const InputFieldLarge = styled(Field)`
+    font-weight: 300;
+    margin: auto;
+    width: 100%;
+    line-height: 2rem;
+    font-size: 1.5rem;
+    color: grey;
+    padding: 3px;;
+    border: none;
+    outline: none;
+    marginTop: 10px;
+    marginBottom: 10px;
+    border-bottom: .7pt solid lightseagreen;
 `;
 
 const TextAreaField = styled(Field)`
@@ -44,19 +54,17 @@ const TextAreaField = styled(Field)`
     border-bottom: .7pt solid lightseagreen;
 `;
 
-export const InputFieldLarge = styled(Field)`
-    font-weight: 300;
-    margin: auto;
-    width: 100%;
-    line-height: 2rem;
-    font-size: 1.5rem;
-    color: grey;
-    padding: 3px;;
-    border: none;
-    outline: none;
-    marginTop: 10px;
-    marginBottom: 10px;
-    border-bottom: .7pt solid lightseagreen;
+const StyledMarkDown = styled(MarkDown)`
+  background: lightgrey;
+`;
+const StyledSubmitButton = styled(SubmitButton)`
+  padding: 10px 20px;
+  borderRadius: 30px;
+`;
+
+const FullWidthWrapper = styled.div`
+  width: 100%;
+  margin: auto;
 `;
 
 const LabelButton = styled.label`
@@ -67,18 +75,13 @@ const LabelButton = styled.label`
     paddingRight: 15px;
     font-size: .9rem;
     fontWeight: 200;
-    border-radius: 5px;
+    border-radius: 30px;
     color: darkgrey;
     border: 0.3pt solid lightseagreen;
     borderRadius: 30px;
     &:hover{
         cursor: pointer;
     }
-`;
-
-const StyledSubmitButton = styled(SubmitButton)`
-  padding: 10px 20px;
-  borderRadius: 30px;
 `;
 
 class CreatePost extends Component {
@@ -99,7 +102,7 @@ class CreatePost extends Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
-    const { postTitleImageURL, title, categories, content } = this.props.fields;
+    const { postTitleImageURL, title, categories, content, postDescription } = this.props.fields;
     return (
       <div>
         <CreatePostWrapper>
@@ -119,24 +122,40 @@ class CreatePost extends Component {
               </LabelButton>
           </ButtonWrapper>
           <OptionsBar content={this.props.postContent}/>
-          <form onSubmit={handleSubmit(values => this.props.submitNewPost(values))}>
+          <form onSubmit={handleSubmit((values) => {
+            this.props.submitNewPost(values).then(response => {
+              this.props.routerProps.history.push('/post/'+response)
+            });
+          })}
+          >
             <InputFieldLarge
               component="input"
               placeholder="Post Title"
               name="postTitle"
+              required
               {...title}
             />
             <InputFieldLarge
               component="input"
               placeholder="Post Tags"
               name="categories"
+              required
               {...categories}
+            />
+            <TextAreaField
+              rows="3"
+              component="textarea"
+              name="postDescription"
+              placeholder={'Write up a short description for the post'}
+              required
+              {...postDescription}
             />
             <TextAreaField
               rows="9"
               component="textarea"
               name="postContent"
               placeholder={'Enter content here'}
+              required
               {...content}
             />
             <ButtonWrapper>
@@ -145,6 +164,10 @@ class CreatePost extends Component {
               </StyledSubmitButton>
             </ButtonWrapper>
           </form>
+          <h2> Preview </h2>
+          {this.props.postContent ? 
+            <StyledMarkDown source={this.props.postContent} /> :
+        ''}
         </CreatePostWrapper>
       </div>
     );
@@ -154,7 +177,7 @@ class CreatePost extends Component {
 
 CreatePost = reduxForm({
   form: 'newPost',
-  fields: ['postTitleImageURL', 'title', 'categories', 'content'],
+  fields: ['postTitleImageURL', 'title', 'categories', 'content', 'postDescription'],
 }, null, { uploadImage })(CreatePost);
 const selector = formValueSelector('newPost');
 

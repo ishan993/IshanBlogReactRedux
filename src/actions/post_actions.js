@@ -5,10 +5,26 @@ import config from '../config';
 const ROOT_URL = config.ROOT_URL;
 const MARKDOWN_LINK_ADDED = 'MARKDOWN_LINK_ADDED';
 export const FETCH_POST = 'FETCH_POST';
+export const FETCH_ALL_POSTS = '';
 
 // //////////////////////////////////////
 // Actions related to posts
 // /////////////////////////////////////
+
+// fetch all posts.
+// TODO: Implement pagination
+export const getAllPosts = () => {
+  const fetchAllPostsRequest = request.get(ROOT_URL + '/posts')
+                                      .send();
+  return (dispatch) => {
+    fetchAllPostsRequest.then((response) => {
+      dispatch({ type: FETCH_ALL_POSTS, payload: response.body.result });
+    })
+    .catch((error) => {
+      console.log('FETCH_ALL_POSTS_ERROR' + JSON.stringify(error.message));
+    });
+  };
+};
 
 // Submit newPost form
 export const submitNewPost = (values) => {
@@ -17,10 +33,12 @@ export const submitNewPost = (values) => {
                         .send(values);
 
   return (dispatch) => {
-    createPost.then((response) => {
+    return createPost.then((response) => {
+      console.log('NEW_POST_CREATED_SUCCESS'+JSON.stringify(response.body.result._id));
+      return (response.body.result._id);
     })
     .catch(error => {
-      console.log('ERROR_ACTIONS_SUBMIT_NEW_POST' + JSON.stringify(error));
+      console.log('NEW_POST_CREATED_ERROR' + JSON.stringify(error));
     });
   };
 };

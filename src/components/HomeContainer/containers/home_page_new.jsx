@@ -40,21 +40,35 @@ const headlineProps = {
 };
 
 
-const HomePage = props => (
-  <ContentWrapper>
-    <TopPost props={headlineProps} />
-    <MidPostsWrapper>
-      <MidPost url={'https://s-media-cache-ak0.pinimg.com/originals/5c/91/a0/5c91a0775997aaedec4e68807b806e03.jpg'} />
-      <MidPost url={'http://okp-cdn.okayplayer.com/wp-content/uploads/2017/02/john-mayer-wave-two-copy.jpg'} />
-      <MidPost url={'http://www.billboard.com/files/styles/article_main_image/public/media/john-mayer-performance-650-430.jpg'} />
-    </MidPostsWrapper>
-    <BottomPostWrapper>
-      <BottomPost props={headlineProps} />
-      <BottomPost props={headlineProps} />
-      <BottomPost props={headlineProps} />
-      <BottomPost props={headlineProps} />
-    </BottomPostWrapper>
-  </ContentWrapper>
-);
+const HomePage = props => {
+  const propPosts = props.posts;
+  if (propPosts.length === 0) {
+    return (
+      <p>
+        Loading...
+      </p>
+    );
+  }
+  return (
+    <ContentWrapper>
+      <TopPost post={propPosts.splice(0, 1)[0]} />
+      <MidPostsWrapper>
+        <MidPost url={'https://s-media-cache-ak0.pinimg.com/originals/5c/91/a0/5c91a0775997aaedec4e68807b806e03.jpg'} />
+        <MidPost url={'http://okp-cdn.okayplayer.com/wp-content/uploads/2017/02/john-mayer-wave-two-copy.jpg'} />
+        <MidPost url={'http://www.billboard.com/files/styles/article_main_image/public/media/john-mayer-performance-650-430.jpg'} />
+      </MidPostsWrapper>
+      <BottomPostWrapper>
+        <BottomPost props={headlineProps} />
+        <BottomPost props={headlineProps} />
+        <BottomPost props={headlineProps} />
+        <BottomPost props={headlineProps} />
+      </BottomPostWrapper>
+    </ContentWrapper>
+  );
+};
+
+HomePage.propTypes = {
+  posts: PropTypes.array.isRequired,
+};
 
 export default HomePage;

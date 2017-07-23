@@ -3,7 +3,12 @@
     font-family: title-font;
     src: url(CaviarDreams-webfont.woff);
 }
+@font-face {
+    font-family: quicksand;
+    src: url(Quicksand-Regular.ttf);
+}
 body {
+  font-family: quicksand;
   margin: 0;
   padding: 0;
 }
@@ -47,7 +52,7 @@ h4 {
 p, li {
   margin-top: 0;
   font-weight: 100;
-	font-size: 0.9rem;
+	font-size: 1rem;
 }
 
 img {

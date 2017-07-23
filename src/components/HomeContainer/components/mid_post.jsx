@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const H3Link = styled(Link)`
+const H2Link = styled(Link)`
   cursor: pointer;
-  fontSize: 1.2rem;
+  fontSize: 1.8rem;
   textDecoration: none;
   fontWeight: 100;
   color: darkGrey;
@@ -19,7 +19,6 @@ const Image = styled.img`
     maxWidth: 100%;
     padding: 0;
     objectFit: cover;
-
 `;
 
 const MidPostWrapper = styled.div`
@@ -48,9 +47,9 @@ const MidPost = props => (
       <Image src={props.url} />
     </ImageContainer>
     <TextContainer>
-      <H3Link to="/google.com">
+      <H2Link to="/google.com">
         Fix You
-      </H3Link>
+      </H2Link>
       <p>
         please!wrzey
         xtcyvubiln;ilm'k;,ztrxd

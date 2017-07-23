@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const H3Link = styled(Link)`
+const H2Link = styled(Link)`
   cursor: pointer;
-  fontSize: 1.2rem;
+  fontSize: 1.8rem;
   textDecoration: none;
   fontWeight: 100;
   color: darkGrey;
@@ -42,9 +42,9 @@ const BottomPost = (props) => (
       <Image src="https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg" />
     </ImageWrapper>
     <TextWrapper>
-      <H3Link to={'hello'}>
+      <H2Link to={'hello'}>
         Hello World!
-      </H3Link>
+      </H2Link>
       <p>
         Post content here!
       </p>

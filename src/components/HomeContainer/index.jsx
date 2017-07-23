@@ -8,7 +8,7 @@ import HomePage from './containers/home_page_new';
 import ResumeTab from '../../containers/resume_tab';
 import Modal from '../base_modal';
 import LoginModal from '../Modal';
-import {showBlogTab, showResumeTab} from '../../actions/index';
+import { showBlogTab, showResumeTab, getAllPosts } from '../../actions/index';
 
 const HomeWrapper = styled.div`
   width: 100%;
@@ -38,6 +38,10 @@ class HomeContainer extends Component {
     showSecondTab: this.props.showResumeTab,
   };
 
+  componentWillMount() {
+    this.props.getAllPosts();
+  }
+
   render() {
     return (
       <HomeWrapper>
@@ -51,17 +55,28 @@ class HomeContainer extends Component {
         }
         {this.props.resumeVisible ?
           <ResumeTab /> :
-          <HomePage />
+          <HomePage posts={this.props.posts}/>
         }
       </HomeWrapper>
     );
   }
 }
 
+//  TODO: change post reducer name
 const mapStateToProps = (state) => ({
   resumeVisible: state.displayComps.resumeVisible,
   loginModalVisible: state.displayComps.loginModalVisible,
-  loadingScreenVisible: state.displayComps.loadingScreenVisible
+  loadingScreenVisible: state.displayComps.loadingScreenVisible,
+  posts: state.posts.posts
 });
 
-export default connect(mapStateToProps, {showBlogTab, showResumeTab})(HomeContainer);
+HomeContainer.propTypes = {
+  resumeVisible: PropTypes.bool.isRequired,
+  loginModalVisible: PropTypes.bool.isRequired,
+  posts: PropTypes.array.isRequired,
+  showBlogTab: PropTypes.func.isRequired,
+  showResumeTab: PropTypes.func.isRequired,
+  getAllPosts: PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps, { showBlogTab, showResumeTab, getAllPosts })(HomeContainer);

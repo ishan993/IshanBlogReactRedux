@@ -27,11 +27,12 @@ export const SubmitButton = styled.button`
     background: white;
     color: grey;
     border: 1px solid lightseagreen;
-    font-size: 1.4rem;
+    font-size: 0.8rem;
     unselectable: on;
-    padding: 5px;
+    padding: 3px 15px;
     margin: auto;
     width: auto;
+    borderRadius: 30px;
     margin-top: 10px;
     &:hover{
         background: rgba(0, 0, 0, .07);
