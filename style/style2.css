@@ -27,6 +27,15 @@ html {
 	  font-size: 14px;
     box-sizing: border-box;
 }
+pre {
+  background-color: #dbf0fd;
+  display: block;
+  padding: 20px;
+}
+code {
+  background-color: #dbf0fd;
+}
+
 h1 {
 	font-size: 3rem;
   font-weight: 100;

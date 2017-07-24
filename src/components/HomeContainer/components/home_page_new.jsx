@@ -6,7 +6,6 @@ import TopPost from '../components/top_post';
 import MidPost from '../components/mid_post';
 import BottomPost from '../components/bottom_post';
 
-
 const BottomPostWrapper = styled.div`
   margin: auto;
   marginTop: 20px;
@@ -41,7 +40,10 @@ const headlineProps = {
 
 
 const HomePage = props => {
-  const propPosts = props.posts;
+  const propPosts = props.posts.slice();
+  propPosts.map((item) => {
+    console.log(item.postTitle);
+  });
   if (propPosts.length === 0) {
     return (
       <p>
@@ -51,17 +53,15 @@ const HomePage = props => {
   }
   return (
     <ContentWrapper>
+      {console.log('The length is: '+ propPosts.length)}
       <TopPost post={propPosts.splice(0, 1)[0]} />
       <MidPostsWrapper>
-        <MidPost url={'https://s-media-cache-ak0.pinimg.com/originals/5c/91/a0/5c91a0775997aaedec4e68807b806e03.jpg'} />
-        <MidPost url={'http://okp-cdn.okayplayer.com/wp-content/uploads/2017/02/john-mayer-wave-two-copy.jpg'} />
-        <MidPost url={'http://www.billboard.com/files/styles/article_main_image/public/media/john-mayer-performance-650-430.jpg'} />
+        <MidPost post={propPosts.splice(0, 1)[0]} />
+        <MidPost post={propPosts.splice(0, 1)[0]} />
+        <MidPost post={propPosts.splice(0, 1)[0]} />
       </MidPostsWrapper>
       <BottomPostWrapper>
-        <BottomPost props={headlineProps} />
-        <BottomPost props={headlineProps} />
-        <BottomPost props={headlineProps} />
-        <BottomPost props={headlineProps} />
+        {propPosts.map(post => (<BottomPost post={post} />))}
       </BottomPostWrapper>
     </ContentWrapper>
   );

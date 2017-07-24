@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -55,7 +56,6 @@ const TextAreaField = styled(Field)`
 `;
 
 const StyledMarkDown = styled(MarkDown)`
-  background: lightgrey;
 `;
 const StyledSubmitButton = styled(SubmitButton)`
   padding: 10px 20px;
@@ -92,10 +92,9 @@ class CreatePost extends Component {
     }
   }
 
-  handleFile(event, bool) {
+  handleFile(event) {
     this.props.uploadImage({
       file: event.target.files[0],
-      isPostTitleImage: bool,
       content: this.props.postContent,
     });
   }
@@ -115,7 +114,8 @@ class CreatePost extends Component {
               <FileInputConcealer
                 type="file"
                 name="postTitleImageURL"
-                onChange={event => this.handleFile(event, true)}
+                onChange={event => this.handleFile(event)}
+                required
                 {...postTitleImageURL}
               />
                 Upload an image for this post    
@@ -183,10 +183,18 @@ const selector = formValueSelector('newPost');
 
 const mapStateToProps = state => ({
   userLoggedIn: state.displayComps.userLoggedIn,
-  markDownProps: state.markDownProps,
   postTitleImageURL: selector(state, 'postTitleImageURL'),
   postContent: selector(state, 'postContent'),
 });
+
+CreatePost.propTypes = {
+  userLoggedIn: PropTypes.bool.isRequired,
+  postTitleImageURL: PropTypes.string.isRequired,
+  postContent: PropTypes.string.isRequired,
+  routerProps: PropTypes.object.isRequired,
+  fields: PropTypes.object.isRequired,
+  submitNewPost: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, {
   uploadImage,

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import TabBar from '../../containers/tab_bar';
-import HomePage from './containers/home_page_new';
+import HomePage from './components/home_page_new';
 import ResumeTab from '../../containers/resume_tab';
 import Modal from '../base_modal';
 import LoginModal from '../Modal';

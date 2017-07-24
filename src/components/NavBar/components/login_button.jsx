@@ -10,7 +10,6 @@ const TextButtonRight = styled(Link)`
     text-decoration: none;
     margin: 0;
     padding: 0;
-    font-family: title-font;
     text-align: center;
     flex-basis: 40%;
     order: -1;

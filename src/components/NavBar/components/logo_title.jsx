@@ -6,7 +6,6 @@ import { IconImage } from '../../reuseable_components';
 
 const TitleAndLogoContainer = styled.div`
   flexBasis: 40%;
-  font-family: title-font;
   order: -1;
   text-align: left;
   display: flex;

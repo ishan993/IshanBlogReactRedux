@@ -43,20 +43,22 @@ const ImageContainer = styled(Link)`
 
 const MidPost = props => (
   <MidPostWrapper>
-    <ImageContainer to="/post/1499901747564">
-      <Image src={props.url} />
+    <ImageContainer to={'/post/' + props.post._id}>
+      <Image src={props.post.postTitleImageURL} />
     </ImageContainer>
     <TextContainer>
-      <H2Link to="/google.com">
-        Fix You
+      <H2Link to={'/post/' + props.post._id}>
+        {props.post.postTitle}
       </H2Link>
       <p>
-        please!wrzey
-        xtcyvubiln;ilm'k;,ztrxd
-        Add more textDecorationWill thtay wficasc if?
+        {props.post.postDescription}
       </p>
     </TextContainer>
   </MidPostWrapper>
 );
+
+MidPost.propTypes = {
+  post: PropTypes.object.isRequired,
+};
 
 export default MidPost;

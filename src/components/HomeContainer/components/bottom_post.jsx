@@ -36,20 +36,24 @@ const Image = styled.img`
   margin: auto;
 `;
 
-const BottomPost = (props) => (
+const BottomPost = props => (
   <BottomPostWrapper>
-    <ImageWrapper to="/post/1499901747564">
-      <Image src="https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg" />
+    <ImageWrapper to={'/post/' + props.post._id}>
+      <Image src={props.post.postTitleImageURL} />
     </ImageWrapper>
     <TextWrapper>
-      <H2Link to={'hello'}>
-        Hello World!
+      <H2Link to={'/post/' + props.post._id}>
+        {props.post.postTitle}
       </H2Link>
       <p>
-        Post content here!
+        {props.post.postDescription}
       </p>
     </TextWrapper>
   </BottomPostWrapper>
 );
+
+BottomPost.propTypes = {
+  post: PropTypes.object.isRequired,
+};
 
 export default BottomPost;

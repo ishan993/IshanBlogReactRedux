@@ -42,11 +42,10 @@ const Image = styled.img`
 const TopPost = (props) => (
   <TopPostWrapper>
     <ImageWrapper to={'/post/' + props.post._id}>
-      {console.log('I got these props!' + JSON.stringify(props))}
-      <Image src="https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg" />
+      <Image src={props.post.postTitleImageURL} />
     </ImageWrapper>
     <TextWrapper>
-      <H1Link to="/post/1499901747564">
+      <H1Link to={'/post/' + props.post._id}>
         {props.post.postTitle}
       </H1Link>
       <p>
