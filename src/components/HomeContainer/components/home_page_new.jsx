@@ -41,9 +41,6 @@ const headlineProps = {
 
 const HomePage = props => {
   const propPosts = props.posts.slice();
-  propPosts.map((item) => {
-    console.log(item.postTitle);
-  });
   if (propPosts.length === 0) {
     return (
       <p>
@@ -51,6 +48,7 @@ const HomePage = props => {
       </p>
     );
   }
+
   return (
     <ContentWrapper>
       {console.log('The length is: '+ propPosts.length)}
@@ -61,7 +59,7 @@ const HomePage = props => {
         <MidPost post={propPosts.splice(0, 1)[0]} />
       </MidPostsWrapper>
       <BottomPostWrapper>
-        {propPosts.map(post => (<BottomPost post={post} />))}
+        {propPosts.map(post => (<BottomPost key={post._id} post={post} />))}
       </BottomPostWrapper>
     </ContentWrapper>
   );

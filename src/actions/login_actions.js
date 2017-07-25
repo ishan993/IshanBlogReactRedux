@@ -19,26 +19,43 @@ export const hideLoginModal = () => ({
 });
 
 export const checkUserLoggedInAction = () => {
-  if (localStorage.getItem('userLoggedIn') === 'true') {
+  if (localStorage.getItem('token') === null) {
+    console.log('USER_LOGGED_IN_FALSE');
     return ({
       type: UPDATE_USER_LOGGED_IN,
-      payload: true,
+      payload: false,
     });
   }
-  return ({
-    type: UPDATE_USER_LOGGED_IN,
-    payload: false,
-  });
+  const tokenValidRequest = request.post(ROOT_URL + '/token')
+                                    .send({ token: localStorage.getItem('token') });
+  return (dispatch) => {
+    tokenValidRequest.then(response => {
+      dispatch({
+        type: UPDATE_USER_LOGGED_IN,
+        payload: true,
+      });
+    })
+    .catch(error => {
+      console.log('LOGIN_ERROR: ' + error.message);
+      dispatch({
+        type: UPDATE_USER_LOGGED_IN,
+        payload: false,
+      });
+    });
+  };
 };
 
 const loginSuccessSequence = (dispatch) => {
-  localStorage.setItem('userLoggedIn', true);
-
-  dispatch(toggleAuthErrorAction({ showError: false, message: null }));
+  dispatch(toggleAuthErrorAction({
+    showError: false,
+    message: null,
+  }));
   dispatch(toggleLoadingGraphicAction(false));
   dispatch(hideLoginModal());
-  dispatch({ type: UPDATE_USER_LOGGED_IN, payload: true });
-  console.log('Hitting me!');
+  dispatch({
+    type: UPDATE_USER_LOGGED_IN,
+    payload: true,
+  });
 };
 
 export const signUpUser = (props) => {
@@ -54,7 +71,10 @@ export const signUpUser = (props) => {
     })
     .catch((error) => {
       dispatch(toggleLoadingGraphicAction(false));
-      dispatch(toggleAuthErrorAction({ showError: true, message: error.response.body.message }));
+      dispatch(toggleAuthErrorAction({
+        showError: true,
+        message: error.response.body.message,
+      }));
     });
   };
 };
@@ -69,13 +89,16 @@ export const logInUser = (props) => {
   return (dispatch) => {
     dispatch(toggleLoadingGraphicAction(true));
     loginReq.then((response) => {
-      localStorage.setItem('token', response.body.data.user.token);
+      localStorage.setItem('token', response.body.result.token);
       loginSuccessSequence(dispatch);
     })
     .catch((error) => {
       console.log('Login error: ' + error);
       dispatch(toggleLoadingGraphicAction(false));
-      dispatch(toggleAuthErrorAction({ showError: true, message: error.response.body.message }));
+      dispatch(toggleAuthErrorAction({
+        showError: true,
+        message: error.response.body.message,
+      }));
     });
   };
 };

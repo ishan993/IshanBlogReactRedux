@@ -30,7 +30,9 @@ export const getAllPosts = () => {
 export const submitNewPost = (values) => {
   console.log('I got these values here! ' + JSON.stringify(values));
   const createPost = request.post(ROOT_URL + '/post')
-                        .send(values);
+                        .send(values)
+                        .set('x-access-token', localStorage.getItem('token'));
+
 
   return (dispatch) => {
     return createPost.then((response) => {

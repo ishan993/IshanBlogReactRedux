@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import MarkDown from 'react-markdown';
@@ -85,16 +84,16 @@ const LabelButton = styled.label`
 `;
 
 class CreatePost extends Component {
-  constructor(props) {
-    super(props);
-    if (!this.props.userLoggedIn) {
-      browserHistory.push('/');
+  componentWillMount() {
+    if (!this.props.userLoggedIn){
+      console.log('USER_NOT_LOGGED_IN');
+      this.props.routerProps.history.push('/');
     }
   }
-
-  handleFile(event) {
+  handleFile(event, bool) {
     this.props.uploadImage({
       file: event.target.files[0],
+      isPostTitleImage: bool,
       content: this.props.postContent,
     });
   }
@@ -114,7 +113,7 @@ class CreatePost extends Component {
               <FileInputConcealer
                 type="file"
                 name="postTitleImageURL"
-                onChange={event => this.handleFile(event)}
+                onChange={event => this.handleFile(event, true)}
                 required
                 {...postTitleImageURL}
               />
