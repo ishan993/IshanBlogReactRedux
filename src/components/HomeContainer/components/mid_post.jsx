@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const H2Link = styled(Link)`
   cursor: pointer;
@@ -10,15 +11,16 @@ const H2Link = styled(Link)`
   fontWeight: 100;
   color: darkGrey;
 `;
+
 const Image = styled.img`
-    margin: auto;
-    textAlign: center;
-    width: 100%;
-    height: 100%;
-    maxHeight: 200px;
-    maxWidth: 100%;
-    padding: 0;
-    objectFit: cover;
+  margin: auto;
+  textAlign: center;
+  width: 100%;
+  height: 100%;
+  maxHeight: 200px;
+  maxWidth: 100%;
+  padding: 0;
+  objectFit: cover;
 `;
 
 const MidPostWrapper = styled.div`
@@ -29,12 +31,18 @@ const MidPostWrapper = styled.div`
     flexBasis: 30%;
     display: flex;
     flexDirection: column;
-    justifyContent: space-between;
+    justifyContent: space-around;
   }
 `;
 
+const AuthorAndTimeContainer = styled.div`
+  fontSize: 1rem;
+  color: grey;
+  width: 100%;
+`;
+
 const TextContainer = styled.div`
-  flexBasis: 40%;
+  flexBasis: 60%;
   padding: 10px;
 `;
 const ImageContainer = styled(Link)`
@@ -53,6 +61,11 @@ const MidPost = props => (
       <p>
         {props.post.postDescription}
       </p>
+      <AuthorAndTimeContainer>
+        {props.post.postDate ?
+          moment(props.post.postDate).format('l') :
+          moment(1490911605370).format('l')}
+      </AuthorAndTimeContainer>
     </TextContainer>
   </MidPostWrapper>
 );

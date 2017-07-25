@@ -122,9 +122,9 @@ class CreatePost extends Component {
           </ButtonWrapper>
           <OptionsBar content={this.props.postContent}/>
           <form onSubmit={handleSubmit((values) => {
-            this.props.submitNewPost(values).then(response => {
+            this.props.submitNewPost(values).then((response) => {
               this.props.routerProps.history.push('/post/'+response)
-            });
+            }).catch((error) => { console.log('I got error: ' + error); });
           })}
           >
             <InputFieldLarge
@@ -164,7 +164,7 @@ class CreatePost extends Component {
             </ButtonWrapper>
           </form>
           <h2> Preview </h2>
-          {this.props.postContent ? 
+          {this.props.postContent ?
             <StyledMarkDown source={this.props.postContent} /> :
         ''}
         </CreatePostWrapper>

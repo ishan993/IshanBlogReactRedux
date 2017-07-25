@@ -24,7 +24,7 @@ class LoginForm extends Component {
     const { email, password } = this.props.fields;
     return (
       <FullWrapper>
-        <form>
+        <form onSubmit={(event) => { event.preventDefault(); }}>
           <InputFieldLarge
             component="input"
             name="email"

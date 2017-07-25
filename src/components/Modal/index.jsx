@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import {Field, reduxForm, formValueSelector, change} from 'redux-form';
-
 import { hideLoginModal, showLoginTab, showSignUpTab, logInUser, signUpUser,
      toggleLoadingGraphicAction, toggleAuthErrorAction} from '../../actions';
 import { InputFieldLarge } from '../CreatePost';

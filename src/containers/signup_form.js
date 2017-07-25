@@ -39,7 +39,7 @@ class SignUpForm extends Component {
     const { firstName, lastName, email, password } = this.props.fields;
     return (
       <FullWrapper>
-        <form>
+        <form onSubmit={(event) => { event.preventDefault(); }}>
           <SmallInputField
             component="input"
             name="firstName"

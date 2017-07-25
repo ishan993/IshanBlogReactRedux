@@ -28,7 +28,6 @@ export const getAllPosts = () => {
 
 // Submit newPost form
 export const submitNewPost = (values) => {
-  console.log('I got these values here! ' + JSON.stringify(values));
   const createPost = request.post(ROOT_URL + '/post')
                         .send(values)
                         .set('x-access-token', localStorage.getItem('token'));
@@ -39,8 +38,9 @@ export const submitNewPost = (values) => {
       console.log('NEW_POST_CREATED_SUCCESS'+JSON.stringify(response.body.result._id));
       return (response.body.result._id);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log('NEW_POST_CREATED_ERROR' + JSON.stringify(error));
+      return (error);
     });
   };
 };
