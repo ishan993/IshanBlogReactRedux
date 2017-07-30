@@ -7,6 +7,7 @@ export * from './login_actions';
 export * from './error_actions';
 export * from './display_actions';
 export * from './post_actions';
+export * from './user_actions';
 
 const ROOT_URL = 'http://localhost:3000';
 const API_KEY = '?key=ishan';

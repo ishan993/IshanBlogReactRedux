@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import HomeComponent from '../components/HomeContainer';
 import CreatePostComponent from '../components/CreatePost';
 import CurrentPost from './CurrentPost';
+import UserInfo from './UserInfo';
 
 const RouterWrapper = styled.div`
   margin-top: 60px;
@@ -28,6 +29,11 @@ const ContentRouter = () => (
         path="/post/:id"
         exact
         component={props => <CurrentPost routerProps={props} />}
+      />
+      <Route
+        path="/user/:id"
+        exact
+        component={props => <UserInfo routerProps={props} />}
       />
     </Switch>
   </RouterWrapper>

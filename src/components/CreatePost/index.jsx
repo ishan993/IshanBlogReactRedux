@@ -57,8 +57,10 @@ const TextAreaField = styled(Field)`
 const StyledMarkDown = styled(MarkDown)`
 `;
 const StyledSubmitButton = styled(SubmitButton)`
+  background: lightseagreen;
+  color: white;
   padding: 10px 20px;
-  borderRadius: 30px;
+  borderRadius: 5px;
 `;
 
 const FullWidthWrapper = styled.div`
@@ -75,9 +77,10 @@ const LabelButton = styled.label`
     font-size: .9rem;
     fontWeight: 200;
     border-radius: 30px;
-    color: darkgrey;
+    color: white;
     border: 0.3pt solid lightseagreen;
-    borderRadius: 30px;
+    borderRadius: 5px;
+    background: lightseagreen;
     &:hover{
         cursor: pointer;
     }
@@ -122,7 +125,12 @@ class CreatePost extends Component {
           </ButtonWrapper>
           <OptionsBar content={this.props.postContent}/>
           <form onSubmit={handleSubmit((values) => {
-            this.props.submitNewPost(values);
+            this.props.submitNewPost(values)
+              .then((response) => {
+                console.log('HIT OK =====>>>>');
+              }).catch((error) => {
+                console.log('It worked!!!!' + error.message);
+              });
           })}
           >
             <InputFieldLarge

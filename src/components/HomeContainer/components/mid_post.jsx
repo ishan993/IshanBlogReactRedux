@@ -2,16 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import PostAuthorContainer from './PostAuthorContainer';
-
-const H2Link = styled(Link)`
-  padding: 10px 0;
-  cursor: pointer;
-  fontSize: 1.5rem;
-  textDecoration: none;
-  fontWeight: 100;
-  color: darkGrey;
-`;
+import PostTextContainer from './PostTextContainer';
 
 const Image = styled.img`
   margin: auto;
@@ -36,14 +27,6 @@ const MidPostWrapper = styled.div`
   }
 `;
 
-const TextContainer = styled.div`
-  flexBasis: 60%;
-  @media only screen and (min-width: 768px) {
-    display: flex;
-    flexDirection: column;
-    justifyContent: space-between;
-  }
-`;
 const ImageContainer = styled(Link)`
   flexBasis: 40%;
 `;
@@ -53,19 +36,12 @@ const MidPost = props => (
     <ImageContainer to={'/post/' + props.post._id}>
       <Image src={props.post.postTitleImageURL} />
     </ImageContainer>
-    <TextContainer>
-      <H2Link to={'/post/' + props.post._id}>
-        {props.post.postTitle}
-      </H2Link>
-      <p>
-        {props.post.postDescription}
-      </p>
-      <PostAuthorContainer
-        postAuthorImage="http://localhost:8080/static/profilePic.png"
-        postAuthorName="Ishan Vadwala"
-        postDate={props.post.postDate}
-      />
-    </TextContainer>
+    <PostTextContainer
+      _id={props.post._id}
+      postTitle={props.post.postTitle}
+      postDescription={props.post.postDescription}
+      postDate={props.post.postDate}
+    />
   </MidPostWrapper>
 );
 

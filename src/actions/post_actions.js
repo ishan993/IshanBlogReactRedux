@@ -18,7 +18,10 @@ export const getAllPosts = () => {
                                       .send();
   return (dispatch) => {
     fetchAllPostsRequest.then((response) => {
-      dispatch({ type: FETCH_ALL_POSTS, payload: response.body.result });
+      dispatch({
+        type: FETCH_ALL_POSTS,
+        payload: response.body.result,
+      });
     })
     .catch((error) => {
       console.log('FETCH_ALL_POSTS_ERROR' + JSON.stringify(error.message));
@@ -40,7 +43,7 @@ export const submitNewPost = (values) => {
     })
     .catch((error) => {
       console.log('NEW_POST_CREATED_ERROR' + JSON.stringify(error));
-      return (error);
+      return (Promise.reject(error));
     });
   };
 };
