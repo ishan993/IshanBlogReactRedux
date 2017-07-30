@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-
-const AuthorAndTimeContainer = styled.div`
-  fontSize: 1rem;
-  color: grey;
-  width: 100%;
-`;
+import PostAuthorContainer from './PostAuthorContainer';
 
 const H2Link = styled(Link)`
   cursor: pointer;
@@ -25,7 +19,7 @@ const BottomPostWrapper = styled.div`
   borderBottom: 0.3pt solid lightgrey;
   @media only screen and (min-width: 768px) {
     display: flex;
-    justifyContent: space-around;
+    justifyContent: space-between;
     alignContent: middle;
   }
 `;
@@ -36,6 +30,11 @@ const ImageWrapper = styled(Link)`
 const TextWrapper = styled.div`
   flexBasis: 60%;
   padding: 5px;
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    justifyContent: space-between;
+    flexDirection: column;
+  }
 `;
 const Image = styled.img`
   maxHeight: 225px;
@@ -55,12 +54,11 @@ const BottomPost = props => (
       <p>
         {props.post.postDescription}
       </p>
-      <AuthorAndTimeContainer>
-        {console.log('I got this time: ' + props.post.postDate + ' ' + props.post.postTitle)}
-        {props.post.postDate ?
-          moment(props.post.postDate).format('l') :
-          moment(1490911605370).format('l')}
-      </AuthorAndTimeContainer>
+      <PostAuthorContainer
+        postAuthorImage='http://localhost:8080/static/profilePic.png'
+        postAuthorName='Ishan Vadwala'
+        postDate={props.post.postDate}
+      />
     </TextWrapper>
   </BottomPostWrapper>
 );

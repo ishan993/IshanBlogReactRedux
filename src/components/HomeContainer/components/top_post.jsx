@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PostAuthorContainer from './PostAuthorContainer';
 
 const H1Link = styled(Link)`
   cursor: pointer;
@@ -21,7 +21,7 @@ const TopPostWrapper = styled.div`
   margin: 0;
   @media only screen and (min-width: 768px) {
     display: flex;
-    justifyContent: space-around;
+    justifyContent: space-between;
     alignContent: middle;
   }
 `;
@@ -32,7 +32,7 @@ const ImageWrapper = styled(Link)`
 `;
 const TextWrapper = styled.div`
   flexBasis: 50%;
-  padding: 30px;
+  padding: 20px;
   flex-shrink: 1;
   @media only screen and (min-width: 768px) {
     display: flex;
@@ -63,11 +63,11 @@ const TopPost = (props) => (
       <p>
         {props.post.postDescription}
       </p>
-      <AuthorAndTimeContainer>
-        {props.post.postDate ?
-          moment.unix(props.post.postDate).format('l') :
-          moment(1490911605370).format('l')}
-      </AuthorAndTimeContainer>
+      <PostAuthorContainer
+        postAuthorImage='http://localhost:8080/static/profilePic.png'
+        postAuthorName='Ishan Vadwala'
+        postDate={props.post.postDate}
+      />
     </TextWrapper>
   </TopPostWrapper>
 );

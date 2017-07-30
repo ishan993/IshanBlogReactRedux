@@ -122,9 +122,7 @@ class CreatePost extends Component {
           </ButtonWrapper>
           <OptionsBar content={this.props.postContent}/>
           <form onSubmit={handleSubmit((values) => {
-            this.props.submitNewPost(values).then((response) => {
-              this.props.routerProps.history.push('/post/'+response)
-            }).catch((error) => { console.log('I got error: ' + error); });
+            this.props.submitNewPost(values);
           })}
           >
             <InputFieldLarge

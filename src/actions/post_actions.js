@@ -70,17 +70,21 @@ export const addMarkdownLink = (props) => {
 
 // Add markdown for Bold, Italic & code
 export const addMarkdownFormatting = (props) => {
+  if (props.content === undefined) {
+    props.content = '';
+  }
+
   let formattingString = '';
   switch (props.formatting) {
     case 'BOLD':
       formattingString = '**';
       return (dispatch) => {
-        dispatch(change('newPost', 'postContent', props.content + ' ' + formattingString));
+        dispatch(change('newPost', 'postContent', props.content + '' + formattingString));
       };
     case 'CODE':
       formattingString = '```';
       return (dispatch) => {
-        dispatch(change('newPost', 'postContent', props.content + '\n' + formattingString));
+        dispatch(change('newPost', 'postContent', props.content + '\n' + formattingString + '\n'));
       };
     case 'ITALIC':
       formattingString = '*';

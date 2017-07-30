@@ -23,21 +23,15 @@ const ContentWrapper = styled.div`
 const MidPostsWrapper = styled.div`
   display: block;
   marginTop: 20px;
+  padding: 20px 0;  
   borderTop: 0.3pt solid lightgrey;
   borderBottom: 0.3pt solid lightgrey;
   @media only screen and (min-width: 768px) {
     display: flex;
-    justifyContent: space-around;
+    justifyContent: space-between;
     alignContent: center;
   }
 `;
-
-const headlineProps = {
-  displayProps: { imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/51R1OY7r4QL.jpg' },
-  textProps: { title: "Don't think twice, it's alright",
-    content: "When your rooster crows at the break a dawn, look out your window and I'll be gone. You're the reason I'm trav'lin' on. Don't think twice, it's all right" },
-};
-
 
 const HomePage = props => {
   const propPosts = props.posts.slice();

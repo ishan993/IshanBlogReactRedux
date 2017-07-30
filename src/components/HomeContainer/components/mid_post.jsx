@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+import PostAuthorContainer from './PostAuthorContainer';
 
 const H2Link = styled(Link)`
+  padding: 10px 0;
   cursor: pointer;
-  fontSize: 1.8rem;
+  fontSize: 1.5rem;
   textDecoration: none;
   fontWeight: 100;
   color: darkGrey;
@@ -31,19 +32,17 @@ const MidPostWrapper = styled.div`
     flexBasis: 30%;
     display: flex;
     flexDirection: column;
-    justifyContent: space-around;
+    justifyContent: space-between;
   }
-`;
-
-const AuthorAndTimeContainer = styled.div`
-  fontSize: 1rem;
-  color: grey;
-  width: 100%;
 `;
 
 const TextContainer = styled.div`
   flexBasis: 60%;
-  padding: 10px;
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    flexDirection: column;
+    justifyContent: space-between;
+  }
 `;
 const ImageContainer = styled(Link)`
   flexBasis: 40%;
@@ -61,11 +60,11 @@ const MidPost = props => (
       <p>
         {props.post.postDescription}
       </p>
-      <AuthorAndTimeContainer>
-        {props.post.postDate ?
-          moment(props.post.postDate).format('l') :
-          moment(1490911605370).format('l')}
-      </AuthorAndTimeContainer>
+      <PostAuthorContainer
+        postAuthorImage="http://localhost:8080/static/profilePic.png"
+        postAuthorName="Ishan Vadwala"
+        postDate={props.post.postDate}
+      />
     </TextContainer>
   </MidPostWrapper>
 );
