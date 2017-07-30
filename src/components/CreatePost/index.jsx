@@ -120,6 +120,7 @@ class CreatePost extends Component {
                 required
                 {...postTitleImageURL}
               />
+                
                 Upload an image for this post    
               </LabelButton>
           </ButtonWrapper>
@@ -127,7 +128,7 @@ class CreatePost extends Component {
           <form onSubmit={handleSubmit((values) => {
             this.props.submitNewPost(values)
               .then((response) => {
-                console.log('HIT OK =====>>>>');
+                this.props.routerProps.history.push('/post/' + response);
               }).catch((error) => {
                 console.log('It worked!!!!' + error.message);
               });

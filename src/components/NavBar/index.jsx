@@ -28,7 +28,7 @@ const NavBarWrapper = styled(FullWidthWrapper)`
 
 const SearchAndLoginContainer = styled.div`
     paddingRight: 10px;
-    flexBasis: ${props => props.isLoggedIn ? '55%' : '30%'};
+    flexBasis: ${(props) => props.isLoggedIn ? '55%' : '30%'};
     display: flex;
     align-items: center;
     justify-content: space-around;

@@ -5,6 +5,7 @@ import displayComponentsReducer from './reducer_display';
 import searchFormReducer from './reducer_form';
 import markDownReducer from './reducer_markdown';
 import errorReducer from './redeucer_error';
+import userReducer from './reducer_user';
 
 const rootReducer = combineReducers({
   posts: postsReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   searchForm: searchFormReducer,
   markDownProps: markDownReducer,
   errorProps: errorReducer,
+  userProps: userReducer,
 });
 
 export default rootReducer;
