@@ -31,6 +31,7 @@ const PostTextContainer = (props) => (
       {props.postDescription}
     </p>
     <PostAuthorContainer
+      postAuthorId={props.postAuthorId}
       postAuthorImage="http://localhost:8080/static/profilePic.png"
       postAuthorName="Ishan Vadwala"
       postDate={props.postDate}
@@ -40,6 +41,7 @@ const PostTextContainer = (props) => (
 
 PostTextContainer.propTypes = {
   _id: PropTypes.string.isRequired,
+  postAuthorId: PropTypes.string.isRequired,
   postTitle: PropTypes.string.isRequired,
   postDescription: PropTypes.string.isRequired,
   postDate: PropTypes.string.isRequired,

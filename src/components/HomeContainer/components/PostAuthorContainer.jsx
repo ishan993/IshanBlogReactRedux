@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -23,12 +24,21 @@ const PostAuthorWrapper = styled.div`
   justifyContent: flex-start;
   alignItems: center;
 `;
+
+const StyledLink = styled(Link)`
+  textDecoration: none;
+  display: flex;
+  color: grey;
+  alignItems: center;
+`;
 const PostAuthorContainer = (props) => (
   <PostAuthorWrapper>
-    <PostAuthor src={props.postAuthorImage} />
-    <BoldText>
-      By {' ' + props.postAuthorName}
-    </BoldText>
+    <StyledLink to={'/user/' + props.postAuthorId}>
+      <PostAuthor src={props.postAuthorImage} />
+      <BoldText>
+        By {' ' + props.postAuthorName}
+      </BoldText>
+    </StyledLink>
     {props.postDate ?
       moment(props.postDate).format('l') : ' ' +
       moment(1490911605370).format('l')}

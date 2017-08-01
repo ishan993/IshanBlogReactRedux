@@ -150,7 +150,7 @@ export const DropdownContent = styled.div`
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 `;
 
-export const LabelGrey = styled.label`
+export const LabelGrey = styled.div`
     -webkit-user-select: none; 
     user-select: none;
     font-family: title-font;

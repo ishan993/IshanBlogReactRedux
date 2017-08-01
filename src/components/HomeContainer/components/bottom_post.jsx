@@ -33,6 +33,7 @@ const BottomPost = props => (
     </ImageWrapper>
     <PostTextContainer
       _id={props.post._id}
+      postAuthorId={props.post.postAuthorId}
       postTitle={props.post.postTitle}
       postDescription={props.post.postDescription}
       postDate={props.post.postDate}

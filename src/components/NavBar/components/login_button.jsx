@@ -30,7 +30,7 @@ const LoginButton = props => (
   );
 
 LoginButton.propTypes = {
-  userLoggedIn: PropTypes.bool.isRequired,
+  userLoggedIn: PropTypes.object,
   showLoginModal: PropTypes.func.isRequired,
 };
 

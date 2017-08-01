@@ -12,7 +12,7 @@ const DEFAULT_STATE = {
   resumeVisible: false,
   loginModalVisible: false,
   loginTabVisible: true,
-  userLoggedIn: false,
+  userLoggedIn: null,
   isLoading: false,
 };
 

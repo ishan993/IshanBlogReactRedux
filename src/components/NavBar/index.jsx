@@ -15,7 +15,6 @@ import { showSearch, showLoginModal, logOutUser, checkUserLoggedInAction } from 
 // Fix Dropdown Arrow
 
 const NavBarWrapper = styled(FullWidthWrapper)`
-    
     position: fixed;
     top: 0;
     left: 0;
@@ -50,8 +49,11 @@ class NavBarContainer extends Component {
           />
           <SearchBar />
           {
-            this.props.userLoggedIn ?
-              <ProfileIcon logOutUser={this.props.logOutUser} />
+            this.props.userLoggedIn !== null ?
+              <ProfileIcon
+                logOutUser={this.props.logOutUser}
+                userInfo={this.props.userLoggedIn}
+              />
             : ''
           }
         </SearchAndLoginContainer>
@@ -65,7 +67,7 @@ const mapStateToProps = state => ({
 });
 
 NavBarContainer.propTypes = {
-  userLoggedIn: PropTypes.bool.isRequired,
+  userLoggedIn: PropTypes.object,
   showLoginModal: PropTypes.func.isRequired,
   logOutUser: PropTypes.func.isRequired,
   checkUserLoggedIn: PropTypes.func.isRequired,

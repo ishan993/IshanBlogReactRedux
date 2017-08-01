@@ -38,6 +38,7 @@ const MidPost = props => (
     </ImageContainer>
     <PostTextContainer
       _id={props.post._id}
+      postAuthorId={props.post.postAuthorId}
       postTitle={props.post.postTitle}
       postDescription={props.post.postDescription}
       postDate={props.post.postDate}

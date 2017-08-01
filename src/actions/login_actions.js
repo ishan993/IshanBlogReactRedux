@@ -23,23 +23,23 @@ export const checkUserLoggedInAction = () => {
     console.log('USER_LOGGED_IN_FALSE');
     return ({
       type: UPDATE_USER_LOGGED_IN,
-      payload: false,
+      payload: null,
     });
   }
   const tokenValidRequest = request.post(ROOT_URL + '/token')
                                     .send({ token: localStorage.getItem('token') });
   return (dispatch) => {
-    tokenValidRequest.then(response => {
+    tokenValidRequest.then((response) => {
       dispatch({
         type: UPDATE_USER_LOGGED_IN,
-        payload: true,
+        payload: response.body.result,
       });
     })
     .catch(error => {
       console.log('LOGIN_ERROR: ' + error.message);
       dispatch({
         type: UPDATE_USER_LOGGED_IN,
-        payload: false,
+        payload: null,
       });
     });
   };

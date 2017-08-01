@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconImage, DropdownContent, LabelGrey, DropdownDiv, ArrowDiv } from '../../reuseable_components';
 
@@ -22,6 +24,11 @@ const NavBarArrowDiv = styled(ArrowDiv)`
     left: 160px;
 `;
 
+const StyledLink = styled(Link)`
+  textDecoration: none;
+  color: grey;
+`;
+
 class ProfileIcon extends Component {
   constructor() {
     super();
@@ -41,6 +48,12 @@ class ProfileIcon extends Component {
         <ProfileDropdown showDropdown={this.state.showDropdown}>
           <NavBarArrowDiv />
           <DropdownContent>
+            <StyledLink 
+              to={'/edit/' + this.props.userInfo._id}
+              onClick={() => this.toggleDropdown()}
+            >
+              Edit profile
+            </StyledLink>
             <LabelGrey onClick={() => {
               this.props.logOutUser();
               this.toggleDropdown();
@@ -54,5 +67,10 @@ class ProfileIcon extends Component {
     );
   }
 }
+
+ProfileIcon.propTypes = {
+  userInfo: PropTypes.object.isRequired,
+  logOutUser: PropTypes.func.isRequired,
+};
 
 export default ProfileIcon;

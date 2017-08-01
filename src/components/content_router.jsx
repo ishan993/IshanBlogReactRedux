@@ -6,6 +6,7 @@ import HomeComponent from '../components/HomeContainer';
 import CreatePostComponent from '../components/CreatePost';
 import CurrentPost from './CurrentPost';
 import UserInfo from './UserInfo';
+import EditUser from './EditUserInfo';
 
 const RouterWrapper = styled.div`
   margin-top: 60px;
@@ -34,6 +35,11 @@ const ContentRouter = () => (
         path="/user/:id"
         exact
         component={props => <UserInfo routerProps={props} />}
+      />
+      <Route
+        path="/edit/:id"
+        exact
+        component={props => <EditUser routerProps={props} />}
       />
     </Switch>
   </RouterWrapper>
