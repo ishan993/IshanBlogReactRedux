@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import UserInfoComponent from './components/UserInfoComponent';
 import PostItem from '../HomeContainer/components/bottom_post';
+import EditUserInfo from './containers/EditUserInfo';
 import { fetchUserInfo } from '../../actions';
 
 const UserInfoWrapper = styled.div`
@@ -27,22 +28,30 @@ const UserDescriptionWrapper = styled.div`
 `;
 
 class UserInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = ({ showEditForm: false });
+  }
   componentWillMount() {
     this.props.fetchUserInfo(this.props.routerProps.match.params.id);
+  }
+  toggleEditForm() {
+    this.setState({ showEditForm: !this.state.showEditForm });
   }
 
   render() {
     return (
       <UserInfoWrapper>
-        {console.log('I got these props! ' + JSON.stringify(this.props.userPosts))}
-        {this.props.userInfoProps === null ?
-          'Loading....' :
-          <UserInfoComponent
-            firstName={this.props.userInfoProps.firstName}
-            lastName={this.props.userInfoProps.lastName}
-            userDescription={this.props.userInfoProps.userDescription}
-            profileImgURL="http://localhost:8080/static/profilePic.png"
-          />
+        <button
+          onClick={() => {
+            this.toggleEditForm();
+          }}
+        >
+          Edit
+        </button>
+        {this.props.userInfoProps !== null && !this.state.showEditForm ?
+          <UserInfoComponent userInfoProps={this.props.userInfoProps} /> :
+          <EditUserInfo userInfoProps={this.props.userInfoProps} />
         }
         <UserDescriptionWrapper>
           Hello World! How are you? I'm good, thanks for asking!

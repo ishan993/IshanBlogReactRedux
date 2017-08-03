@@ -10,14 +10,24 @@ const Form = styled.form`
   flexDirection: column;
   fontSize: 1rem;
 `;
+
 const StyledField = styled(Field)`
+  boxSizing: border-box;
   fontSize: 1rem;
-  width: 70%;
+  width: 80%;
   margin: 10px auto;
+  outline: none;
   padding: 10px;
   border: 0;
   color: grey;
-  borderBottom: 0.3pt solid grey;
+  border: none;
+  borderBottom: 0.3pt solid lightseagreen;
+  fontSize: 200;
+`;
+
+const StyledFieldLarge = styled(StyledField)`
+  width: 100%;
+  flex: 3;
 `;
 
 const IconImage = styled.img`
@@ -25,15 +35,30 @@ const IconImage = styled.img`
   height: 120px;
   width: 120px;
   padding: 10px;
+  flex: 1;
 `;
+
 const FileInput = styled.input`
   display: none;
 `;
+
 const Label = styled.label`
   display: inline-block;
   cursor: pointer;
   margin: 0;
   padding: 0;
+  outline: none;
+`;
+const RowWrapper = styled.div`
+  width: 80%;
+  margin: auto;
+  display: flex;
+  alignItems: center;
+  justifyContent: center;
+`;
+
+const ImgRowWrapper = styled(RowWrapper)`
+  justifyContent: space-between;
 `;
 
 const blankImgURL = 'http://res.cloudinary.com/ishanvadwala/image/upload/v1501545883/default_user_p6plmj.png';
@@ -49,8 +74,7 @@ class EditUserInfoContainer extends Component {
   render() {
     return (
       <div>
-        <div>
-          {console.log('Hitting me2')}
+        <ImgRowWrapper>
           <Label>
             {this.props.initialValues !== null && this.props.initialValues.authorImgURL !== undefined ?
               this.setState({ imgURL: this.props.initialValues.authorImgURL }) : ''
@@ -60,11 +84,12 @@ class EditUserInfoContainer extends Component {
             />
             <FileInput type="file" />
           </Label>
-        </div>
+          <div>
+            <StyledFieldLarge name="firstName" component="input" placeholder="First Name" />
+            <StyledFieldLarge name="lastName" component="input" placeholder="Second Name" />
+          </div>
+        </ImgRowWrapper>
         <Form>
-          <StyledField name="firstName" component="input" placeholder="First Name" />
-          <StyledField name="lastName" component="input" placeholder="Second Name" />
-          <StyledField name="email" component="input" readOnly />
           <StyledField name="authorImgUrl" component="input" value={this.state.imgURL} hidden />
           <StyledField
             name="userDescription"
@@ -73,6 +98,18 @@ class EditUserInfoContainer extends Component {
           />
           <StyledField name="github" component="input" placeholder="Enter your Github URL" />
           <StyledField name="linkedIn" component="input" placeholder="Enter your LinkedIn URL" />
+          <RowWrapper>
+            <SubmitButton
+              type="submit"
+              onClick={
+              (event) => {
+                event.preventDefault();
+                console.log('tried to submit!');
+              }}
+            >
+              Submit
+            </SubmitButton>
+          </RowWrapper>
         </Form>
       </div>
     );

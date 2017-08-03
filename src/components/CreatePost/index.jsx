@@ -23,18 +23,18 @@ const ButtonWrapper = styled.div`
     }
 `;
 const InputFieldLarge = styled(Field)`
-    font-weight: 300;
+    font-weight: 200;
     margin: auto;
     width: 100%;
     line-height: 2rem;
     font-size: 1.5rem;
     color: grey;
     padding: 3px;;
-    border: none;
     outline: none;
     marginTop: 10px;
     marginBottom: 10px;
-    border-bottom: .7pt solid lightseagreen;
+    border: 0;
+    borderBottom: .3pt solid lightseagreen;
 `;
 
 const TextAreaField = styled(Field)`

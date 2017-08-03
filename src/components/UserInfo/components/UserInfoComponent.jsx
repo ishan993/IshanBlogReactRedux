@@ -23,17 +23,15 @@ const ProfileImg = styled.img`
 
 const UserInfoComponent = props => (
   <NameAndPictureWrapper>
-    <ProfileImg src={props.profileImgURL} />
+    <ProfileImg src={'http://localhost:8080/static/profilePic.png'} />
     <h2>
-      {props.firstName + ' '+ props.lastName}
+      {props.userInfoProps.firstName + ' '+ props.userInfoProps.lastName}
     </h2>
   </NameAndPictureWrapper>
 );
 
 UserInfoComponent.propTypes = {
-  profileImgURL: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
+  userInfoProps: PropTypes.object.isRequired,
 };
 
 export default UserInfoComponent;
