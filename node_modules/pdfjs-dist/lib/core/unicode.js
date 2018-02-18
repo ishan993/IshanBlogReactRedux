@@ -14,8 +14,7 @@
  */
 'use strict';
 
-var sharedUtil = require('../shared/util.js');
-var getLookupTableFactory = sharedUtil.getLookupTableFactory;
+var getLookupTableFactory = require('../shared/util').getLookupTableFactory;
 var getSpecialPUASymbols = getLookupTableFactory(function (t) {
   t[63721] = 0x00A9;
   t[63193] = 0x00A9;
@@ -47,6 +46,8 @@ function mapSpecialUnicodeValues(code) {
     return 0;
   } else if (code >= 0xF600 && code <= 0xF8FF) {
     return getSpecialPUASymbols()[code] || code;
+  } else if (code === 0x00AD) {
+    return 0x002D;
   }
   return code;
 }

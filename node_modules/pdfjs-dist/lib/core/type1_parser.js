@@ -14,13 +14,17 @@
  */
 'use strict';
 
-var sharedUtil = require('../shared/util.js');
-var coreStream = require('./stream.js');
-var coreEncodings = require('./encodings.js');
-var warn = sharedUtil.warn;
-var isSpace = sharedUtil.isSpace;
-var Stream = coreStream.Stream;
-var getEncoding = coreEncodings.getEncoding;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Type1Parser = undefined;
+
+var _util = require('../shared/util');
+
+var _encodings = require('./encodings');
+
+var _stream = require('./stream');
+
 var HINTING_ENABLED = false;
 var Type1CharString = function Type1CharStringClosure() {
   var COMMAND_MAP = {
@@ -106,6 +110,10 @@ var Type1CharString = function Type1CharStringClosure() {
                 break;
               }
               subrNumber = this.stack.pop();
+              if (!subrs[subrNumber]) {
+                error = true;
+                break;
+              }
               error = this.convert(subrs[subrNumber], subrs, seacAnalysisEnabled);
               break;
             case 11:
@@ -215,7 +223,7 @@ var Type1CharString = function Type1CharStringClosure() {
               this.stack = [];
               break;
             default:
-              warn('Unknown type 1 charstring command of "' + value + '"');
+              (0, _util.warn)('Unknown type 1 charstring command of "' + value + '"');
               break;
           }
           if (error) {
@@ -243,7 +251,7 @@ var Type1CharString = function Type1CharStringClosure() {
       var start = stackLength - howManyArgs;
       for (var i = start; i < stackLength; i++) {
         var value = this.stack[i];
-        if (value === (value | 0)) {
+        if (Number.isInteger(value)) {
           this.output.push(28, value >> 8 & 0xff, value & 0xff);
         } else {
           value = 65536 * value | 0;
@@ -321,7 +329,7 @@ var Type1Parser = function Type1ParserClosure() {
     if (encrypted) {
       var data = stream.getBytes();
       var isBinary = !(isHexDigit(data[0]) && isHexDigit(data[1]) && isHexDigit(data[2]) && isHexDigit(data[3]));
-      stream = new Stream(isBinary ? decrypt(data, EEXEC_ENCRYPT_KEY, 4) : decryptAscii(data, EEXEC_ENCRYPT_KEY, 4));
+      stream = new _stream.Stream(isBinary ? decrypt(data, EEXEC_ENCRYPT_KEY, 4) : decryptAscii(data, EEXEC_ENCRYPT_KEY, 4));
     }
     this.seacAnalysisEnabled = !!seacAnalysisEnabled;
     this.stream = stream;
@@ -368,7 +376,7 @@ var Type1Parser = function Type1ParserClosure() {
           }
         } else if (ch === 0x25) {
           comment = true;
-        } else if (!isSpace(ch)) {
+        } else if (!(0, _util.isSpace)(ch)) {
           break;
         }
         ch = this.nextChar();
@@ -381,8 +389,14 @@ var Type1Parser = function Type1ParserClosure() {
       do {
         token += String.fromCharCode(ch);
         ch = this.nextChar();
-      } while (ch >= 0 && !isSpace(ch) && !isSpecial(ch));
+      } while (ch >= 0 && !(0, _util.isSpace)(ch) && !isSpecial(ch));
       return token;
+    },
+    readCharStrings: function Type1Parser_readCharStrings(bytes, lenIV) {
+      if (lenIV === -1) {
+        return bytes;
+      }
+      return decrypt(bytes, CHAR_STRS_ENCRYPT_KEY, lenIV);
     },
     extractFontProgram: function Type1Parser_extractFontProgram() {
       var stream = this.stream;
@@ -420,7 +434,7 @@ var Type1Parser = function Type1ParserClosure() {
               this.getToken();
               data = stream.makeSubStream(stream.pos, length);
               lenIV = program.properties.privateData['lenIV'];
-              encoded = decrypt(data.getBytes(), CHAR_STRS_ENCRYPT_KEY, lenIV);
+              encoded = this.readCharStrings(data.getBytes(), lenIV);
               stream.skip(length);
               this.nextChar();
               token = this.getToken();
@@ -442,7 +456,7 @@ var Type1Parser = function Type1ParserClosure() {
               this.getToken();
               data = stream.makeSubStream(stream.pos, length);
               lenIV = program.properties.privateData['lenIV'];
-              encoded = decrypt(data.getBytes(), CHAR_STRS_ENCRYPT_KEY, lenIV);
+              encoded = this.readCharStrings(data.getBytes(), lenIV);
               stream.skip(length);
               this.nextChar();
               token = this.getToken();
@@ -517,7 +531,7 @@ var Type1Parser = function Type1ParserClosure() {
             var encodingArg = this.getToken();
             var encoding;
             if (!/^\d+$/.test(encodingArg)) {
-              encoding = getEncoding(encodingArg);
+              encoding = (0, _encodings.getEncoding)(encodingArg);
             } else {
               encoding = [];
               var size = parseInt(encodingArg, 10) | 0;

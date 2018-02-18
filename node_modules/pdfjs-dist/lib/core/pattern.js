@@ -14,20 +14,17 @@
  */
 'use strict';
 
-var sharedUtil = require('../shared/util.js');
-var corePrimitives = require('./primitives.js');
-var coreFunction = require('./function.js');
-var coreColorSpace = require('./colorspace.js');
-var UNSUPPORTED_FEATURES = sharedUtil.UNSUPPORTED_FEATURES;
-var MissingDataException = sharedUtil.MissingDataException;
-var Util = sharedUtil.Util;
-var assert = sharedUtil.assert;
-var error = sharedUtil.error;
-var info = sharedUtil.info;
-var warn = sharedUtil.warn;
-var isStream = corePrimitives.isStream;
-var PDFFunction = coreFunction.PDFFunction;
-var ColorSpace = coreColorSpace.ColorSpace;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getTilingPatternIR = exports.Pattern = undefined;
+
+var _util = require('../shared/util');
+
+var _colorspace = require('./colorspace');
+
+var _primitives = require('./primitives');
+
 var ShadingType = {
   FUNCTION_BASED: 1,
   AXIAL: 2,
@@ -39,35 +36,35 @@ var ShadingType = {
 };
 var Pattern = function PatternClosure() {
   function Pattern() {
-    error('should not call Pattern constructor');
+    throw new Error('should not call Pattern constructor');
   }
   Pattern.prototype = {
     getPattern: function Pattern_getPattern(ctx) {
-      error('Should not call Pattern.getStyle: ' + ctx);
+      throw new Error('Should not call Pattern.getStyle: ' + ctx);
     }
   };
-  Pattern.parseShading = function Pattern_parseShading(shading, matrix, xref, res, handler) {
-    var dict = isStream(shading) ? shading.dict : shading;
+  Pattern.parseShading = function (shading, matrix, xref, res, handler, pdfFunctionFactory) {
+    var dict = (0, _primitives.isStream)(shading) ? shading.dict : shading;
     var type = dict.get('ShadingType');
     try {
       switch (type) {
         case ShadingType.AXIAL:
         case ShadingType.RADIAL:
-          return new Shadings.RadialAxial(dict, matrix, xref, res);
+          return new Shadings.RadialAxial(dict, matrix, xref, res, pdfFunctionFactory);
         case ShadingType.FREE_FORM_MESH:
         case ShadingType.LATTICE_FORM_MESH:
         case ShadingType.COONS_PATCH_MESH:
         case ShadingType.TENSOR_PATCH_MESH:
-          return new Shadings.Mesh(shading, matrix, xref, res);
+          return new Shadings.Mesh(shading, matrix, xref, res, pdfFunctionFactory);
         default:
-          throw new Error('Unsupported ShadingType: ' + type);
+          throw new _util.FormatError('Unsupported ShadingType: ' + type);
       }
     } catch (ex) {
-      if (ex instanceof MissingDataException) {
+      if (ex instanceof _util.MissingDataException) {
         throw ex;
       }
-      handler.send('UnsupportedFeature', { featureId: UNSUPPORTED_FEATURES.shadingPattern });
-      warn(ex);
+      handler.send('UnsupportedFeature', { featureId: _util.UNSUPPORTED_FEATURES.shadingPattern });
+      (0, _util.warn)(ex);
       return new Shadings.Dummy();
     }
   };
@@ -76,13 +73,13 @@ var Pattern = function PatternClosure() {
 var Shadings = {};
 Shadings.SMALL_NUMBER = 1e-6;
 Shadings.RadialAxial = function RadialAxialClosure() {
-  function RadialAxial(dict, matrix, xref, res) {
+  function RadialAxial(dict, matrix, xref, res, pdfFunctionFactory) {
     this.matrix = matrix;
     this.coordsArr = dict.getArray('Coords');
     this.shadingType = dict.get('ShadingType');
     this.type = 'Pattern';
     var cs = dict.get('ColorSpace', 'CS');
-    cs = ColorSpace.parse(cs, xref, res);
+    cs = _colorspace.ColorSpace.parse(cs, xref, res, pdfFunctionFactory);
     this.cs = cs;
     var t0 = 0.0,
         t1 = 1.0;
@@ -107,18 +104,18 @@ Shadings.RadialAxial = function RadialAxialClosure() {
       var r2 = this.coordsArr[5];
       var distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
       if (r1 <= r2 + distance && r2 <= r1 + distance) {
-        warn('Unsupported radial gradient.');
+        (0, _util.warn)('Unsupported radial gradient.');
       }
     }
     this.extendStart = extendStart;
     this.extendEnd = extendEnd;
     var fnObj = dict.get('Function');
-    var fn = PDFFunction.parseArray(xref, fnObj);
+    var fn = pdfFunctionFactory.createFromArray(fnObj);
     var diff = t1 - t0;
     var step = diff / 10;
     var colorStops = this.colorStops = [];
     if (t0 >= t1 || step <= 0) {
-      info('Bad shading domain.');
+      (0, _util.info)('Bad shading domain.');
       return;
     }
     var color = new Float32Array(cs.numComps),
@@ -128,13 +125,13 @@ Shadings.RadialAxial = function RadialAxialClosure() {
       ratio[0] = i;
       fn(ratio, 0, color, 0);
       rgbColor = cs.getRgb(color, 0);
-      var cssColor = Util.makeCssRgb(rgbColor[0], rgbColor[1], rgbColor[2]);
+      var cssColor = _util.Util.makeCssRgb(rgbColor[0], rgbColor[1], rgbColor[2]);
       colorStops.push([(i - t0) / diff, cssColor]);
     }
     var background = 'transparent';
     if (dict.has('Background')) {
       rgbColor = cs.getRgb(dict.get('Background'), 0);
-      background = Util.makeCssRgb(rgbColor[0], rgbColor[1], rgbColor[2]);
+      background = _util.Util.makeCssRgb(rgbColor[0], rgbColor[1], rgbColor[2]);
     }
     if (!extendStart) {
       colorStops.unshift([0, background]);
@@ -164,14 +161,14 @@ Shadings.RadialAxial = function RadialAxialClosure() {
         r1 = coordsArr[5];
         type = 'radial';
       } else {
-        error('getPattern type unknown: ' + shadingType);
+        (0, _util.unreachable)('getPattern type unknown: ' + shadingType);
       }
       var matrix = this.matrix;
       if (matrix) {
-        p0 = Util.applyTransform(p0, matrix);
-        p1 = Util.applyTransform(p1, matrix);
+        p0 = _util.Util.applyTransform(p0, matrix);
+        p1 = _util.Util.applyTransform(p1, matrix);
         if (shadingType === ShadingType.RADIAL) {
-          var scale = Util.singularValueDecompose2dScale(matrix);
+          var scale = _util.Util.singularValueDecompose2dScale(matrix);
           r0 *= scale[0];
           r1 *= scale[1];
         }
@@ -275,7 +272,9 @@ Shadings.Mesh = function MeshClosure() {
       var coord = reader.readCoordinate();
       var color = reader.readComponents();
       if (verticesLeft === 0) {
-        assert(0 <= f && f <= 2, 'Unknown type4 flag');
+        if (!(0 <= f && f <= 2)) {
+          throw new _util.FormatError('Unknown type4 flag');
+        }
         switch (f) {
           case 0:
             verticesLeft = 3;
@@ -344,7 +343,7 @@ Shadings.Mesh = function MeshClosure() {
   }();
   function buildFigureFromPatch(mesh, index) {
     var figure = mesh.figures[index];
-    assert(figure.type === 'patch', 'Unexpected patch mesh figure');
+    (0, _util.assert)(figure.type === 'patch', 'Unexpected patch mesh figure');
     var coords = mesh.coords,
         colors = mesh.colors;
     var pi = figure.coords;
@@ -422,7 +421,9 @@ Shadings.Mesh = function MeshClosure() {
     var cs = new Int32Array(4);
     while (reader.hasData) {
       var f = reader.readFlag();
-      assert(0 <= f && f <= 3, 'Unknown type6 flag');
+      if (!(0 <= f && f <= 3)) {
+        throw new _util.FormatError('Unknown type6 flag');
+      }
       var i, ii;
       var pi = coords.length;
       for (i = 0, ii = f !== 0 ? 8 : 12; i < ii; i++) {
@@ -538,7 +539,9 @@ Shadings.Mesh = function MeshClosure() {
     var cs = new Int32Array(4);
     while (reader.hasData) {
       var f = reader.readFlag();
-      assert(0 <= f && f <= 3, 'Unknown type7 flag');
+      if (!(0 <= f && f <= 3)) {
+        throw new _util.FormatError('Unknown type7 flag');
+      }
       var i, ii;
       var pi = coords.length;
       for (i = 0, ii = f !== 0 ? 12 : 16; i < ii; i++) {
@@ -700,19 +703,21 @@ Shadings.Mesh = function MeshClosure() {
       }
     }
   }
-  function Mesh(stream, matrix, xref, res) {
-    assert(isStream(stream), 'Mesh data is not a stream');
+  function Mesh(stream, matrix, xref, res, pdfFunctionFactory) {
+    if (!(0, _primitives.isStream)(stream)) {
+      throw new _util.FormatError('Mesh data is not a stream');
+    }
     var dict = stream.dict;
     this.matrix = matrix;
     this.shadingType = dict.get('ShadingType');
     this.type = 'Pattern';
     this.bbox = dict.getArray('BBox');
     var cs = dict.get('ColorSpace', 'CS');
-    cs = ColorSpace.parse(cs, xref, res);
+    cs = _colorspace.ColorSpace.parse(cs, xref, res, pdfFunctionFactory);
     this.cs = cs;
     this.background = dict.has('Background') ? cs.getRgb(dict.get('Background'), 0) : null;
     var fnObj = dict.get('Function');
-    var fn = fnObj ? PDFFunction.parseArray(xref, fnObj) : null;
+    var fn = fnObj ? pdfFunctionFactory.createFromArray(fnObj) : null;
     this.coords = [];
     this.colors = [];
     this.figures = [];
@@ -733,7 +738,9 @@ Shadings.Mesh = function MeshClosure() {
         break;
       case ShadingType.LATTICE_FORM_MESH:
         var verticesPerRow = dict.get('VerticesPerRow') | 0;
-        assert(verticesPerRow >= 2, 'Invalid VerticesPerRow');
+        if (verticesPerRow < 2) {
+          throw new _util.FormatError('Invalid VerticesPerRow');
+        }
         decodeType5Shading(this, reader, verticesPerRow);
         break;
       case ShadingType.COONS_PATCH_MESH:
@@ -745,7 +752,7 @@ Shadings.Mesh = function MeshClosure() {
         patchMesh = true;
         break;
       default:
-        error('Unsupported mesh type.');
+        (0, _util.unreachable)('Unsupported mesh type.');
         break;
     }
     if (patchMesh) {
@@ -777,11 +784,14 @@ Shadings.Dummy = function DummyClosure() {
 }();
 function getTilingPatternIR(operatorList, dict, args) {
   var matrix = dict.getArray('Matrix');
-  var bbox = dict.getArray('BBox');
+  var bbox = _util.Util.normalizeRect(dict.getArray('BBox'));
   var xstep = dict.get('XStep');
   var ystep = dict.get('YStep');
   var paintType = dict.get('PaintType');
   var tilingType = dict.get('TilingType');
+  if (bbox[2] - bbox[0] === 0 || bbox[3] - bbox[1] === 0) {
+    throw new _util.FormatError('Invalid getTilingPatternIR /BBox array: [' + bbox + '].');
+  }
   return ['TilingPattern', args, operatorList, matrix, bbox, xstep, ystep, paintType, tilingType];
 }
 exports.Pattern = Pattern;

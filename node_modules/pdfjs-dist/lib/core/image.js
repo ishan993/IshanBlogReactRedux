@@ -14,23 +14,23 @@
  */
 'use strict';
 
-var sharedUtil = require('../shared/util.js');
-var corePrimitives = require('./primitives.js');
-var coreColorSpace = require('./colorspace.js');
-var coreStream = require('./stream.js');
-var coreJpx = require('./jpx.js');
-var ImageKind = sharedUtil.ImageKind;
-var assert = sharedUtil.assert;
-var error = sharedUtil.error;
-var info = sharedUtil.info;
-var isArray = sharedUtil.isArray;
-var warn = sharedUtil.warn;
-var Name = corePrimitives.Name;
-var isStream = corePrimitives.isStream;
-var ColorSpace = coreColorSpace.ColorSpace;
-var DecodeStream = coreStream.DecodeStream;
-var JpegStream = coreStream.JpegStream;
-var JpxImage = coreJpx.JpxImage;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PDFImage = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _util = require('../shared/util');
+
+var _stream = require('./stream');
+
+var _primitives = require('./primitives');
+
+var _colorspace = require('./colorspace');
+
+var _jpx = require('./jpx');
+
 var PDFImage = function PDFImageClosure() {
   function handleImageData(image, nativeDecoder) {
     if (nativeDecoder && nativeDecoder.canDecode(image)) {
@@ -66,13 +66,24 @@ var PDFImage = function PDFImageClosure() {
     }
     return dest;
   }
-  function PDFImage(xref, res, image, inline, smask, mask, isMask) {
+  function PDFImage(_ref) {
+    var xref = _ref.xref,
+        res = _ref.res,
+        image = _ref.image,
+        _ref$smask = _ref.smask,
+        smask = _ref$smask === undefined ? null : _ref$smask,
+        _ref$mask = _ref.mask,
+        mask = _ref$mask === undefined ? null : _ref$mask,
+        _ref$isMask = _ref.isMask,
+        isMask = _ref$isMask === undefined ? false : _ref$isMask,
+        pdfFunctionFactory = _ref.pdfFunctionFactory;
+
     this.image = image;
     var dict = image.dict;
     if (dict.has('Filter')) {
       var filter = dict.get('Filter').name;
       if (filter === 'JPXDecode') {
-        var jpxImage = new JpxImage();
+        var jpxImage = new _jpx.JpxImage();
         jpxImage.parseImageProperties(image.stream);
         image.stream.reset();
         image.bitsPerComponent = jpxImage.bitsPerComponent;
@@ -85,7 +96,7 @@ var PDFImage = function PDFImageClosure() {
     this.width = dict.get('Width', 'W');
     this.height = dict.get('Height', 'H');
     if (this.width < 1 || this.height < 1) {
-      error('Invalid image width: ' + this.width + ' or height: ' + this.height);
+      throw new _util.FormatError('Invalid image width: ' + this.width + ' or ' + ('height: ' + this.height));
     }
     this.interpolate = dict.get('Interpolate', 'I') || false;
     this.imageMask = dict.get('ImageMask', 'IM') || false;
@@ -97,7 +108,7 @@ var PDFImage = function PDFImageClosure() {
         if (this.imageMask) {
           bitsPerComponent = 1;
         } else {
-          error('Bits per component missing in image: ' + this.imageMask);
+          throw new _util.FormatError('Bits per component missing in image: ' + this.imageMask);
         }
       }
     }
@@ -105,27 +116,27 @@ var PDFImage = function PDFImageClosure() {
     if (!this.imageMask) {
       var colorSpace = dict.get('ColorSpace', 'CS');
       if (!colorSpace) {
-        info('JPX images (which do not require color spaces)');
+        (0, _util.info)('JPX images (which do not require color spaces)');
         switch (image.numComps) {
           case 1:
-            colorSpace = Name.get('DeviceGray');
+            colorSpace = _primitives.Name.get('DeviceGray');
             break;
           case 3:
-            colorSpace = Name.get('DeviceRGB');
+            colorSpace = _primitives.Name.get('DeviceRGB');
             break;
           case 4:
-            colorSpace = Name.get('DeviceCMYK');
+            colorSpace = _primitives.Name.get('DeviceCMYK');
             break;
           default:
-            error('JPX images with ' + this.numComps + ' color components not supported.');
+            throw new Error('JPX images with ' + this.numComps + ' ' + 'color components not supported.');
         }
       }
-      this.colorSpace = ColorSpace.parse(colorSpace, xref, res);
+      this.colorSpace = _colorspace.ColorSpace.parse(colorSpace, xref, res, pdfFunctionFactory);
       this.numComps = this.colorSpace.numComps;
     }
     this.decode = dict.getArray('Decode', 'D');
     this.needsDecode = false;
-    if (this.decode && (this.colorSpace && !this.colorSpace.isDefaultDecode(this.decode) || isMask && !ColorSpace.isDefaultDecode(this.decode, 1))) {
+    if (this.decode && (this.colorSpace && !this.colorSpace.isDefaultDecode(this.decode) || isMask && !_colorspace.ColorSpace.isDefaultDecode(this.decode, 1))) {
       this.needsDecode = true;
       var max = (1 << bitsPerComponent) - 1;
       this.decodeCoefficients = [];
@@ -138,22 +149,41 @@ var PDFImage = function PDFImageClosure() {
       }
     }
     if (smask) {
-      this.smask = new PDFImage(xref, res, smask, false);
+      this.smask = new PDFImage({
+        xref: xref,
+        res: res,
+        image: smask,
+        pdfFunctionFactory: pdfFunctionFactory
+      });
     } else if (mask) {
-      if (isStream(mask)) {
+      if ((0, _primitives.isStream)(mask)) {
         var maskDict = mask.dict,
             imageMask = maskDict.get('ImageMask', 'IM');
         if (!imageMask) {
-          warn('Ignoring /Mask in image without /ImageMask.');
+          (0, _util.warn)('Ignoring /Mask in image without /ImageMask.');
         } else {
-          this.mask = new PDFImage(xref, res, mask, false, null, null, true);
+          this.mask = new PDFImage({
+            xref: xref,
+            res: res,
+            image: mask,
+            isMask: true,
+            pdfFunctionFactory: pdfFunctionFactory
+          });
         }
       } else {
         this.mask = mask;
       }
     }
   }
-  PDFImage.buildImage = function PDFImage_buildImage(handler, xref, res, image, inline, nativeDecoder) {
+  PDFImage.buildImage = function (_ref2) {
+    var handler = _ref2.handler,
+        xref = _ref2.xref,
+        res = _ref2.res,
+        image = _ref2.image,
+        _ref2$nativeDecoder = _ref2.nativeDecoder,
+        nativeDecoder = _ref2$nativeDecoder === undefined ? null : _ref2$nativeDecoder,
+        pdfFunctionFactory = _ref2.pdfFunctionFactory;
+
     var imagePromise = handleImageData(image, nativeDecoder);
     var smaskPromise;
     var maskPromise;
@@ -165,26 +195,41 @@ var PDFImage = function PDFImageClosure() {
     } else {
       smaskPromise = Promise.resolve(null);
       if (mask) {
-        if (isStream(mask)) {
+        if ((0, _primitives.isStream)(mask)) {
           maskPromise = handleImageData(mask, nativeDecoder);
-        } else if (isArray(mask)) {
+        } else if (Array.isArray(mask)) {
           maskPromise = Promise.resolve(mask);
         } else {
-          warn('Unsupported mask format.');
+          (0, _util.warn)('Unsupported mask format.');
           maskPromise = Promise.resolve(null);
         }
       } else {
         maskPromise = Promise.resolve(null);
       }
     }
-    return Promise.all([imagePromise, smaskPromise, maskPromise]).then(function (results) {
-      var imageData = results[0];
-      var smaskData = results[1];
-      var maskData = results[2];
-      return new PDFImage(xref, res, imageData, inline, smaskData, maskData);
+    return Promise.all([imagePromise, smaskPromise, maskPromise]).then(function (_ref3) {
+      var _ref4 = _slicedToArray(_ref3, 3),
+          imageData = _ref4[0],
+          smaskData = _ref4[1],
+          maskData = _ref4[2];
+
+      return new PDFImage({
+        xref: xref,
+        res: res,
+        image: imageData,
+        smask: smaskData,
+        mask: maskData,
+        pdfFunctionFactory: pdfFunctionFactory
+      });
     });
   };
-  PDFImage.createMask = function PDFImage_createMask(imgArray, width, height, imageIsFromDecodeStream, inverseDecode) {
+  PDFImage.createMask = function (_ref5) {
+    var imgArray = _ref5.imgArray,
+        width = _ref5.width,
+        height = _ref5.height,
+        imageIsFromDecodeStream = _ref5.imageIsFromDecodeStream,
+        inverseDecode = _ref5.inverseDecode;
+
     var computedLength = (width + 7 >> 3) * height;
     var actualLength = imgArray.byteLength;
     var haveFullData = computedLength === actualLength;
@@ -203,7 +248,7 @@ var PDFImage = function PDFImageClosure() {
     }
     if (inverseDecode) {
       for (i = 0; i < actualLength; i++) {
-        data[i] = ~data[i];
+        data[i] ^= 0xFF;
       }
     }
     return {
@@ -219,7 +264,7 @@ var PDFImage = function PDFImageClosure() {
     get drawHeight() {
       return Math.max(this.height, this.smask && this.smask.height || 0, this.mask && this.mask.height || 0);
     },
-    decodeBuffer: function PDFImage_decodeBuffer(buffer) {
+    decodeBuffer: function decodeBuffer(buffer) {
       var bpc = this.bpc;
       var numComps = this.numComps;
       var decodeAddends = this.decodeAddends;
@@ -240,7 +285,7 @@ var PDFImage = function PDFImageClosure() {
         }
       }
     },
-    getComponents: function PDFImage_getComponents(buffer) {
+    getComponents: function getComponents(buffer) {
       var bpc = this.bpc;
       if (bpc === 8) {
         return buffer;
@@ -303,7 +348,7 @@ var PDFImage = function PDFImageClosure() {
       }
       return output;
     },
-    fillOpacity: function PDFImage_fillOpacity(rgbaBuf, width, height, actualHeight, image) {
+    fillOpacity: function fillOpacity(rgbaBuf, width, height, actualHeight, image) {
       var smask = this.smask;
       var mask = this.mask;
       var alphaBuf, sw, sh, i, ii, j;
@@ -328,7 +373,7 @@ var PDFImage = function PDFImageClosure() {
           if (sw !== width || sh !== height) {
             alphaBuf = resizeImageMask(alphaBuf, mask.bpc, sw, sh, width, height);
           }
-        } else if (isArray(mask)) {
+        } else if (Array.isArray(mask)) {
           alphaBuf = new Uint8Array(width * height);
           var numComps = this.numComps;
           for (i = 0, ii = width * height; i < ii; ++i) {
@@ -345,7 +390,7 @@ var PDFImage = function PDFImageClosure() {
             alphaBuf[i] = opacity;
           }
         } else {
-          error('Unknown mask format.');
+          throw new _util.FormatError('Unknown mask format.');
         }
       }
       if (alphaBuf) {
@@ -358,7 +403,7 @@ var PDFImage = function PDFImageClosure() {
         }
       }
     },
-    undoPreblend: function PDFImage_undoPreblend(buffer, width, height) {
+    undoPreblend: function undoPreblend(buffer, width, height) {
       var matte = this.smask && this.smask.matte;
       if (!matte) {
         return;
@@ -386,7 +431,9 @@ var PDFImage = function PDFImageClosure() {
         buffer[i + 2] = b <= 0 ? 0 : b >= 255 ? 255 : b | 0;
       }
     },
-    createImageData: function PDFImage_createImageData(forceRGBA) {
+    createImageData: function createImageData() {
+      var forceRGBA = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
       var drawWidth = this.drawWidth;
       var drawHeight = this.drawHeight;
       var imgData = {
@@ -402,14 +449,14 @@ var PDFImage = function PDFImageClosure() {
       if (!forceRGBA) {
         var kind;
         if (this.colorSpace.name === 'DeviceGray' && bpc === 1) {
-          kind = ImageKind.GRAYSCALE_1BPP;
+          kind = _util.ImageKind.GRAYSCALE_1BPP;
         } else if (this.colorSpace.name === 'DeviceRGB' && bpc === 8 && !this.needsDecode) {
-          kind = ImageKind.RGB_24BPP;
+          kind = _util.ImageKind.RGB_24BPP;
         }
         if (kind && !this.smask && !this.mask && drawWidth === originalWidth && drawHeight === originalHeight) {
           imgData.kind = kind;
           imgArray = this.getImageBytes(originalHeight * rowBytes);
-          if (this.image instanceof DecodeStream) {
+          if (this.image instanceof _stream.DecodeStream) {
             imgData.data = imgArray;
           } else {
             var newArray = new Uint8Array(imgArray.length);
@@ -417,7 +464,7 @@ var PDFImage = function PDFImageClosure() {
             imgData.data = newArray;
           }
           if (this.needsDecode) {
-            assert(kind === ImageKind.GRAYSCALE_1BPP);
+            (0, _util.assert)(kind === _util.ImageKind.GRAYSCALE_1BPP);
             var buffer = imgData.data;
             for (var i = 0, ii = buffer.length; i < ii; i++) {
               buffer[i] ^= 0xff;
@@ -425,8 +472,8 @@ var PDFImage = function PDFImageClosure() {
           }
           return imgData;
         }
-        if (this.image instanceof JpegStream && !this.smask && !this.mask && (this.colorSpace.name === 'DeviceGray' || this.colorSpace.name === 'DeviceRGB' || this.colorSpace.name === 'DeviceCMYK')) {
-          imgData.kind = ImageKind.RGB_24BPP;
+        if (this.image instanceof _stream.JpegStream && !this.smask && !this.mask && (this.colorSpace.name === 'DeviceGray' || this.colorSpace.name === 'DeviceRGB' || this.colorSpace.name === 'DeviceCMYK')) {
+          imgData.kind = _util.ImageKind.RGB_24BPP;
           imgData.data = this.getImageBytes(originalHeight * rowBytes, drawWidth, drawHeight, true);
           return imgData;
         }
@@ -436,12 +483,12 @@ var PDFImage = function PDFImageClosure() {
       var comps = this.getComponents(imgArray);
       var alpha01, maybeUndoPreblend;
       if (!forceRGBA && !this.smask && !this.mask) {
-        imgData.kind = ImageKind.RGB_24BPP;
+        imgData.kind = _util.ImageKind.RGB_24BPP;
         imgData.data = new Uint8Array(drawWidth * drawHeight * 3);
         alpha01 = 0;
         maybeUndoPreblend = false;
       } else {
-        imgData.kind = ImageKind.RGBA_32BPP;
+        imgData.kind = _util.ImageKind.RGBA_32BPP;
         imgData.data = new Uint8Array(drawWidth * drawHeight * 4);
         alpha01 = 1;
         maybeUndoPreblend = true;
@@ -456,10 +503,10 @@ var PDFImage = function PDFImageClosure() {
       }
       return imgData;
     },
-    fillGrayBuffer: function PDFImage_fillGrayBuffer(buffer) {
+    fillGrayBuffer: function fillGrayBuffer(buffer) {
       var numComps = this.numComps;
       if (numComps !== 1) {
-        error('Reading gray scale from a color image: ' + numComps);
+        throw new _util.FormatError('Reading gray scale from a color image: ' + numComps);
       }
       var width = this.width;
       var height = this.height;
@@ -490,7 +537,9 @@ var PDFImage = function PDFImageClosure() {
         buffer[i] = scale * comps[i] | 0;
       }
     },
-    getImageBytes: function PDFImage_getImageBytes(length, drawWidth, drawHeight, forceRGB) {
+    getImageBytes: function getImageBytes(length, drawWidth, drawHeight) {
+      var forceRGB = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
       this.image.reset();
       this.image.drawWidth = drawWidth || this.width;
       this.image.drawHeight = drawHeight || this.height;
